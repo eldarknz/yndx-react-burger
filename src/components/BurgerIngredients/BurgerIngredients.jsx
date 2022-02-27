@@ -41,10 +41,7 @@ const BurgerIngredients = ({ data }) => {
                 </div>
                 <div className={cn(styles.blockList, "pt-10")}>
                     {
-                        
-                    }
-                    {
-                        /*Object.keys(burgerIngredientCategories).map((key, index) => (
+                        Object.keys(burgerIngredientCategories).map((key, index) => (
                             <div key={index} className={styles.block}>
                                 <h3 className={cn(styles.title, "text text_type_main-medium mb-6")}>{burgerIngredientCategories[key].title}</h3>
                                 {burgerIngredientCategories[key].items.length !== 0 && <div className={cn(styles.cardGroup, "mb-2")}>
@@ -69,7 +66,7 @@ const BurgerIngredients = ({ data }) => {
                                     ))}
                                 </div>}
                             </div>
-                        ))*/
+                        ))
                     }
                 </div>
             </Container>
