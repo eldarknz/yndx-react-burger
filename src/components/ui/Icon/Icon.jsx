@@ -2,9 +2,10 @@ import PropTypes from 'prop-types';
 
 import { iconsLibrary } from "./Icon.lib"
 
-export const Icon = ({ name, type = "primary" }) => {
+export const Icon = ({ name, type = "primary", onClick }) => {
     const props = {
-        type
+        type,
+        onClick
     }
 
     const resultIcon = iconsLibrary[name]?.(props)

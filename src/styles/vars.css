@@ -27,4 +27,7 @@
 
     /* TRANSITION */
     --common-transition: all .3s ease-in;
+
+    /* Z-INDEX */
+    --zindex-modal: 5000;
 }
