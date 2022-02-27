@@ -41,16 +41,18 @@ const BurgerIngredients = ({ data }) => {
                 </div>
                 <div className={cn(styles.blockList, "pt-10")}>
                     {
-                        Object.keys(burgerIngredientCategories).map((key, index) => (
+                        
+                    }
+                    {
+                        /*Object.keys(burgerIngredientCategories).map((key, index) => (
                             <div key={index} className={styles.block}>
                                 <h3 className={cn(styles.title, "text text_type_main-medium mb-6")}>{burgerIngredientCategories[key].title}</h3>
-                                {burgerIngredientCategories[key].items.length !== 0 && <div className={cn(styles.cardGroup, "ml-1 mr-1 mb-2")}>
+                                {burgerIngredientCategories[key].items.length !== 0 && <div className={cn(styles.cardGroup, "mb-2")}>
                                     {burgerIngredientCategories[key].items.map((item, index) => (
-                                        <div key={item._id} className={cn(styles.card, "ml-3 mr-3 mb-8")}>
+                                        <div key={item._id} className={cn(styles.card, "ml-4 mr-2 mb-8")}>
                                             <div className={styles.counter}>
                                                 <Counter count={1} size="default" />
                                             </div>
-                                            <Counter count={1} size="default" />
                                             <div className={styles.сardImage}>
                                                 <img src={item.image} />
                                             </div>
@@ -67,7 +69,7 @@ const BurgerIngredients = ({ data }) => {
                                     ))}
                                 </div>}
                             </div>
-                        ))
+                        ))*/
                     }
                 </div>
             </Container>
