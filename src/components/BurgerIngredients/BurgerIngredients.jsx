@@ -76,7 +76,7 @@ const BurgerIngredients = ({ data }) => {
                                                     <Counter count={1} size="default" />
                                                 </div>
                                                 <div className={styles.сardImage}>
-                                                    <img src={item.image} />
+                                                    <img src={item.image} alt="ingredient" />
                                                 </div>
                                                 <div className={styles.cardBody}>
                                                     <div className={cn(styles.cardTitle, "text text_type_digits-default", "pt-1 pb-1")}>

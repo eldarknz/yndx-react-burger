@@ -1,5 +1,7 @@
 import cn from "classnames";
 
+import PropTypes from "prop-types";
+
 import { Row, Col } from "components/ui/Grid/Grid";
 
 import styles from "./IngredientDetails.module.css";
@@ -12,7 +14,7 @@ const IngredientDetails = (props) => {
     return (
         <div className={styles.ingredientBlock}>
             <div className={styles.image}>
-                <img src={image_large} />
+                <img src={image_large} alt="ingredient"/>
             </div>
             <div className={cn(styles.title, "pb-8")}>
                 <h3 className="text text_type_main-medium">{name}</h3>
@@ -38,5 +40,9 @@ const IngredientDetails = (props) => {
         </div>
     );
 };
+
+IngredientDetails.propTypes = {
+    data: PropTypes.object
+}
 
 export default IngredientDetails

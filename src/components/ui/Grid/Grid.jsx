@@ -87,19 +87,6 @@ Col.propTypes = {
     className: PropTypes.string
 };
 
-/*
-export function childrenOf(...types) {
-    let childType = PropTypes.shape({
-        type: PropTypes.oneOf(types),
-    });
-
-    return PropTypes.oneOfType([
-        childType,
-        PropTypes.arrayOf(childType),
-    ]);
-}
-*/
-
 Row.propTypes = {
     children: PropTypes.any.isRequired,
     justifyContent: PropTypes.string,

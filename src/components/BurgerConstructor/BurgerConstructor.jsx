@@ -1,6 +1,7 @@
 import cn from "classnames";
 
 import React from "react";
+import PropTypes from "prop-types";
 
 import { Container, Row } from "../ui/Grid/Grid";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -96,5 +97,9 @@ const BurgerConstructor = ({ data }) => {
         </>
     );
 };
+
+BurgerConstructor.propTypes = {
+    data: PropTypes.array
+}
 
 export default BurgerConstructor

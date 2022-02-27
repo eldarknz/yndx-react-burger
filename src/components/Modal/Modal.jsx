@@ -3,11 +3,13 @@ import cn from "classnames";
 import React from "react";
 import ReactDOM from 'react-dom'
 
-import styles from "./Modal.module.css";
-
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 
 import { Icon } from "../ui/Icon/Icon";
+
+import PropTypes from 'prop-types';
+
+import styles from "./Modal.module.css";
 
 const modalRoot = document.getElementById("modal-root");
 
@@ -39,6 +41,13 @@ const Modal = ({
         </>,
         modalRoot
     );
+};
+
+Modal.Modal = {
+    header: PropTypes.string,
+    justifyContent: PropTypes.func,
+    children: PropTypes.any.isRequired,
+    closeByOverlay: PropTypes.bool
 };
 
 export default Modal;
