@@ -1,3 +1,5 @@
+import PropTypes from 'prop-types';
+
 import { iconsLibrary } from "./Icon.lib"
 
 export const Icon = ({ name, type = "primary" }) => {
@@ -11,3 +13,8 @@ export const Icon = ({ name, type = "primary" }) => {
 
     return resultIcon
 }
+
+Icon.propTypes = {
+    name: PropTypes.string.isRequired,
+    type: PropTypes.string
+};
