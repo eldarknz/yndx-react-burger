@@ -1,0 +1,34 @@
+.link {
+    display: flex;
+    color: var(--link-color);
+    text-decoration: var(--link-decoration);
+    cursor: pointer;
+    user-select: none;
+    transition: var(--common-transition);
+}
+
+.link:hover {
+    color: var(--link-hover-color);
+}
+
+.link.isActive {
+    color: var(--color-white);
+    cursor: default;
+}
+
+.linkContent {
+    display: flex;
+}
+
+.link svg {
+    transition: var(--common-transition);
+    fill: var(--link-color);
+}
+
+.link:hover svg {
+    fill: var(--color-white);
+}
+
+.link.isActive svg {
+    fill: var(--color-white);
+}

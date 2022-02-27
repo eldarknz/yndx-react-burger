@@ -1,0 +1,30 @@
+:root {
+    /* COLORS */
+    --color-white: #FFFFFF;
+
+    --body-bg: #131316;
+    --body-color: #F2F2F3;
+
+    --link-color: #8585AD;
+    --link-hover-color: var(--color-white);
+    --link-decoraion: none;
+
+    /* SPACING */
+    --spacing-1: 4px;
+    --spacing-2: calc(2 * var(--spacing-1));
+    --spacing-3: calc(3 * var(--spacing-1));
+    --spacing-4: calc(4 * var(--spacing-1));
+    --spacing-5: calc(5 * var(--spacing-1));
+    --spacing-6: calc(6 * var(--spacing-1));
+    --spacing-7: calc(7 * var(--spacing-1));
+    --spacing-8: calc(8 * var(--spacing-1));
+    --spacing-9: calc(9 * var(--spacing-1));
+    --spacing-10: calc(10 * var(--spacing-1));
+    --spacing-15: calc(15 * var(--spacing-1));
+    --spacing-20: calc(20 * var(--spacing-1));
+    --spacing-25: calc(25 * var(--spacing-1));
+    --spacing-30: calc(30 * var(--spacing-1));
+
+    /* TRANSITION */
+    --common-transition: all .3s ease-in;
+}

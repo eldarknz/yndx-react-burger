@@ -1,0 +1,11 @@
+.nav {
+    display: flex;
+}
+
+.navItem {
+    padding: var(--spacing-4) var(--spacing-5);
+}
+
+.nav > .navItem + .navItem {
+    margin-left: 8px;
+}
