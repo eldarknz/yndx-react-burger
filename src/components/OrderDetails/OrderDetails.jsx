@@ -2,7 +2,7 @@ import cn from "classnames";
 
 import styles from "./OrderDetails.module.css";
 
-const OrderDeatils = () => {
+const OrderDetails = () => {
 
     return (
         <div className={cn(styles.orderBlock, "pb-15")}>
@@ -17,4 +17,4 @@ const OrderDeatils = () => {
     );
 };
 
-export default OrderDeatils
+export default OrderDetails

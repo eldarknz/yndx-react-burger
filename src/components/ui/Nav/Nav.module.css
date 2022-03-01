@@ -1,5 +1,8 @@
 .nav {
     display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
 }
 
 .navItem {
@@ -7,5 +10,5 @@
 }
 
 .nav > .navItem + .navItem {
-    margin-left: 8px;
+    margin-left: var(--spacing-2);
 }

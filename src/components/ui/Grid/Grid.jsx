@@ -76,19 +76,19 @@ export const Col = ({ children, col, className }) => {
 };
 
 Container.propTypes = {
-    children: PropTypes.any.isRequired,
+    children: PropTypes.node.isRequired,
     fluid: PropTypes.bool,
     className: PropTypes.string
 };
 
 Col.propTypes = {
-    children: PropTypes.any.isRequired,
+    children: PropTypes.node.isRequired,
     col: PropTypes.string,
     className: PropTypes.string
 };
 
 Row.propTypes = {
-    children: PropTypes.any.isRequired,
+    children: PropTypes.node.isRequired,
     justifyContent: PropTypes.string,
     alignItems: PropTypes.string,
     className: PropTypes.string

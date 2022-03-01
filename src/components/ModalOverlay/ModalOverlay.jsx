@@ -6,13 +6,10 @@ const ModalOverlay = ({
     onClick
 }) => {
 
-    const overlayRef = React.useRef(null);
-
     return (
         <div
             className={styles.container}
             onClick={onClick}
-            ref={overlayRef}
         ></div>
     );
 };

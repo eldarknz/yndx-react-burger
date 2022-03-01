@@ -2,15 +2,14 @@
     width: 600px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: var(--spacing-10);
 }
 
 .blockList {
-    height: calc(100vh - 548px);
+    height: calc(100vh - 536px);
     overflow-y: auto;
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 16px;
 }
 
 .block {
@@ -46,4 +45,14 @@
 
 .constructorElementFull > div {
     width: 100%;
+}
+
+.ingredientsBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.priceBlock {
+    padding-bottom: 52px;
 }

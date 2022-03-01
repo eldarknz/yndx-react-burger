@@ -1,11 +1,11 @@
 import cn from "classnames";
 
-import React from "react";
+import React, { useEffect } from "react";
 import ReactDOM from 'react-dom'
 
 import ModalOverlay from "../ModalOverlay/ModalOverlay";
 
-import { Icon } from "../ui/Icon/Icon";
+import { CloseIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import PropTypes from 'prop-types';
 
@@ -20,6 +20,21 @@ const Modal = ({
     closeByOverlay = true
 }) => {
 
+    useEffect(() => {
+        const keyDownHandler = (e) => {
+            e.preventDefault();
+            if (e.key === "Escape") {
+                onClose();
+            }
+        };
+
+        document.addEventListener('keydown', keyDownHandler);
+
+        return () => {
+            document.removeEventListener('keydown', keyDownHandler);
+        }
+    }, []);
+
     return ReactDOM.createPortal(
         <>
             <ModalOverlay
@@ -32,7 +47,7 @@ const Modal = ({
                 <h1 className="text text_type_main-large">{header}</h1>
             </div>
             <div className={styles.closeButton} onClick={onClose}>
-                <Icon name="close" />
+                <CloseIcon type="primary" />
             </div>
             <section className={cn(styles.content)}>
                 {children}
@@ -43,10 +58,10 @@ const Modal = ({
     );
 };
 
-Modal.Modal = {
+Modal.propTypes = {
     header: PropTypes.string,
-    justifyContent: PropTypes.func,
-    children: PropTypes.any.isRequired,
+    onClose: PropTypes.func.isRequired,
+    children: PropTypes.node.isRequired,
     closeByOverlay: PropTypes.bool
 };
 

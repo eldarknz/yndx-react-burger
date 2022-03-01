@@ -6,15 +6,29 @@ import { Row, Col } from "components/ui/Grid/Grid";
 
 import styles from "./IngredientDetails.module.css";
 
+export const ingredientType = PropTypes.shape({
+    _id: PropTypes.string,
+    __v: PropTypes.number,
+    type: PropTypes.string,
+    name: PropTypes.string,
+    proteins: PropTypes.number,
+    calories: PropTypes.number,
+    carbohydrates: PropTypes.number,
+    fat: PropTypes.number,
+    price: PropTypes.number,
+    image: PropTypes.string,
+    image_large: PropTypes.string,
+    image_mobile: PropTypes.string
+});
+
 const IngredientDetails = (props) => {
-    console.log(props);
 
     const { image_large, name, calories, proteins, fat, carbohydrates } = props
 
     return (
         <div className={styles.ingredientBlock}>
             <div className={styles.image}>
-                <img src={image_large} alt="ingredient"/>
+                <img src={image_large} alt={name}/>
             </div>
             <div className={cn(styles.title, "pb-8")}>
                 <h3 className="text text_type_main-medium">{name}</h3>
@@ -42,7 +56,7 @@ const IngredientDetails = (props) => {
 };
 
 IngredientDetails.propTypes = {
-    data: PropTypes.object
+    props: PropTypes.objectOf(ingredientType)
 }
 
 export default IngredientDetails

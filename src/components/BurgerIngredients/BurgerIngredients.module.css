@@ -2,11 +2,10 @@
     width: 600px;
     margin-left: auto;
     margin-right: auto;
-    margin-bottom: var(--spacing-10);
 }
 
 .blockList {
-    height: calc(100vh - 325px);
+    height: calc(100vh - 284px);
     overflow-y: auto;
     display: block;
 }

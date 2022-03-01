@@ -6,18 +6,21 @@ import PropTypes from "prop-types";
 import { Container } from "../ui/Grid/Grid";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import styles from "./BurgerIngredients.module.css";
-import { Icon } from "../ui/Icon/Icon";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 
 import Modal from "../Modal/Modal";
 
+import { ingredientType } from "../IngredientDetails/IngredientDetails";
+
+import styles from "./BurgerIngredients.module.css";
+
 const BurgerIngredients = ({ data }) => {
 
     const [currentIngredient, setCurrentIngredient] = useState(null);
 
-    let burgerIngredientCategories = {
+    const burgerIngredientCategories = {
         bun: { title: "Булки", items: [] },
         main: { title: "Начинки", items: [] },
         sauce: { title: "Соусы", items: [] }
@@ -28,18 +31,12 @@ const BurgerIngredients = ({ data }) => {
     ));
 
     const [current, setCurrent] = React.useState("bun");
-    
-    const [modalVisible, setModalVisible] = React.useState(false)
 
     const handleOpenModal = (item) => {
-        console.log(item);
-        setModalVisible(true);
         setCurrentIngredient(item);
     }
     
     const handleCloseModal = () => {
-        console.log('Close');
-        setModalVisible(false);
         setCurrentIngredient(null);
     }
 
@@ -59,10 +56,10 @@ const BurgerIngredients = ({ data }) => {
                             Начинки
                         </Tab>
                     </div>
-                    <div className={cn(styles.blockList, "pt-10")}>
+                    <div className={cn(styles.blockList, "mt-10")}>
                         {
                             Object.keys(burgerIngredientCategories).map((key, index) => (
-                                <div key={index} className={styles.block}>
+                                <section key={index} className={styles.block}>
                                     <h3 className={cn(styles.title, "text text_type_main-medium mb-6")}>{burgerIngredientCategories[key].title}</h3>
                                     {burgerIngredientCategories[key].items.length !== 0 && <div className={cn(styles.cardGroup, "mb-2")}>
                                         {burgerIngredientCategories[key].items.map((item, index) => (
@@ -76,13 +73,13 @@ const BurgerIngredients = ({ data }) => {
                                                     <Counter count={1} size="default" />
                                                 </div>
                                                 <div className={styles.сardImage}>
-                                                    <img src={item.image} alt="ingredient" />
+                                                    <img src={item.image} alt={item.name} />
                                                 </div>
                                                 <div className={styles.cardBody}>
                                                     <div className={cn(styles.cardTitle, "text text_type_digits-default", "pt-1 pb-1")}>
                                                         {item.price}
                                                         <div className={styles.icon}>
-                                                            <Icon name="currency" />
+                                                            <CurrencyIcon tpe="primary" />
                                                         </div>
                                                     </div>
                                                     <div className={cn(styles.cardText, "text text_type_main-default")}>{item.name}</div>
@@ -91,14 +88,14 @@ const BurgerIngredients = ({ data }) => {
 
                                         ))}
                                     </div>}
-                                </div>
+                                </section>
                             ))
                         }
                     </div>
                 </Container>
             </section>
 
-            {modalVisible && (
+            {currentIngredient && (
                 <Modal
                     header="Детали ингредиента"
                     onClose={handleCloseModal}
@@ -111,7 +108,7 @@ const BurgerIngredients = ({ data }) => {
 };
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.arrayOf(ingredientType).isRequired
 }
 
 export default BurgerIngredients

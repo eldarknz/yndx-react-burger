@@ -8,7 +8,7 @@ import { Container, Row, Col } from "../ui/Grid/Grid";
 
 import { Nav, NavItem } from "../ui/Nav/Nav";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Icon } from "../ui/Icon/Icon";
+import { BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import Link from "../ui/Link/Link";
 
 const AppHeader = () => {
@@ -23,7 +23,7 @@ const AppHeader = () => {
                             >
                                 <Link isActive={true}>
                                     <div className={styles.icon}>
-                                        <Icon name="burger" />
+                                        <BurgerIcon type="primary" />
                                     </div>
                                     <div className={cn("text", "text_type_main-default", styles.name)}>Конструктор</div>
                                 </Link>
@@ -31,7 +31,7 @@ const AppHeader = () => {
                             <NavItem>
                                 <Link href={'/'}>
                                     <div className={styles.icon}>
-                                        <Icon name="list" />
+                                        <ListIcon type="primary" />
                                     </div>
                                     <div className={cn("text", "text_type_main-default", styles.name)}>Лента заказов</div>
                                 </Link>
@@ -48,7 +48,7 @@ const AppHeader = () => {
                             <NavItem>
                                 <Link href={'/'}>
                                 <div className={styles.icon}>
-                                        <Icon name="profile" />
+                                        <ProfileIcon type="primary" />
                                     </div>
                                     <div className={cn("text", "text_type_main-default", styles.name)}>Личный кабинет</div>
                                 </Link>

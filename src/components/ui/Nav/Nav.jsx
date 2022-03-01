@@ -3,6 +3,8 @@ import cn from "classnames";
 import React from "react";
 import PropTypes from 'prop-types';
 
+import { childrenOf } from "../../../utils/utils";
+
 import styles from "./Nav.module.css";
 
 export const NavItem = ({ children, isActive, className }) => {
@@ -15,9 +17,9 @@ export const NavItem = ({ children, isActive, className }) => {
     );
 
     return (
-        <div className={navItemClassName}>
+        <li className={navItemClassName}>
             {children}
-        </div>
+        </li>
     );
 };
 
@@ -28,28 +30,17 @@ export const Nav = ({ children, className }) => {
     );
 
     return (
-        <div className={navClassName}>
+        <nav className={navClassName}>
             {children}
-        </div>
+        </nav>
     );
 };
 
 NavItem.propTypes = {
-    children: PropTypes.any.isRequired,
+    children: PropTypes.node.isRequired,
     isActive: PropTypes.bool,
     className: PropTypes.string
 };
-
-export function childrenOf(...types) {
-    let childType = PropTypes.shape({
-        type: PropTypes.oneOf(types),
-    });
-
-    return PropTypes.oneOfType([
-        childType,
-        PropTypes.arrayOf(childType),
-    ]);
-}
 
 Nav.propTypes = {
     children: childrenOf(NavItem).isRequired,

@@ -32,7 +32,7 @@ const Link = ({ href, isActive, children, className, onClick }) => {
 Link.propTypes = {
     href: PropTypes.string,
     isActive: PropTypes.bool,
-    children: PropTypes.any.isRequired,
+    children: PropTypes.node.isRequired,
     className: PropTypes.string,
     onClick: PropTypes.func,
 };

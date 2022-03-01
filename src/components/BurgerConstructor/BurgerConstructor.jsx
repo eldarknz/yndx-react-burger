@@ -5,10 +5,12 @@ import PropTypes from "prop-types";
 
 import { Container, Row } from "../ui/Grid/Grid";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Icon } from "../ui/Icon/Icon";
+import { DragIcon, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
-import OrderDeatils from "../OrderDetails/OrderDetails";
+import OrderDetails from "../OrderDetails/OrderDetails";
+
+import { ingredientType } from "../IngredientDetails/IngredientDetails";
 
 import styles from "./BurgerConstructor.module.css";
 
@@ -16,13 +18,15 @@ const BurgerConstructor = ({ data }) => {
 
     const [modalVisible, setModalVisible] = React.useState(false)
 
+    const bun = data.find(ingredient => {
+        return ingredient.type === 'bun'
+    })
+
     const handleOpenModal = (e) => {
-        console.log('Open');
         setModalVisible(true);
     }
     
     const handleCloseModal = () => {
-        console.log('Close');
         setModalVisible(false);
     }
 
@@ -30,25 +34,27 @@ const BurgerConstructor = ({ data }) => {
         <>
             <section className={styles.section}>
                 <Container fluid={true}>
-                    <div className="pt-25 ml-4" style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
-                        <Row className="alignItemsCenter">
-                            <div className={styles.block}>
-                                <ConstructorElement
-                                    type="top"
-                                    isLocked={true}
-                                    text="Краторная булка N-200i (верх)"
-                                    price={200}
-                                    thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
-                                />
-                            </div>
-                        </Row>
+                    {<div className={cn(styles.ingredientsBlock, "pt-25 ml-4")}>
+                        {bun && (
+                            <Row align="center">
+                                <div className={styles.block}>
+                                    <ConstructorElement
+                                        type="top"
+                                        isLocked={true}
+                                        text={`${bun.name} (верх)`}
+                                        price={bun.price}
+                                        thumbnail={bun.image}
+                                    />
+                                </div>
+                            </Row>
+                        )}
                         <div className={styles.blockList}>
-                            {data && data.map((item, index) => (
+                            {data && data.map((item) => (
 
                                 <Row key={item._id} align="center">
                                     <div className={styles.block}>
                                         <div className={styles.blokcIcon}>
-                                            <Icon name="drag" />
+                                            <DragIcon type="primary" />
                                         </div>
                                         <div className={styles.constructorElementFull}>
                                             <ConstructorElement
@@ -61,26 +67,28 @@ const BurgerConstructor = ({ data }) => {
                                 </Row>
 
                             ))}
-                        </div>
-                        <Row align="center">
-                            <div className={styles.block}>
-                                <ConstructorElement
-                                    type="bottom"
-                                    isLocked={true}
-                                    text="Краторная булка N-200i (низ)"
-                                    price={200}
-                                    thumbnail={'https://code.s3.yandex.net/react/code/meat-04.png'}
-                                />
-                            </div>
-                        </Row>
-                    </div>
-                    <Row alignItems="center" justifyContent="flex-end" className="pt-10 pb-9">
+                        </div>  
+                        {bun && (
+                            <Row align="center">
+                                <div className={styles.block}>
+                                    <ConstructorElement
+                                        type="bottom"
+                                        isLocked={true}
+                                        text={`${bun.name} (низ)`}
+                                        price={bun.price}
+                                        thumbnail={bun.image}
+                                    />
+                                </div>
+                            </Row>
+                        )}
+                    </div>}
+                    <Row alignItems="center" justifyContent="flex-end" className={cn(styles.priceBlock, "pt-10")}>
                         <div className={"text text_type_digits-medium mr-2"}>600</div>
                         <div className={cn(styles.iconLarge, "pr-10")}>
-                            <Icon name="currency" />
+                            <CurrencyIcon type="primary" />
                         </div>
                         <Button type="primary" size="large" onClick={handleOpenModal}>
-                            Нажми на меня
+                            Оформить заказ
                         </Button>
                     </Row>
                 </Container>
@@ -91,7 +99,7 @@ const BurgerConstructor = ({ data }) => {
                     header=""
                     onClose={handleCloseModal}
                 >
-                    <OrderDeatils />
+                    <OrderDetails />
                 </Modal>
             )}
         </>
@@ -99,7 +107,7 @@ const BurgerConstructor = ({ data }) => {
 };
 
 BurgerConstructor.propTypes = {
-    data: PropTypes.array
+    data: PropTypes.arrayOf(ingredientType).isRequired
 }
 
 export default BurgerConstructor
