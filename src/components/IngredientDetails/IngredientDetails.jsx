@@ -56,7 +56,18 @@ const IngredientDetails = (props) => {
 };
 
 IngredientDetails.propTypes = {
-    props: PropTypes.objectOf(ingredientType)
+    _id: PropTypes.string,
+    __v: PropTypes.number,
+    type: PropTypes.string,
+    name: PropTypes.string.isRequired,
+    proteins: PropTypes.number.isRequired,
+    calories: PropTypes.number.isRequired,
+    carbohydrates: PropTypes.number.isRequired,
+    fat: PropTypes.number.isRequired,
+    price: PropTypes.number,
+    image: PropTypes.string,
+    image_large: PropTypes.string.isRequired,
+    image_mobile: PropTypes.string
 }
 
 export default IngredientDetails
