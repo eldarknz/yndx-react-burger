@@ -33,7 +33,7 @@ const Modal = ({
         return () => {
             document.removeEventListener('keydown', keyDownHandler);
         }
-    }, []);
+    }, [onClose]);
 
     return ReactDOM.createPortal(
         <>
