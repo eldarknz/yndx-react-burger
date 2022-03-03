@@ -1,0 +1,90 @@
+.container,
+.containerFluid {
+    width: 100%;
+    margin: 0 auto;
+}
+
+.container {
+    max-width: 1280px;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.col {
+    flex-basis: 0;
+    flex-grow: 1;
+    max-width: 100%;
+}
+
+.colAuto {
+    width: auto;
+    max-width: 100%;
+    flex: 0 0 auto;
+  }
+
+.col2 {
+    max-width: 16.6666667%;
+    flex: 0 0 16.6666667%;
+}
+
+.col3 {
+    max-width: 25%;
+    flex: 0 0 25%;
+}
+
+.col4 {
+    max-width: 33.3333333%;
+    flex: 0 0 33.3333333%;
+}
+
+.col5 {
+    max-width: 41.6666667%;
+    flex: 0 0 41.6666667%;
+}
+
+.col6 {
+    max-width: 50%;
+    flex: 0 0 50%;
+}
+
+.col7 {
+    max-width: 58.3333333%;
+    flex: 0 0 58.3333333%;
+}
+
+.col8 {
+    max-width: 66.6666667%;
+    flex: 0 0 66.6666667%;
+}
+
+.col9 {
+    max-width: 75%;
+    flex: 0 0 75%;
+}
+
+.col10 {
+    max-width: 83.3333333%;
+    flex: 0 0 83.3333333%;
+}
+
+.col12 {
+    max-width: 100%;
+    flex: 0 0 100%;
+}
+
+.justifyContentFlexStart { justify-content: flex-start; }
+.justifyContentFlexEnd { justify-content: flex-end; }
+.justifyContentCenter { justify-content: center; }
+.justifyContentSpaceBetween { justify-content: space-between; }
+.justifyContentSpaceAround { justify-content: space-around; }
+.justifyContentSpaceEvenly { justify-content: space-evenly }
+
+.alignItemsFlexStart { align-Items: flex-start }
+.alignItemsFlexEnd { align-Items: flex-end; }
+.alignItemsCenter { align-Items: center; }
+.alignItemsBaseline { align-Items: baseline; }
+.alignItemsStretch { align-Items: stretch; }

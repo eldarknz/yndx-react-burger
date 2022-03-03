@@ -1,0 +1,11 @@
+.ingredientBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.image {
+    width: 480px;
+    height: 240px;
+}

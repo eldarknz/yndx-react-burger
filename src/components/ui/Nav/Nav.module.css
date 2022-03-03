@@ -1,0 +1,14 @@
+.nav {
+    display: flex;
+    padding: 0;
+    margin: 0;
+    list-style: none;
+}
+
+.navItem {
+    padding: var(--spacing-4) var(--spacing-5);
+}
+
+.nav > .navItem + .navItem {
+    margin-left: var(--spacing-2);
+}

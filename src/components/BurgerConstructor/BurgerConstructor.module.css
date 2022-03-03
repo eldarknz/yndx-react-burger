@@ -1,0 +1,58 @@
+.section { 
+    width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.blockList {
+    height: calc(100vh - 536px);
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.block {
+    position: relative;
+    padding-left: 32px;
+    width: 100%;
+}
+
+.icon {
+    height: 24px;
+    width: 24px;
+}
+
+.iconLarge,
+.iconLarge svg {
+    height: 36px;
+    width: 36px;
+}
+
+.icon + .text {
+    margin-right: var(--spacing-2);
+}
+
+.blokcIcon {
+    composes: icon;
+
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+}
+
+.constructorElementFull > div {
+    width: 100%;
+}
+
+.ingredientsBlock {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.priceBlock {
+    padding-bottom: 52px;
+}

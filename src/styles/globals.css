@@ -1,0 +1,74 @@
+@import "fonts.css";
+@import "vars.css";
+
+* {
+    margin: 0;
+    padding: 0;
+    outline: 0;
+}
+
+html, body {
+    height: 100%;
+    width: 100%;
+}
+
+a {
+    color: var(--link-color);
+    text-decoration: var(--link-decoration);
+}
+
+a:hover,
+a:active {
+    color: var(--link-hover-color);
+    text-decoration: var(--link-hover-decoration);
+}
+
+.mlAuto {
+    margin-left: auto;
+}
+
+.mrAuto {
+    margin-right: auto;
+}
+
+.alignItemsCenter {
+    align-items: center;
+}
+
+.justifyContentCenter {
+    justify-content: center;
+}
+
+.justifyContentEnd {
+    justify-content: flex-end;
+}
+
+.textAlignCenter {
+    text-align: center;
+}
+
+.gap-10 {
+    gap: 10px;
+}
+
+/* SCROLLBAEL */
+
+* {
+    scrollbar-width: thin;
+    scrollbar-color: #8585AD #2F2F37;
+}
+  
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+    width: 8px;
+}
+
+*::-webkit-scrollbar-track {
+    background: #2F2F37;
+}
+
+*::-webkit-scrollbar-thumb {
+    background-color: #8585AD;
+    border-radius: 0;
+    border: 0
+}
