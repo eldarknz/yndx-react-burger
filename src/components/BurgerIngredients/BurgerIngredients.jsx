@@ -1,6 +1,7 @@
 import cn from "classnames";
 
-import React, { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import PropTypes from "prop-types";
 
 import { Container } from "../ui/Grid/Grid";
@@ -12,25 +13,30 @@ import IngredientDetails from "../IngredientDetails/IngredientDetails";
 
 import Modal from "../Modal/Modal";
 
-import { ingredientType } from "../IngredientDetails/IngredientDetails";
+import { TAB_SWITCH } from "services/actions";
+
+import { useDrag } from 'react-dnd';
 
 import styles from "./BurgerIngredients.module.css";
 
-const BurgerIngredients = ({ data }) => {
+const ingredientCategories = [
+    { _id: 0, type: "bun", title: "Булки" },
+    { _id: 1, type: "sauce", title: "Соусы" },
+    { _id: 2, type: "main", title: "Начинки" }
+];
+
+const BurgerIngredients = () => {
+
+    const dispatch = useDispatch();
+
+    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(store => store.app);
+    const currentTab = useSelector(store => store.app.currentTab);
 
     const [currentIngredient, setCurrentIngredient] = useState(null);
 
-    const burgerIngredientCategories = {
-        bun: { title: "Булки", items: [] },
-        main: { title: "Начинки", items: [] },
-        sauce: { title: "Соусы", items: [] }
+    const switchTab = (clickedTab) => {
+        dispatch({ type: TAB_SWITCH, clickedTab });
     };
-
-    data.forEach((item, i) => (
-        burgerIngredientCategories[item.type].items.push(item)
-    ));
-
-    const [current, setCurrent] = React.useState("bun");
 
     const handleOpenModal = (item) => {
         setCurrentIngredient(item);
@@ -40,54 +46,74 @@ const BurgerIngredients = ({ data }) => {
         setCurrentIngredient(null);
     }
 
+    const IngredientCard = (props) => {
+
+        const { _id } = props;
+
+        console.log(_id);
+
+        const [{ opacity }, dragRef] = useDrag({
+            type: 'ingredient',
+            item: { _id },
+            collect: monitor => ({
+              opacity: monitor.isDragging() ? 0.5 : 1
+            })
+        });
+
+        return (
+            <div
+                className={cn(styles.card, "ml-4 mr-2 mb-8")}
+                onClick={() => handleOpenModal(props)}
+                ref={dragRef}
+                style={{ opacity }}
+            >
+                <div className={styles.counter}>
+                    { props._v && <Counter count={props._v} size="default" /> }
+                </div>
+                <div className={styles.сardImage}>
+                    <img src={props.image} alt={props.name} />
+                </div>
+                <div className={styles.cardBody}>
+                    <div className={cn(styles.cardTitle, "text text_type_digits-default", "pt-1 pb-1")}>
+                        {props.price}
+                        <div className={styles.icon}>
+                            <CurrencyIcon tpe="primary" />
+                        </div>
+                    </div>
+                    <div className={cn(styles.cardText, "text text_type_main-default")}>{props.name}</div>
+                </div>
+            </div>
+        )
+    };
+
     return (
         <>
             <section className={styles.section}>
                 <Container fluid={true}>
                     <h1 className="text text_type_main-large pt-10">Соберите бургер</h1>
                     <div className="pt-5" style={{ display: "flex" }}>
-                        <Tab value="bun" active={current === "bun"} onClick={setCurrent}>
-                            Булки
-                        </Tab>
-                        <Tab value="sauce" active={current === "sauce"} onClick={setCurrent}>
-                            Соусы
-                        </Tab>
-                        <Tab value="main" active={current === "main"} onClick={setCurrent}>
-                            Начинки
-                        </Tab>
+                        {
+                            ingredientCategories.map((category, index) => (
+                                <Tab key={index} value={category.type} active={currentTab === category.type} onClick={() => switchTab(category.type)}>
+                                    {category.title}
+                                </Tab>
+                            ))
+                        }
                     </div>
                     <div className={cn(styles.blockList, "mt-10")}>
+                        { ingredientsFailed && <p className="text text_type_main-default pb-3">Произошла ошибка при получении данных</p> }
+                        { ingredientsRequest && <p className="text text_type_main-default pb-3">Загрузка...</p> }
                         {
-                            Object.keys(burgerIngredientCategories).map((key, index) => (
+                            !ingredientsFailed && !ingredientsRequest && ingredientCategories.map((category, index) => (
                                 <section key={index} className={styles.block}>
-                                    <h3 className={cn(styles.title, "text text_type_main-medium mb-6")}>{burgerIngredientCategories[key].title}</h3>
-                                    {burgerIngredientCategories[key].items.length !== 0 && <div className={cn(styles.cardGroup, "mb-2")}>
-                                        {burgerIngredientCategories[key].items.map((item, index) => (
-
-                                            <div
-                                                key={item._id}
-                                                className={cn(styles.card, "ml-4 mr-2 mb-8")}
-                                                onClick={() => handleOpenModal(item)}
-                                            >
-                                                <div className={styles.counter}>
-                                                    <Counter count={1} size="default" />
-                                                </div>
-                                                <div className={styles.сardImage}>
-                                                    <img src={item.image} alt={item.name} />
-                                                </div>
-                                                <div className={styles.cardBody}>
-                                                    <div className={cn(styles.cardTitle, "text text_type_digits-default", "pt-1 pb-1")}>
-                                                        {item.price}
-                                                        <div className={styles.icon}>
-                                                            <CurrencyIcon tpe="primary" />
-                                                        </div>
-                                                    </div>
-                                                    <div className={cn(styles.cardText, "text text_type_main-default")}>{item.name}</div>
-                                                </div>
-                                            </div>
-
-                                        ))}
-                                    </div>}
+                                    <h3 className={cn(styles.title, "text text_type_main-medium mb-6")}>{category.title}</h3>
+                                    <div className={cn(styles.cardGroup, "mb-2")}>
+                                        {
+                                            ingredients.filter(item => item.type === category.type).map(ingredient => (
+                                                <IngredientCard key={ingredient._id} {...ingredient}/>
+                                            ))
+                                        }
+                                    </div>
                                 </section>
                             ))
                         }
@@ -107,8 +133,8 @@ const BurgerIngredients = ({ data }) => {
     );
 };
 
-BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientType).isRequired
-}
+//BurgerIngredients.propTypes = {
+//    data: PropTypes.arrayOf(ingredientType).isRequired
+//}
 
 export default BurgerIngredients
