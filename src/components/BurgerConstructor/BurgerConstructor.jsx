@@ -1,6 +1,9 @@
 import cn from "classnames";
 
 import { useState, useEffect, useMemo } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useDrag, useDrop } from 'react-dnd';
+
 import PropTypes from "prop-types";
 
 import { Container, Row } from "../ui/Grid/Grid";
@@ -9,12 +12,11 @@ import { DragIcon, CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-
 import { Button } from "@ya.praktikum/react-developer-burger-ui-components";
 import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
+import BurgerConstructorItem from "./BurgerConstructorItem";
 
-import { DELETE_INGREDIENT } from "services/actions";
+import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUN } from "services/actions";
 
-import { useDispatch, useSelector } from "react-redux";
-
-import { useDrag } from 'react-dnd';
+import { isEmpty } from "utils/utils";
 
 import styles from "./BurgerConstructor.module.css";
 
@@ -24,13 +26,22 @@ const BurgerConstructor = () => {
 
     const [modalVisible, setModalVisible] = useState(false);
 
-    const ingredients = useSelector(store => store.app.burgerIngredients);
-    const currentBun = useSelector(store => store.app.burgerBun);
+    const burgerIngredients = useSelector(store => store.app.burgerIngredients);
+    const burgerBun         = useSelector(store => store.app.burgerBun);
 
-    const totalPrice = ingredients.reduce((acc, item) => acc + item.price, 0) + (currentBun.price * 2);
+    const totalPrice = burgerIngredients.reduce((acc, item) => acc + item.price, 0) + (!isEmpty(burgerBun) ? burgerBun.price * 2 : 0);
 
-    const onDelete = (_id) => {
-        dispatch({ type: DELETE_INGREDIENT, _id });
+    const addIngredient = ( ingredient ) => {
+        dispatch({ type: ADD_INGREDIENT, ingredient });
+    }
+
+    const deleteIngredient = ( index, ingredient ) => {
+        dispatch({ type: DELETE_INGREDIENT, index, ingredient });
+    };
+
+    const addBun = ( ingredient ) => {
+        if (ingredient._id !== burgerBun._id)
+            dispatch({ type: ADD_BUN, ingredient });
     };
 
     const handleOpenModal = (e) => {
@@ -41,16 +52,30 @@ const BurgerConstructor = () => {
         setModalVisible(false);
     };
 
-    const bun = (type) => {
+    const [{ isHover }, dropTarget] = useDrop({
+        accept: 'ingredient',
+        collect: monitor => ({
+          isHover: monitor.isOver()
+        }),
+        drop(item) {
+            if (item.type === 'bun') {
+                addBun(item)
+            } else {
+                addIngredient(item);
+            }
+        },
+    });
+
+    const Bun = ({ type, item }) => {
         return (
             <Row align="center">
                 <div className={styles.block}>
                     <ConstructorElement
                         type={type}
                         isLocked={true}
-                        text={`${currentBun.name} (верх)`}
-                        price={currentBun.price}
-                        thumbnail={currentBun.image}
+                        text={`${item.name} (верх)`}
+                        price={item.price}
+                        thumbnail={item.image}
                     />
                 </div>
             </Row>
@@ -60,39 +85,39 @@ const BurgerConstructor = () => {
     const content = useMemo(
         () => {
             return (
-                ingredients.map((item) => (
-                    <Row key={item._id} align="center">
-                        <div className={styles.block}>
-                            <div className={styles.blokcIcon}>
-                                <DragIcon type="primary" />
-                            </div>
-                            <div className={styles.constructorElementFull}>
-                                <ConstructorElement
-                                    text={item.name}
-                                    price={item.price}
-                                    thumbnail={item.image}
-                                    handleClose={() => onDelete(item._id)}
-                                />
-                            </div>
-                        </div>
-                    </Row>
+                burgerIngredients.map((ingredient, index) => ingredient.type !== 'bun' && (
+                    <BurgerConstructorItem key={index} index={index} ingredient={ingredient} deleteIngredient={deleteIngredient}/>
                 ))
             );
         },
-        [ingredients]
+        [burgerIngredients]
     );
-
+    
     return (
         <>
             <section className={styles.section}>
                 <Container fluid={true}>
-                    {<div className={cn(styles.ingredientsBlock, "pt-25 ml-4")}>
-                        {currentBun && bun('top')}
-                        <div className={styles.blockList}>
-                            {content}
+
+                    {
+                        <div 
+                            className={cn(styles.ingredientsBlock,
+                                "mt-25 ml-4",
+                                {
+                                    [styles.onHover]: isHover
+                                }
+                            )}
+                            ref={dropTarget}
+                        >
+                            {/* isEmpty(burgerBun) && burgerIngredients.length === 0 && (
+                                <p className="text text_type_main-default pb-3">Добавьте ингредиенты</p>
+                            )*/}
+                            { !isEmpty(burgerBun) && <Bun type={'top'} item={burgerBun} /> }
+                            <div className={styles.blockList}>
+                                {content}
+                            </div>
+                            { !isEmpty(burgerBun) && <Bun type={'bottom'} item={burgerBun} />}
                         </div>
-                        {currentBun && bun('bottom')}
-                    </div>}
+                    }
                     <Row alignItems="center" justifyContent="flex-end" className={cn(styles.priceBlock, "pt-10")}>
                         <div className={"text text_type_digits-medium mr-2"}>
                             {totalPrice}

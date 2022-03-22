@@ -5,7 +5,7 @@ import { compose, createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
 
 import { Provider } from 'react-redux';
-import { rootReducer } from './services/reducers';
+import { rootReducer } from 'services/reducers/rootReducer';
 
 import App from './components/App/App';
 import './styles/globals.css';
@@ -31,7 +31,7 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const enhancer = composeEnhancers(applyMiddleware(actionLogger, errorLogger, thunk));
+const enhancer = composeEnhancers(applyMiddleware(thunk));
 
 const store = createStore(rootReducer, enhancer);
 

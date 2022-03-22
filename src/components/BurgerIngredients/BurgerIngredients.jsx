@@ -7,15 +7,13 @@ import PropTypes from "prop-types";
 import { Container } from "../ui/Grid/Grid";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 import IngredientDetails from "../IngredientDetails/IngredientDetails";
 
 import Modal from "../Modal/Modal";
 
-import { TAB_SWITCH } from "services/actions";
+import BurgerIngredientsItem from "./BurgerIngredientsItem";
 
-import { useDrag } from 'react-dnd';
+import { TAB_SWITCH } from "services/actions";
 
 import styles from "./BurgerIngredients.module.css";
 
@@ -30,6 +28,7 @@ const BurgerIngredients = () => {
     const dispatch = useDispatch();
 
     const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(store => store.app);
+
     const currentTab = useSelector(store => store.app.currentTab);
 
     const [currentIngredient, setCurrentIngredient] = useState(null);
@@ -45,46 +44,6 @@ const BurgerIngredients = () => {
     const handleCloseModal = () => {
         setCurrentIngredient(null);
     }
-
-    const IngredientCard = (props) => {
-
-        const { _id } = props;
-
-        console.log(_id);
-
-        const [{ opacity }, dragRef] = useDrag({
-            type: 'ingredient',
-            item: { _id },
-            collect: monitor => ({
-              opacity: monitor.isDragging() ? 0.5 : 1
-            })
-        });
-
-        return (
-            <div
-                className={cn(styles.card, "ml-4 mr-2 mb-8")}
-                onClick={() => handleOpenModal(props)}
-                ref={dragRef}
-                style={{ opacity }}
-            >
-                <div className={styles.counter}>
-                    { props._v && <Counter count={props._v} size="default" /> }
-                </div>
-                <div className={styles.сardImage}>
-                    <img src={props.image} alt={props.name} />
-                </div>
-                <div className={styles.cardBody}>
-                    <div className={cn(styles.cardTitle, "text text_type_digits-default", "pt-1 pb-1")}>
-                        {props.price}
-                        <div className={styles.icon}>
-                            <CurrencyIcon tpe="primary" />
-                        </div>
-                    </div>
-                    <div className={cn(styles.cardText, "text text_type_main-default")}>{props.name}</div>
-                </div>
-            </div>
-        )
-    };
 
     return (
         <>
@@ -110,7 +69,7 @@ const BurgerIngredients = () => {
                                     <div className={cn(styles.cardGroup, "mb-2")}>
                                         {
                                             ingredients.filter(item => item.type === category.type).map(ingredient => (
-                                                <IngredientCard key={ingredient._id} {...ingredient}/>
+                                                <BurgerIngredientsItem key={ingredient._id} ingredient={ingredient} openModal={handleOpenModal}/>
                                             ))
                                         }
                                     </div>

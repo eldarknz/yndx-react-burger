@@ -1,5 +1,3 @@
-import { combineReducers } from 'redux';
-
 // temporary data
 import { bun, ingredients } from '../initialIngredients';
 
@@ -9,7 +7,8 @@ import {
     GET_INGREDIENTS_FAILED,
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
-    CHANGE_BUN,
+    SWAP_INGREDIENTS,
+    ADD_BUN,
     TAB_SWITCH
 } from 'services/actions';
 
@@ -19,7 +18,7 @@ const initialState = {
     ingredientsRequest: false,
     ingredientsFailed: false,
 
-    burgerIngredients: ingredients,
+    burgerIngredients: [],
     burgerBun: bun,
 
     viewedIngredient: null,
@@ -55,14 +54,30 @@ export const appReducer = (state = initialState, action) => {
         case ADD_INGREDIENT: {
             return {
                 ...state,
-                burgerIngredients: [...state.burgerIngredients, ...state.burgerIngredients.filter(ingredient => ingredient._id === action._id)]
+                burgerIngredients: [...state.burgerIngredients, action.ingredient]
             };
         }
         case DELETE_INGREDIENT: {
             return {
                 ...state,
-                burgerIngredients: [...state.burgerIngredients].filter(ingredient => ingredient._id !== action._id)
+                burgerIngredients: [...state.burgerIngredients].filter((_, index) => index !== action.index)
             };
+        }
+        case ADD_BUN: {
+            return {
+                ...state,
+                burgerBun: action.ingredient
+            };
+        }
+        case SWAP_INGREDIENTS: {
+            const { dragIndex, hoverIndex } = action.payload;
+            const copyBurgerIngredients = [...state.burgerIngredients];
+            [copyBurgerIngredients[dragIndex], copyBurgerIngredients[hoverIndex]] = [copyBurgerIngredients[hoverIndex], copyBurgerIngredients[dragIndex]];
+      
+            return {
+                ...state,
+                burgerIngredients: copyBurgerIngredients
+            }
         }
         case TAB_SWITCH: {
             return {
@@ -75,7 +90,3 @@ export const appReducer = (state = initialState, action) => {
         }
     }
 }
-
-export const rootReducer = combineReducers({
-    app: appReducer
-});
