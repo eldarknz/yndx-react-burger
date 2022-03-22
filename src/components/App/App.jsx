@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
 
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { DndProvider } from 'react-dnd';
@@ -10,7 +10,7 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 
 import { Container, Row, Col } from '../ui/Grid/Grid';
 
-import { getItems } from 'services/actions';
+import { getIngredients } from 'services/actions';
 
 import styles from "./App.module.css";
 
@@ -19,7 +19,7 @@ function App() {
   const dispatch = useDispatch();
 
   useEffect(() => {
-    dispatch(getItems());
+    dispatch(getIngredients());
   }, [dispatch]);
 
   return (

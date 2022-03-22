@@ -1,5 +1,7 @@
-// temporary data
-import { bun, ingredients } from '../initialIngredients';
+/**
+ * Для теста
+ */
+//import { bun, ingredients } from '../initialIngredients';
 
 import {
     GET_INGREDIENTS_REQUEST,
@@ -7,9 +9,14 @@ import {
     GET_INGREDIENTS_FAILED,
     ADD_INGREDIENT,
     DELETE_INGREDIENT,
-    SWAP_INGREDIENTS,
     ADD_BUN,
-    TAB_SWITCH
+    SWAP_INGREDIENTS,
+    TAB_SWITCH,
+    GET_INGREDIENT_DETAILS,
+    DELETE_INGREDIENT_DETAILS,
+    GET_ORDER_NUMBER_REQUEST,
+    GET_ORDER_NUMBER_SUCCESS,
+    GET_ORDER_NUMBER_FAILED,
 } from 'services/actions';
 
 const initialState = {
@@ -19,17 +26,23 @@ const initialState = {
     ingredientsFailed: false,
 
     burgerIngredients: [],
-    burgerBun: bun,
+    burgerBun: {},
 
     viewedIngredient: null,
 
-    order: null,
+    orderNumber: null,
 
     currentTab: 'bun'
 };
 
 export const appReducer = (state = initialState, action) => {
     switch (action.type) {
+        case TAB_SWITCH: {
+            return {
+                ...state,
+                currentTab: state.currentTab !== action.selectedtTab ? action.selectedtTab : state.currentTab
+            };
+        }
         case GET_INGREDIENTS_REQUEST: {
             return {
                 ...state,
@@ -39,9 +52,9 @@ export const appReducer = (state = initialState, action) => {
         case GET_INGREDIENTS_SUCCESS: {
             return {
                 ...state,
+                ingredients: action.ingredients,
                 ingredientsRequest: false,
                 ingredientsFailed: false,
-                ingredients: action.ingredients,
             };
         }
         case GET_INGREDIENTS_FAILED: {
@@ -79,11 +92,35 @@ export const appReducer = (state = initialState, action) => {
                 burgerIngredients: copyBurgerIngredients
             }
         }
-        case TAB_SWITCH: {
+        case GET_INGREDIENT_DETAILS: {
             return {
                 ...state,
-                currentTab: state.currentTab !== action.clickedTab ? action.clickedTab : state.currentTab
+                viewedIngredient: action.ingredient
             };
+        }
+        case DELETE_INGREDIENT_DETAILS: {
+            return {
+                ...state,
+                viewedIngredient: null
+            };
+        }
+        case GET_ORDER_NUMBER_REQUEST: {
+            return {
+                ...state,
+                orderNumberRequest: true
+            }
+        }
+        case GET_ORDER_NUMBER_SUCCESS: {
+            return {
+                ...state,
+                orderNumber: action.orderNumber,
+            }
+        }
+        case GET_ORDER_NUMBER_FAILED: {
+            return {
+                ...state,
+                orderNumber: null,
+            }
         }
         default: {
             return state;

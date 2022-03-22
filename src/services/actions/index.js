@@ -1,5 +1,8 @@
+/**
+ * Для теста
+ */
+//import { getItemsRequest } from "../initialIngredients";
 import { API_URL } from "utils/constants";
-import { getItemsRequest } from "../initialIngredients";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -14,12 +17,19 @@ export const SWAP_INGREDIENTS = 'SWAP_INGREDIENTS';
 export const ADD_ORDER_NUMBER = 'ADD_ORDER_NUMBER';
 export const DELETE_ORDER_NUMBER = 'DELETE_ORDER_NUMBER';
 
-export const ADD_INGREDIENT_DETAILS = 'ADD_INGREDIENT_DETAILS';
+export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
+export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
+export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
+
+export const GET_INGREDIENT_DETAILS = 'GET_INGREDIENT_DETAILS';
 export const DELETE_INGREDIENT_DETAILS = 'DELETE_INGREDIENT_DETAILS';
 
 export const TAB_SWITCH = 'TAB_SWITCH';
 
-export function getItems() {
+/**
+ * Для теста
+ */
+/*export function getIngredients() {
     return (dispatch) => {
       dispatch({
         type: GET_INGREDIENTS_REQUEST
@@ -37,38 +47,73 @@ export function getItems() {
         }
       });
     };
-}
+}*/
 
-/*export function getItems() {
+export function getIngredients() {
   return function(dispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
     });
     fetch(`${API_URL}ingredients`)
-      .then((response) => {
-          if (response.ok) {
-              return response.json();
-          }
-          dispatch({
-              type: GET_INGREDIENTS_FAILED
-          });
-          throw new Error(response.status);
-      })
-      .then((response) => {
-        console.log([...response.data]);
-          dispatch({
-              type: GET_INGREDIENTS_SUCCESS,
-              ingredients: [...response.data]
-          });
-      })
-      .catch((error) => {
-          console.log("Ошибка при выполнении запроса к API: " + error.message);
-          dispatch({
-              type: GET_INGREDIENTS_FAILED
-          });
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error(response.status);
+    })
+    .then((response) => {
+      dispatch({
+          type: GET_INGREDIENTS_SUCCESS,
+          ingredients: [...response.data]
       });
+    })
+    .catch((error) => {
+        console.log("Ошибка при выполнении запроса к API: " + error.message);
+        dispatch({
+            type: GET_INGREDIENTS_FAILED
+        });
+    });
   };
-}*/
+}
+
+export function getOrderNumber(data) {
+  return function(dispatch) {
+    dispatch({
+      type: GET_ORDER_NUMBER_REQUEST
+    });
+
+    const body = JSON.stringify({
+      ingredients: typeof data === "string" ? JSON.parse(data) : data,
+    });
+
+    fetch(`${API_URL}orders`, {
+      method: 'POST',
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json"
+      },
+      body,
+    })
+    .then((response) => {
+        if (response.ok) {
+            return response.json();
+        }
+        throw new Error(response.status);
+    })
+    .then((response) => {
+      dispatch({
+          type: GET_ORDER_NUMBER_SUCCESS,
+          orderNumber: response.order.number
+      });
+    })
+    .catch((error) => {
+        console.log("Ошибка при выполнении запроса к API: " + error.message);
+        dispatch({
+            type: GET_ORDER_NUMBER_FAILED
+        });
+    });
+  }
+}
 
 export const swapIngredients = (dragIndex, hoverIndex) => {
   return (dispatch) => {

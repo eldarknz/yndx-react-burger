@@ -1,14 +1,15 @@
-import cn from 'classnames';
-
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
+import PropTypes from 'prop-types';
 
 import { Row } from "../ui/Grid/Grid";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { swapIngredients } from 'services/actions';
+
+import { ingredientType } from "../IngredientDetails/IngredientDetails";
 
 import styles from "./BurgerConstructor.module.css";
 
@@ -20,7 +21,7 @@ const BurgerConstructorItem = (props) => {
 
     const ref = useRef(null);
 
-    const [{ opacity, isDragging }, dragRef] = useDrag({
+    const [{ opacity }, dragRef] = useDrag({
         type: 'burgerIngredient',
         item: () => ({ id: props.ingredient._id, index: props.index }),
         collect: monitor => ({
@@ -70,7 +71,7 @@ const BurgerConstructorItem = (props) => {
                                 text={name}
                                 price={price}
                                 thumbnail={image}
-                                handleClose={() => props.deleteIngredient(props.index, props.ingredient)}
+                                handleClose={() => props.callback(props.index, props.ingredient)}
                             />
                         </div>
                     </div>
@@ -78,6 +79,12 @@ const BurgerConstructorItem = (props) => {
             </Row>
         </div>
     );
+};
+
+BurgerConstructorItem.propTypes = {
+    index: PropTypes.number.isRequired,
+    ingredient: ingredientType.isRequired,
+    callback: PropTypes.func.isRequired
 };
 
 export default BurgerConstructorItem

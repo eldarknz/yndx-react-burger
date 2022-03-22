@@ -12,20 +12,6 @@ import './styles/globals.css';
 
 import reportWebVitals from './reportWebVitals';
 
-// Усилитель 1
-const actionLogger = store => next => action => {
-  console.log(`${new Date().toLocaleString()} | Action: ${JSON.stringify(action)}` );
-  return next(action);
-};
-
-// Усилитель 2
-const errorLogger = store => next => action => {
-  if (action.type === 'SOMETHING_FAILED') {
-        console.error(`Произошла ошибка: ${JSON.stringify(action)}`)
-    }
-  return next(action);
-};
-
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})

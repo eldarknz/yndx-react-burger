@@ -2,20 +2,22 @@ import cn from 'classnames';
 
 import { useSelector } from "react-redux";
 import { useDrag } from 'react-dnd';
+import PropTypes from 'prop-types';
 
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
+import { ingredientType } from "../IngredientDetails/IngredientDetails";
+
 import styles from "./BurgerIngredients.module.css";
 
 const BurgerIngredientsItem = (props) => {
-
     const { _id, price, image, name } = props.ingredient;
 
     const burgerIngredients = useSelector(store => store.app.burgerIngredients);
     const burgerBun = useSelector(store => store.app.burgerBun);
 
-    const ingredientOccurrences = burgerIngredients.concat([burgerBun]).filter(ingredient => ingredient._id === props.ingredient._id);
+    const ingredientOccurrences = burgerIngredients.concat([burgerBun]).filter(ingredient => ingredient._id === _id);
 
     const [{ opacity }, dragRef] = useDrag({
         type: 'ingredient',
@@ -28,7 +30,7 @@ const BurgerIngredientsItem = (props) => {
     return (
         <div
             className={cn(styles.card, "ml-4 mr-2 mb-8")}
-            onClick={() => props.openModal(props.ingredient)}
+            onClick={() => props.callback(props.ingredient)}
             ref={dragRef}
             style={{ opacity }}
         >
@@ -51,6 +53,11 @@ const BurgerIngredientsItem = (props) => {
             </div>
         </div>
     )
+};
+
+BurgerIngredientsItem.propTypes = {
+    ingredient: ingredientType.isRequired,
+    callback: PropTypes.func.isRequired
 };
 
 export default BurgerIngredientsItem;
