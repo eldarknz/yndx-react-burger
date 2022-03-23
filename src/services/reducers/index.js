@@ -3,6 +3,8 @@
  */
 //import { bun, ingredients } from '../initialIngredients';
 
+import { v4 as uuidv4 } from 'uuid';
+
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
@@ -68,15 +70,17 @@ export const appReducer = (state = initialState, action) => {
             };
         }
         case ADD_INGREDIENT: {
+            const ingredient = action.ingredient;
+            const uuid = uuidv4();
             return {
                 ...state,
-                burgerIngredients: [...state.burgerIngredients, action.ingredient]
+                burgerIngredients: [...state.burgerIngredients, {...ingredient, uuid:uuid}]
             };
         }
         case DELETE_INGREDIENT: {
             return {
                 ...state,
-                burgerIngredients: [...state.burgerIngredients].filter((_, index) => index !== action.index)
+                burgerIngredients: [...state.burgerIngredients].filter(ingredient => ingredient.uuid !== action.ingredient.uuid)
             };
         }
         case ADD_BUN: {
