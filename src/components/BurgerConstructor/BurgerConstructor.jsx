@@ -15,7 +15,8 @@ import BurgerConstructorItem from "./BurgerConstructorItem";
 
 import { ingredientType } from "components/IngredientDetails/IngredientDetails";
 
-import { ADD_INGREDIENT, DELETE_INGREDIENT, ADD_BUN, getOrderNumber } from "services/actions";
+import { getOrderNumber } from "services/actions";
+import { addIngredient, addBun } from "services/actions";
 
 import { isEmpty } from "utils/utils";
 
@@ -53,26 +54,9 @@ const BurgerConstructor = () => {
 
     const totalPrice = burgerIngredients.reduce((acc, item) => acc + item.price, 0) + (!isEmpty(burgerBun) ? burgerBun.price * 2 : 0);
 
-    const addIngredient = ( ingredient ) => {
-        dispatch({ type: ADD_INGREDIENT, ingredient });
-    }
-
-    const deleteIngredient = ( index, ingredient ) => {
-        dispatch({ type: DELETE_INGREDIENT, index, ingredient });
-    };
-
-    const addBun = ( ingredient ) => {
-        if (ingredient._id !== burgerBun._id)
-            dispatch({ type: ADD_BUN, ingredient });
-    };
-
-    const handleOpenModal = () => {
-        setModalVisible(true);
-    };
+    const handleOpenModal = () => setModalVisible(true);
     
-    const handleCloseModal = () => {
-        setModalVisible(false);
-    };
+    const handleCloseModal = () => setModalVisible(false);
 
     const [{ isHover }, dropTarget] = useDrop({
         accept: 'ingredient',
@@ -80,10 +64,10 @@ const BurgerConstructor = () => {
           isHover: monitor.isOver()
         }),
         drop(item) {
-            if (item.type === 'bun') {
-                addBun(item)
+            if (item.type === 'bun' && item._id !== burgerBun._id) {
+                dispatch(addBun(item));
             } else {
-                addIngredient(item);
+                dispatch(addIngredient(item));
             }
         },
     });
@@ -91,7 +75,7 @@ const BurgerConstructor = () => {
     const content = () => {
         return (
             burgerIngredients.map((ingredient, index) => ingredient.type !== 'bun' && (
-                <BurgerConstructorItem key={index} index={index} ingredient={ingredient} callback={deleteIngredient}/>
+                <BurgerConstructorItem key={ingredient.uuid} index={index} ingredient={ingredient}/>
             ))
         );
     };

@@ -121,12 +121,32 @@ export function getOrderNumber(data) {
  * Action Creators
  */
 
-export const swapIngredients = (dragIndex, hoverIndex) => {
+export const swapIngredients = ( dragIndex, hoverIndex ) => {
   return { 
     type: SWAP_INGREDIENTS,
     payload: {
       dragIndex: dragIndex,
       hoverIndex: hoverIndex
     }
-  }
+  };
 }
+
+export const addIngredient = ( ingredient ) => {
+  return {
+    type: ADD_INGREDIENT,
+    ingredient 
+  };
+}
+
+export const deleteIngredient = ( ingredient ) => {
+  return {
+    type: DELETE_INGREDIENT, ingredient
+  };
+};
+
+export const addBun = ( ingredient ) => {
+  return {
+    type: ADD_BUN,
+    ingredient 
+  };
+};

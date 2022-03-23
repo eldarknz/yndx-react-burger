@@ -7,7 +7,7 @@ import { Row } from "../ui/Grid/Grid";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { swapIngredients } from 'services/actions';
+import { deleteIngredient, swapIngredients } from 'services/actions';
 
 import { ingredientType } from "../IngredientDetails/IngredientDetails";
 
@@ -71,7 +71,7 @@ const BurgerConstructorItem = (props) => {
                                 text={name}
                                 price={price}
                                 thumbnail={image}
-                                handleClose={() => props.callback(props.index, props.ingredient)}
+                                handleClose={() => dispatch(deleteIngredient(props.ingredient))}
                             />
                         </div>
                     </div>
@@ -83,8 +83,7 @@ const BurgerConstructorItem = (props) => {
 
 BurgerConstructorItem.propTypes = {
     index: PropTypes.number.isRequired,
-    ingredient: ingredientType.isRequired,
-    callback: PropTypes.func.isRequired
+    ingredient: ingredientType.isRequired
 };
 
 export default BurgerConstructorItem
