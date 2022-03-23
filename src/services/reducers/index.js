@@ -17,6 +17,7 @@ import {
     GET_ORDER_NUMBER_REQUEST,
     GET_ORDER_NUMBER_SUCCESS,
     GET_ORDER_NUMBER_FAILED,
+    CLEAR_CONSTRUCTOR
 } from 'services/actions';
 
 const initialState = {
@@ -31,6 +32,8 @@ const initialState = {
     viewedIngredient: null,
 
     orderNumber: null,
+    orderNumberRequest: false,
+    orderNumberFailed: false,
 
     currentTab: 'bun'
 };
@@ -114,12 +117,23 @@ export const appReducer = (state = initialState, action) => {
             return {
                 ...state,
                 orderNumber: action.orderNumber,
+                orderNumberRequest: false,
+                orderNumberFailed: false,
             }
         }
         case GET_ORDER_NUMBER_FAILED: {
             return {
                 ...state,
                 orderNumber: null,
+                orderNumberRequest: false,
+                orderNumberFailed: true
+            }
+        }
+        case CLEAR_CONSTRUCTOR: {
+            return {
+                ...state,
+                burgerIngredients: [],
+                burgerBun: {},
             }
         }
         default: {
