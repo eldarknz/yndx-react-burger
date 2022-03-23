@@ -2,6 +2,8 @@
  * Для теста
  */
 //import { getItemsRequest } from "../initialIngredients";
+import { v4 as uuidv4 } from 'uuid';
+
 import { API_URL } from "utils/constants";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
@@ -134,7 +136,10 @@ export const swapIngredients = ( dragIndex, hoverIndex ) => {
 export const addIngredient = ( ingredient ) => {
   return {
     type: ADD_INGREDIENT,
-    ingredient 
+    payload: {
+      ingredient,
+      uuid: uuidv4()
+    }
   };
 }
 

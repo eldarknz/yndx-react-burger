@@ -3,8 +3,6 @@
  */
 //import { bun, ingredients } from '../initialIngredients';
 
-import { v4 as uuidv4 } from 'uuid';
-
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
@@ -70,8 +68,7 @@ export const appReducer = (state = initialState, action) => {
             };
         }
         case ADD_INGREDIENT: {
-            const ingredient = action.ingredient;
-            const uuid = uuidv4();
+            const { ingredient, uuid } = action.payload;
             return {
                 ...state,
                 burgerIngredients: [...state.burgerIngredients, {...ingredient, uuid:uuid}]
