@@ -49,18 +49,20 @@ export const TAB_SWITCH = 'TAB_SWITCH';
     };
 }*/
 
+const checkResponse = (response) => {
+  if (response.ok) {
+    return response.json();
+  }
+  throw new Error(response.status);
+}
+
 export function getIngredients() {
   return function(dispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
     });
     fetch(`${API_URL}ingredients`)
-    .then((response) => {
-        if (response.ok) {
-            return response.json();
-        }
-        throw new Error(response.status);
-    })
+    .then(checkResponse)
     .then((response) => {
       dispatch({
           type: GET_INGREDIENTS_SUCCESS,
@@ -94,12 +96,7 @@ export function getOrderNumber(data) {
       },
       body,
     })
-    .then((response) => {
-        if (response.ok) {
-            return response.json();
-        }
-        throw new Error(response.status);
-    })
+    .then(checkResponse)
     .then((response) => {
       dispatch({
           type: GET_ORDER_NUMBER_SUCCESS,
