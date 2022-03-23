@@ -26,6 +26,8 @@ export const DELETE_INGREDIENT_DETAILS = 'DELETE_INGREDIENT_DETAILS';
 
 export const TAB_SWITCH = 'TAB_SWITCH';
 
+export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
+
 /**
  * Для теста
  */
@@ -102,6 +104,9 @@ export function getOrderNumber(data) {
           type: GET_ORDER_NUMBER_SUCCESS,
           orderNumber: response.order.number
       });
+      dispatch({
+        type: CLEAR_CONSTRUCTOR
+      });
     })
     .catch((error) => {
         console.log("Ошибка при выполнении запроса к API: " + error.message);
@@ -112,7 +117,7 @@ export function getOrderNumber(data) {
   }
 }
 
-export const swapIngredients = (dragIndex, hoverIndex) => {
+/*export const swapIngredients = (dragIndex, hoverIndex) => {
   return (dispatch) => {
     dispatch({
       type: SWAP_INGREDIENTS,
@@ -121,5 +126,19 @@ export const swapIngredients = (dragIndex, hoverIndex) => {
         hoverIndex: hoverIndex
       }
     })
+  }
+}*/
+
+/**
+ * Action Creators
+ */
+
+export const swapIngredients = (dragIndex, hoverIndex) => {
+  return { 
+    type: SWAP_INGREDIENTS,
+    payload: {
+      dragIndex: dragIndex,
+      hoverIndex: hoverIndex
+    }
   }
 }
