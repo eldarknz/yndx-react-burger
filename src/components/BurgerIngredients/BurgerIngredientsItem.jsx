@@ -17,7 +17,13 @@ const BurgerIngredientsItem = (props) => {
     const burgerIngredients = useSelector(store => store.app.burgerIngredients);
     const burgerBun = useSelector(store => store.app.burgerBun);
 
-    const ingredientOccurrences = burgerIngredients.concat([burgerBun]).filter(ingredient => ingredient._id === _id);
+    const ingredientOccurrences = burgerIngredients.concat([burgerBun]).reduce(function(sum, ingredient) {
+        if (ingredient._id === _id) {
+            if (ingredient.type === 'bun') return sum + 2;
+            return sum + 1;
+        }
+        return sum;
+    }, 0);
 
     const [{ opacity }, dragRef] = useDrag({
         type: 'ingredient',
@@ -34,9 +40,9 @@ const BurgerIngredientsItem = (props) => {
             ref={dragRef}
             style={{ opacity }}
         >
-            {ingredientOccurrences.length > 0 && (
+            {ingredientOccurrences > 0 && (
                 <div className={styles.counter}>
-                    { props.__v !== 0 && <Counter count={ingredientOccurrences.length} size="default" /> }
+                    <Counter count={ingredientOccurrences} size="default" />
                 </div>
             )}
             <div className={styles.сardImage}>
