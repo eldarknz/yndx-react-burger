@@ -1,6 +1,7 @@
 import cn from "classnames";
 
 import PropTypes from "prop-types";
+import { useSelector } from 'react-redux';
 
 import { Row, Col } from "components/ui/Grid/Grid";
 
@@ -21,9 +22,9 @@ export const ingredientType = PropTypes.shape({
     image_mobile: PropTypes.string
 });
 
-const IngredientDetails = (props) => {
-
-    const { image_large, name, calories, proteins, fat, carbohydrates } = props
+const IngredientDetails = () => {
+    const viewedIngredient = useSelector(store => store.app.viewedIngredient);
+    const { image_large, name, calories, proteins, fat, carbohydrates } = viewedIngredient;
 
     return (
         <div className={styles.ingredientBlock}>
@@ -54,20 +55,5 @@ const IngredientDetails = (props) => {
         </div>
     );
 };
-
-IngredientDetails.propTypes = {
-    _id: PropTypes.string,
-    __v: PropTypes.number,
-    type: PropTypes.string,
-    name: PropTypes.string.isRequired,
-    proteins: PropTypes.number.isRequired,
-    calories: PropTypes.number.isRequired,
-    carbohydrates: PropTypes.number.isRequired,
-    fat: PropTypes.number.isRequired,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_large: PropTypes.string.isRequired,
-    image_mobile: PropTypes.string
-}
 
 export default IngredientDetails

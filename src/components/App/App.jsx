@@ -1,4 +1,8 @@
-import React from 'react';
+import { useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+
+import { HTML5Backend } from 'react-dnd-html5-backend';
+import { DndProvider } from 'react-dnd';
 
 import AppHeader from '../AppHeader/AppHeader';
 import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
@@ -6,44 +10,34 @@ import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 
 import { Container, Row, Col } from '../ui/Grid/Grid';
 
-import { API_URL } from '../../utils/constants';
+import { getIngredients } from 'services/actions';
 
 import styles from "./App.module.css";
 
 function App() {
 
-  const [data, setData] = React.useState([]);
+  const dispatch = useDispatch();
 
-  React.useEffect(() => {
-    fetch(`${API_URL}ingredients`)
-      .then((response) => {
-        if (response.ok) {
-          return response.json();
-        }
-        throw new Error(response.status);
-      })
-      .then((response) => {
-        setData([...response.data]);
-      })
-      .catch((error) => {
-        console.log("Ошибка при выполнении запроса к API: " + error.message);
-      });
-  }, []);
+  useEffect(() => {
+    dispatch(getIngredients());
+  }, [dispatch]);
 
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <Container>
-          <Row>
-            <Col col="6">
-              <BurgerIngredients data={data} />
-            </Col>
-            <Col col="6">
-              <BurgerConstructor data={data} />
-            </Col>
-          </Row>
-        </Container>
+        <DndProvider backend={HTML5Backend}>
+          <Container>
+            <Row>
+              <Col col="6">
+                <BurgerIngredients />
+              </Col>
+              <Col col="6">
+                <BurgerConstructor />
+              </Col>
+            </Row>
+          </Container>
+        </DndProvider>
       </main>
     </>
   );
