@@ -117,18 +117,6 @@ export function getOrderNumber(data) {
   }
 }
 
-/*export const swapIngredients = (dragIndex, hoverIndex) => {
-  return (dispatch) => {
-    dispatch({
-      type: SWAP_INGREDIENTS,
-      payload: {
-        dragIndex: dragIndex,
-        hoverIndex: hoverIndex
-      }
-    })
-  }
-}*/
-
 /**
  * Action Creators
  */
