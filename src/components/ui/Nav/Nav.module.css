@@ -12,3 +12,16 @@
 .nav > .navItem + .navItem {
     margin-left: var(--spacing-2);
 }
+
+.nav.vertical {
+    flex-direction: column;
+}
+
+.nav.vertical .navItem {
+    padding: var(--spacing-4) var(--spacing-5);
+}
+
+.nav.vertical > .navItem + .navItem {
+    margin-top: var(--spacing-1);
+    margin-left: 0;
+}

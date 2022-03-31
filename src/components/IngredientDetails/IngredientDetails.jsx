@@ -7,27 +7,18 @@ import { Row, Col } from "components/ui/Grid/Grid";
 
 import styles from "./IngredientDetails.module.css";
 
-export const ingredientType = PropTypes.shape({
-    _id: PropTypes.string,
-    __v: PropTypes.number,
-    type: PropTypes.string,
-    name: PropTypes.string,
-    proteins: PropTypes.number,
-    calories: PropTypes.number,
-    carbohydrates: PropTypes.number,
-    fat: PropTypes.number,
-    price: PropTypes.number,
-    image: PropTypes.string,
-    image_large: PropTypes.string,
-    image_mobile: PropTypes.string
-});
+const IngredientDetails = (props) => {
+    const currentIngredient = useSelector(store => store.app.viewedIngredient);
 
-const IngredientDetails = () => {
-    const viewedIngredient = useSelector(store => store.app.viewedIngredient);
-    const { image_large, name, calories, proteins, fat, carbohydrates } = viewedIngredient;
+    const { image_large, name, calories, proteins, fat, carbohydrates } = currentIngredient;
 
     return (
         <div className={styles.ingredientBlock}>
+            { props.header && (
+                <div className={cn(styles.title)}>
+                    <h1 className="text text_type_main-large">AAA</h1>
+                </div>
+            )}
             <div className={styles.image}>
                 <img src={image_large} alt={name}/>
             </div>
@@ -54,6 +45,10 @@ const IngredientDetails = () => {
             </Row>
         </div>
     );
+};
+
+IngredientDetails.propTypes = {
+    header: PropTypes.string,
 };
 
 export default IngredientDetails

@@ -3,18 +3,18 @@ import cn from "classnames";
 import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Link  } from 'react-router-dom';
 import { Container } from 'components/ui/Grid/Grid';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import FancyLink from "components/ui/Link/Link";
 
 import styles from './styles.module.css';
 
-export function ResetPasswordPage() {
+export const ResetPasswordPage = () => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
-    newPassword: '',
-    confirmCode: ''
+    password: '',
+    token: ''
   });
 
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -46,7 +46,7 @@ export function ResetPasswordPage() {
             <Input
               type={'password'}
               placeholder={'Введите код из письма'}
-              value={formData.newPassword}
+              value={formData.password}
               name={'password'}
               error={false}
               errorText={'Ошибка'}
@@ -61,7 +61,7 @@ export function ResetPasswordPage() {
             <Input
               type={'text'}
               placeholder={'Введите код из письма'}
-              value={formData.confirmCode}
+              value={formData.token}
               name={'code'}
               error={false}
               errorText={'Ошибка'}
@@ -73,7 +73,7 @@ export function ResetPasswordPage() {
         </form>
         <div className={styles.text}>
           <span className="text text_type_main-default text_color_inactive">Вспомнили пароль?</span>
-          <Link to="/login" className={cn(styles.link, 'text_type_main-default ml-2')}>Войти</Link>
+          <FancyLink href="/login" className={cn(styles.link, 'text_type_main-default ml-2')}>Войти</FancyLink>
         </div>
       </div>
     </Container>

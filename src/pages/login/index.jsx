@@ -3,13 +3,13 @@ import cn from "classnames";
 import { useState, useRef } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Link  } from 'react-router-dom';
 import { Container } from 'components/ui/Grid/Grid';
 import { Button, Input } from '@ya.praktikum/react-developer-burger-ui-components';
+import FancyLink from "components/ui/Link/Link";
 
 import styles from './styles.module.css';
 
-export function LoginPage() {
+export const LoginPage = () => {
   const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
@@ -73,11 +73,11 @@ export function LoginPage() {
         </form>
         <div className={cn(styles.text, 'mb-4')}>
           <span className="text text_type_main-default text_color_inactive">Вы — новый пользователь?</span>
-          <Link to="/register" className={cn(styles.link, 'text_type_main-default ml-2')}>Зарегистироваться</Link>
+          <FancyLink href="/register" className={cn(styles.link, 'text_type_main-default ml-2')}>Зарегистироваться</FancyLink>
         </div>
         <div className={styles.text}>
           <span className="text text_type_main-default text_color_inactive">Забыли пароль?</span>
-          <Link to="/forgot-password" className={cn(styles.link, 'text_type_main-default ml-2')}>Восстановить пароль</Link>
+          <FancyLink href="/forgot-password" className={cn(styles.link, 'text_type_main-default ml-2')}>Восстановить пароль</FancyLink>
         </div>
       </div>
     </Container>

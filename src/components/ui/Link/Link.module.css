@@ -1,6 +1,6 @@
 .link {
     display: flex;
-    color: var(--link-color);
+    color: var(--link-primary-color);
     text-decoration: var(--link-decoration);
     cursor: pointer;
     user-select: none;
@@ -22,7 +22,7 @@
 
 .link svg {
     transition: var(--common-transition);
-    fill: var(--link-color);
+    fill: var(--link-primary-color);
 }
 
 .link:hover svg {

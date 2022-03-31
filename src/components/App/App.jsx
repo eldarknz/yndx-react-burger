@@ -1,19 +1,16 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Route, Switch } from 'react-router-dom';
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
 import AppHeader from '../AppHeader/AppHeader';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
 
-import { Container, Row, Col } from '../ui/Grid/Grid';
+import IngredientDetails from 'components/IngredientDetails/IngredientDetails';
 
 import {
   HomePage,
+  OrdersPage,
   RegistrationPage,
   LoginPage,
   ForgotPasswordPage,
@@ -40,18 +37,7 @@ function App() {
       <main className={styles.main}>
         <Switch>
           <Route path="/" exact={true}>
-            <DndProvider backend={HTML5Backend}>
-              <Container>
-                <Row>
-                  <Col col="6">
-                    <BurgerIngredients />
-                  </Col>
-                  <Col col="6">
-                    <BurgerConstructor />
-                  </Col>
-                </Row>
-              </Container>
-            </DndProvider>
+            <HomePage />
           </Route>
           <Route path="/register" exact={true}>
             <RegistrationPage />
@@ -68,6 +54,12 @@ function App() {
           <ProtectedRoute path="/profile">
             <ProfilePage />
           </ProtectedRoute>
+          <ProtectedRoute path="/orders" exact={true}>
+            <OrdersPage />
+          </ProtectedRoute>
+          {/*<Route path={"/ingredients/:ingredientId"}>
+            <IngredientDetails header="Детали ингредиента"/>
+          </Route>*/}
           <Route>
             <PageNotFoundPage />
           </Route>

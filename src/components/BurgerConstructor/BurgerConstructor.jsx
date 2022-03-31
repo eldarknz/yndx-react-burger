@@ -13,7 +13,7 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import BurgerConstructorItem from "./BurgerConstructorItem";
 
-import { ingredientType } from "components/IngredientDetails/IngredientDetails";
+import { ingredientType } from "../../utils/types";
 
 import { getOrderNumber } from "services/actions";
 import { addIngredient, addBun } from "services/actions";

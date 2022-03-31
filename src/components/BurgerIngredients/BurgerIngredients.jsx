@@ -75,9 +75,10 @@ const BurgerIngredients = () => {
                                     value={category.type}
                                     active={currentTab === category.type}
                                     onClick={() => {
-                                        handleSwitchTab(category.type)
-                                        category.type === 'bun' ? bunRef.current.scrollIntoView() :
-                                        category.type === 'sauce' ? sauceRef.current.scrollIntoView() : mainRef.current.scrollIntoView()
+                                        handleSwitchTab(category.type);
+                                        if (category.type === 'bun' && bunRef.current) bunRef.current.scrollIntoView();
+                                        if (category.type === 'sauce' && sauceRef.current) sauceRef.current.scrollIntoView();
+                                        if (category.type === 'main' && mainRef.current) mainRef.current.scrollIntoView();
                                     }}
                                 >
                                     {category.title}
@@ -93,7 +94,8 @@ const BurgerIngredients = () => {
                         { ingredientsFailed && <p className="text text_type_main-default pb-3">Произошла ошибка при получении данных</p> }
                         { ingredientsRequest && <p className="text text_type_main-default pb-3">Загрузка...</p> }
                         {
-                            !ingredientsFailed && !ingredientsRequest && ingredientCategories.map((category, index) => (
+                            !ingredientsFailed && !ingredientsRequest && ingredients && (
+                                ingredientCategories.map((category, index) => (
                                 <section key={index} className={styles.block}>
                                     <h3
                                         className={cn(styles.title, "text text_type_main-medium mb-6")}
@@ -109,7 +111,7 @@ const BurgerIngredients = () => {
                                         }
                                     </div>
                                 </section>
-                            ))
+                            )))
                         }
                     </div>
                 </Container>

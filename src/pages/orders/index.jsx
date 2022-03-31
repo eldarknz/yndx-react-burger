@@ -2,8 +2,8 @@ import React from 'react';
 
 import styles from './styles.module.css';
 
-export const PageNotFoundPage = () => {
+export const OrdersPage = () => {
   return (
-    <div>PageNotFound</div>
+    <div>OrdersPage</div>
   );
 };

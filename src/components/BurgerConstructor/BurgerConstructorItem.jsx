@@ -9,7 +9,7 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { deleteIngredient, swapIngredients } from 'services/actions';
 
-import { ingredientType } from "../IngredientDetails/IngredientDetails";
+import { ingredientType } from "../../utils/types";
 
 import styles from "./BurgerConstructor.module.css";
 

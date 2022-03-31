@@ -5,7 +5,8 @@
     --body-bg: #131316;
     --body-color: #F2F2F3;
 
-    --link-color: #8585AD;
+    --link-primary-color: #8585AD;
+    --link-secondary-color: #4C4CFF;
     --link-hover-color: var(--color-white);
     --link-decoraion: none;
 
