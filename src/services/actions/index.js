@@ -4,7 +4,7 @@
 //import { getItemsRequest } from "../initialIngredients";
 import { v4 as uuidv4 } from 'uuid';
 
-import { API_URL } from "utils/constants";
+import { API_URL } from "../../utils/constants";
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
