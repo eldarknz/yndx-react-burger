@@ -18,7 +18,7 @@ import {
     GET_ORDER_NUMBER_SUCCESS,
     GET_ORDER_NUMBER_FAILED,
     CLEAR_CONSTRUCTOR
-} from 'services/actions';
+} from '../actions/index';
 
 const initialState = {
 

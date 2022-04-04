@@ -5,6 +5,7 @@ import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from 
 import { Container, Row } from 'components/ui/Grid/Grid';
 import ProfileMenu from "components/ProfileMenu/ProfileMenu";
 import ProfileForm from "components/ProfileForm/ProfileForm";
+import ProfileOrders from "components/ProfileOrders/ProfileOrders";
 
 import styles from './styles.module.css';
 
@@ -24,7 +25,7 @@ export const ProfilePage = () => {
             <ProfileForm />
           </Route>
           <Route path="/profile/orders" exact={true}>
-            <p className='text text_type_main-default'>История заказов</p>
+            <ProfileOrders />
           </Route>
         </Switch>
       </Row>
