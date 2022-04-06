@@ -17,7 +17,7 @@ export const ForgotPasswordPage = () => {
   //const { isAuth } = useSelector(store => store.user);
   const history = useHistory();
   const location = useLocation();
-  console.log(history, location);
+  //console.log(history, location);
 
   const [formData, setFormData] = useState({ email: "" });
 

@@ -11,6 +11,29 @@ const checkResponse = (response) => {
     throw new Error(response.status);
 }
 
+const apiCall = async (url, data) => {
+    await fetch(url, {
+        method: 'POST',
+        headers: {
+            Accept: "application/json",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(data)
+    })
+    .then((response) => {
+        if (response.ok) {
+          return response.json();
+        }
+        throw new Error(response.status);
+    })
+    .then((response) => {
+        return response;
+    })
+    .catch((error) => {
+        console.log("Ошибка при выполнении запроса к API: " + error.message);
+    });
+}
+
 export function register({ email, password }) {
     return function(dispatch) {
         dispatch({
@@ -75,6 +98,8 @@ export function forgotPassword( data, history, location ) {
         dispatch({
             type: IS_REQUEST
         });
+
+        console.log(apiCall(`${API_URL}password-reset`, data));
 
         fetch(`${API_URL}password-reset`, {
             method: 'POST',

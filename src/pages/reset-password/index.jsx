@@ -16,7 +16,7 @@ export const ResetPasswordPage = () => {
 
   //const { isAuth } = useSelector(store => store.user);
   const history = useHistory();
-  console.log(history);
+  //console.log(history);
 
   const [formData, setFormData] = useState({ password: "", token: "" });
   const [isPasswordShow, setIsPasswordShow] = useState(false);

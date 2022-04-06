@@ -16,7 +16,7 @@ export const LoginPage = () => {
 
   //const { isAuth } = useSelector(store => store.user);
   const { state } = useLocation();
-  console.log(state);
+  //console.log(state);
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isPasswordShow, setIsPasswordShow] = useState(false);
