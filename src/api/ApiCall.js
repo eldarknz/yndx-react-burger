@@ -1,4 +1,4 @@
-export const ApiCall = (url, data) => {
+/*export const ApiCall = (url, data) => {
 
     const body = JSON.stringify({
         ingredients: typeof data === "string" ? JSON.parse(data) : data,
@@ -11,4 +11,4 @@ export const ApiCall = (url, data) => {
         },
         body
     })
-};
+};*/

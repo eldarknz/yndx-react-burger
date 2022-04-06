@@ -14,13 +14,9 @@ import BurgerIngredientsItem from "./BurgerIngredientsItem";
 
 import { TAB_SWITCH, GET_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS } from "services/actions";
 
-import styles from "./BurgerIngredients.module.css";
+import { INGREDIENT_CATEGORIES } from "utils/constants";
 
-const ingredientCategories = [
-    { _id: 0, type: "bun", title: "Булки" },
-    { _id: 1, type: "sauce", title: "Соусы" },
-    { _id: 2, type: "main", title: "Начинки" }
-];
+import styles from "./BurgerIngredients.module.css";
 
 const BurgerIngredients = () => {
 
@@ -69,9 +65,9 @@ const BurgerIngredients = () => {
                     <h1 className="text text_type_main-large pt-10">Соберите бургер</h1>
                     <div className="pt-5" style={{ display: "flex" }}>
                         {
-                            ingredientCategories.map((category, index) => (
+                            INGREDIENT_CATEGORIES.map((category) => (
                                 <Tab
-                                    key={index}
+                                    key={category._id}
                                     value={category.type}
                                     active={currentTab === category.type}
                                     onClick={() => {
@@ -95,8 +91,8 @@ const BurgerIngredients = () => {
                         { ingredientsRequest && <p className="text text_type_main-default pb-3">Загрузка...</p> }
                         {
                             !ingredientsFailed && !ingredientsRequest && ingredients && (
-                                ingredientCategories.map((category, index) => (
-                                <section key={index} className={styles.block}>
+                                INGREDIENT_CATEGORIES.map((category) => (
+                                <section key={category._id} className={styles.block}>
                                     <h3
                                         className={cn(styles.title, "text text_type_main-medium mb-6")}
                                         ref={category.type === 'bun' ? bunRef : category.type === 'sauce' ? sauceRef : mainRef}

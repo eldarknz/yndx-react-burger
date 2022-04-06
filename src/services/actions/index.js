@@ -4,7 +4,7 @@
 //import { getItemsRequest } from "../initialIngredients";
 import { v4 as uuidv4 } from 'uuid';
 
-import { API_URL } from "../../utils/constants";
+import ApiRoutes from 'api/ApiRoutes';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -33,7 +33,7 @@ export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
 /**
  * Для теста
  */
-/*export function getIngredients() {
+/*export const getIngredients = () => {
     return (dispatch) => {
       dispatch({
         type: GET_INGREDIENTS_REQUEST
@@ -60,12 +60,12 @@ const checkResponse = (response) => {
   throw new Error(response.status);
 }
 
-export function getIngredients() {
+export const getIngredients = () => {
   return function(dispatch) {
     dispatch({
       type: GET_INGREDIENTS_REQUEST
     });
-    fetch(`${API_URL}ingredients`)
+    fetch(ApiRoutes.ingredients)
     .then(checkResponse)
     .then((response) => {
       dispatch({
@@ -82,7 +82,7 @@ export function getIngredients() {
   };
 }
 
-export function getOrderNumber(data) {
+export const getOrderNumber = (data) => {
   return function(dispatch) {
     dispatch({
       type: GET_ORDER_NUMBER_REQUEST
@@ -92,7 +92,7 @@ export function getOrderNumber(data) {
       ingredients: typeof data === "string" ? JSON.parse(data) : data,
     });
 
-    fetch(`${API_URL}orders`, {
+    fetch(ApiRoutes.orders, {
       method: 'POST',
       headers: {
         Accept: "application/json",

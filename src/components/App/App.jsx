@@ -1,13 +1,15 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 
+import { ROUTES } from 'utils/constants';
+
+import { getIngredients } from 'services/actions';
+
 import AppHeader from '../AppHeader/AppHeader';
-
-import IngredientDetails from 'components/IngredientDetails/IngredientDetails';
-
+import IngredientDetails from '../IngredientDetails/IngredientDetails';
 import {
   HomePage,
   OrdersPage,
@@ -18,8 +20,6 @@ import {
   ProfilePage,
   PageNotFoundPage
 } from '../../pages';
-
-import { getIngredients } from 'services/actions';
 
 import styles from "./App.module.css";
 
@@ -36,28 +36,28 @@ function App() {
       <AppHeader />
       <main className={styles.main}>
         <Switch>
-          <Route path="/" exact={true}>
+          <Route path={ROUTES.home.path} exact={true}>
             <HomePage />
           </Route>
-          <Route path="/register" exact={true}>
+          <Route path={ROUTES.register.path} exact={true}>
             <RegistrationPage />
           </Route>
-          <Route path="/login" exact={true}>
+          <Route path={ROUTES.login.path} exact={true}>
             <LoginPage />
           </Route>
-          <Route path="/forgot-password" exact={true}>
+          <Route path={ROUTES.forgot_password.path} exact={true}>
             <ForgotPasswordPage />
           </Route>
-          <Route path="/reset-password" exact={true}>
+          <Route path={ROUTES.reset_password.path} exact={true}>
             <ResetPasswordPage />
           </Route>
-          <ProtectedRoute path="/profile">
+          <ProtectedRoute path={ROUTES.profile.path}>
             <ProfilePage />
           </ProtectedRoute>
-          <ProtectedRoute path="/orders" exact={true}>
+          <ProtectedRoute path={ROUTES.orders.path} exact={true}>
             <OrdersPage />
           </ProtectedRoute>
-          {/*<Route path={"/ingredients/:ingredientId"}>
+          {/*<Route path={ROUTES.ingredient.path}>
             <IngredientDetails header="Детали ингредиента"/>
           </Route>*/}
           <Route>

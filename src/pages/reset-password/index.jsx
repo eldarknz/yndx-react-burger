@@ -2,8 +2,9 @@ import cn from "classnames";
 
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
+import { Redirect, useLocation } from "react-router-dom";
 import { resetPassword } from "../../services/actions/user";
+import { ROUTES } from "../../utils/constants";
 
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Container } from "../../components/ui/Grid/Grid";
@@ -14,9 +15,10 @@ import styles from "./styles.module.css";
 export const ResetPasswordPage = () => {
   const dispatch = useDispatch();
 
-  //const { isAuth } = useSelector(store => store.user);
-  const history = useHistory();
-  //console.log(history);
+  const { user, resetPasswordSuccess, resetPasswordRequest, resetPasswordFailed } = useSelector(store => store.user);
+
+  const location = useLocation();
+  //console.log(location);
 
   const [formData, setFormData] = useState({ password: "", token: "" });
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -29,12 +31,26 @@ export const ResetPasswordPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(resetPassword({ ...formData }, history));
+    dispatch(resetPassword({ ...formData }));
   }
 
   const toggleShowPassword = () => {
     inputRef.current.type = isPasswordShow ? "password" : "text";
     setIsPasswordShow(!isPasswordShow);
+  }
+
+  if (user) {
+    const locationFrom = (location.state)?.from;
+    const redirectPath = locationFrom ? locationFrom.pathname : ROUTES.home.path;
+    return (
+      <Redirect to={{ pathname: redirectPath }} />
+    );
+  }
+
+  if (resetPasswordSuccess){
+    return (
+      <Redirect to={{ pathname: ROUTES.login.path }} />
+    );
   }
 
   return (
@@ -74,9 +90,18 @@ export const ResetPasswordPage = () => {
               onChange={onChangeFormData}
             />
           </div>
-          <Button type="primary" size="medium" className="mb-20">Войти</Button>
+          {resetPasswordRequest ? (
+            <Button disabled={true} type="primary" size="medium" className="mb-20">Загрузка...</Button>
+            ) : (
+            <Button disabled={!formData.password && !formData.token} type="primary" size="medium" className="mb-20">Сохранить</Button>
+          )}
         </form>
-        <div className={styles.text}>
+        { resetPasswordFailed && (
+          <div className={styles.text}>
+            <span className="text text_type_main-default">Произошла ошибка, попробуйте еще раз.</span>
+          </div>
+        )}
+        <div className={cn(styles.text, "mt-10")}>
           <span className="text text_type_main-default text_color_inactive">Вспомнили пароль?</span>
           <FancyLink href="/login" className={cn(styles.link, "text_type_main-default ml-2")}>Войти</FancyLink>
         </div>
