@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { Container, Row, Col } from 'components/ui/Grid/Grid';
+import { Container } from 'components/ui/Grid/Grid';
 
 import styles from './styles.module.css';
 

@@ -5,3 +5,7 @@
 .text {
     padding-left: var(--spacing-5);
 }
+
+.logout {
+    cursor: pointer;
+}

@@ -15,10 +15,9 @@ import styles from "./styles.module.css";
 export const LoginPage = () => {
   const dispatch = useDispatch();
 
-  const { user, loginFailed, loginRequest } = useSelector(store => store.user);
+  const { isAuth, loginFailed, loginRequest } = useSelector(store => store.user);
 
   const location = useLocation();
-  //console.log(location);
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -39,11 +38,9 @@ export const LoginPage = () => {
     setIsPasswordShow(!isPasswordShow);
   }
 
-  if (user) {
-    const locationFrom = (location.state)?.from;
-    const redirectPath = locationFrom ? locationFrom.pathname : ROUTES.home.path;
+  if (isAuth) {
     return (
-      <Redirect to={{ pathname: redirectPath }} />
+      <Redirect to={location.state?.from || ROUTES.home.path}/>
     );
   }
 

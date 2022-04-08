@@ -39,3 +39,10 @@
     color: #4C4CFF;
     transition: var(--common-transition);
 }
+
+.buttonGroup {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}

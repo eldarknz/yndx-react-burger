@@ -15,10 +15,15 @@ import styles from "./styles.module.css";
 export const ResetPasswordPage = () => {
   const dispatch = useDispatch();
 
-  const { user, resetPasswordSuccess, resetPasswordRequest, resetPasswordFailed } = useSelector(store => store.user);
+  const {
+    isAuth,
+    resetPasswordSuccess,
+    resetPasswordRequest,
+    resetPasswordFailed,
+    forgotPasswordSuccess
+  } = useSelector(store => store.user);
 
   const location = useLocation();
-  //console.log(location);
 
   const [formData, setFormData] = useState({ password: "", token: "" });
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -39,15 +44,19 @@ export const ResetPasswordPage = () => {
     setIsPasswordShow(!isPasswordShow);
   }
 
-  if (user) {
-    const locationFrom = (location.state)?.from;
-    const redirectPath = locationFrom ? locationFrom.pathname : ROUTES.home.path;
+  if (isAuth) {
     return (
-      <Redirect to={{ pathname: redirectPath }} />
+      <Redirect to={location.state?.from || ROUTES.home.path}/>
     );
   }
 
-  if (resetPasswordSuccess){
+  if (!forgotPasswordSuccess) {
+    return (
+      <Redirect to={{ pathname: ROUTES.forgot_password.path }} />
+    );
+  }
+
+  if (resetPasswordSuccess) {
     return (
       <Redirect to={{ pathname: ROUTES.login.path }} />
     );

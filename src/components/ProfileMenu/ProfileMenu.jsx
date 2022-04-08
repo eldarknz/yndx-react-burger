@@ -1,6 +1,9 @@
 import cn from "classnames";
 
-import { useHistory, useLocation, useRouteMatch, matchPath  } from 'react-router-dom'
+import { useDispatch } from "react-redux";
+import { useLocation, useHistory } from 'react-router-dom'
+import { logout } from "../../services/actions/user";
+import { ROUTES } from "../../utils/constants";
 
 import { Nav, NavItem } from "../ui/Nav/Nav";
 import FancyLink from "../ui/Link/Link";
@@ -8,7 +11,14 @@ import FancyLink from "../ui/Link/Link";
 import styles from "./ProfileMenu.module.css";
 
 const ProfileMenu = () => {
+    const dispatch = useDispatch();
     const location = useLocation();
+    const history = useHistory();
+
+    const handleLogout = () => {
+        dispatch(logout());
+        history.replace({ pathname: ROUTES.home.path });
+    } 
 
     return (
         <div className={styles.container}>
@@ -24,7 +34,7 @@ const ProfileMenu = () => {
                     </FancyLink>
                 </NavItem>
                 <NavItem>
-                    <FancyLink>
+                    <FancyLink className={styles.logout} onClick={handleLogout}>
                         <div className={"text text_type_main-medium"}>Выход</div>
                     </FancyLink>
                 </NavItem>

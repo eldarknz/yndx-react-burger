@@ -1,6 +1,4 @@
-import cn from "classnames";
-
-import { Redirect, Route, Switch, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
+import { Route, Switch } from 'react-router-dom';
 
 import { Container, Row } from 'components/ui/Grid/Grid';
 import ProfileMenu from "components/ProfileMenu/ProfileMenu";
@@ -10,12 +8,6 @@ import ProfileOrders from "components/ProfileOrders/ProfileOrders";
 import styles from './styles.module.css';
 
 export const ProfilePage = () => {
-  const match = useRouteMatch();
-  const history = useHistory();
-  const { state } = useLocation();
-
-  //console.log(match, history, state);
-
   return (
     <Container className={styles.container}>
       <Row>

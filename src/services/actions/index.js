@@ -4,6 +4,7 @@
 //import { getItemsRequest } from "../initialIngredients";
 import { v4 as uuidv4 } from 'uuid';
 
+import { ApiCall } from "../../api/ApiCall";
 import ApiRoutes from 'api/ApiRoutes';
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
@@ -53,71 +54,59 @@ export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
     };
 }*/
 
-const checkResponse = (response) => {
-  if (response.ok) {
-    return response.json();
-  }
-  throw new Error(response.status);
-}
-
 export const getIngredients = () => {
-  return function(dispatch) {
-    dispatch({
-      type: GET_INGREDIENTS_REQUEST
-    });
-    fetch(ApiRoutes.ingredients)
-    .then(checkResponse)
-    .then((response) => {
+  return (dispatch) => {
       dispatch({
-          type: GET_INGREDIENTS_SUCCESS,
-          ingredients: [...response.data]
+          type: GET_INGREDIENTS_REQUEST
       });
-    })
-    .catch((error) => {
-        console.log("Ошибка при выполнении запроса к API: " + error.message);
-        dispatch({
-            type: GET_INGREDIENTS_FAILED
-        });
-    });
+      new ApiCall(ApiRoutes.ingredients).get()
+      .then((response) => {
+          if (response.success) {
+            dispatch({
+              type: GET_INGREDIENTS_SUCCESS,
+              ingredients: [...response.data]
+            });
+          } else {
+              dispatch({ type: GET_INGREDIENTS_FAILED });
+          }
+      })
+      .catch((error) => {
+          console.log("Ошибка при выполнении запроса к API: " + error.message);
+          dispatch({
+              type: GET_INGREDIENTS_FAILED
+          });
+      });
   };
-}
+};
 
 export const getOrderNumber = (data) => {
-  return function(dispatch) {
-    dispatch({
-      type: GET_ORDER_NUMBER_REQUEST
-    });
-
-    const body = JSON.stringify({
-      ingredients: typeof data === "string" ? JSON.parse(data) : data,
-    });
-
-    fetch(ApiRoutes.orders, {
-      method: 'POST',
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
-      },
-      body,
-    })
-    .then(checkResponse)
-    .then((response) => {
+  return (dispatch) => {
       dispatch({
-          type: GET_ORDER_NUMBER_SUCCESS,
-          orderNumber: response.order.number
+          type: GET_ORDER_NUMBER_REQUEST
       });
-      dispatch({
-        type: CLEAR_CONSTRUCTOR
+      new ApiCall(ApiRoutes.orders).post({ "ingredients": data })
+      .then((response) => {
+          console.log(response);
+          if (response.success) {
+            dispatch({
+              type: GET_ORDER_NUMBER_SUCCESS,
+              orderNumber: response.order.number
+            });
+            dispatch({
+              type: CLEAR_CONSTRUCTOR
+            });
+          } else {
+              dispatch({ type: GET_ORDER_NUMBER_FAILED });
+          }
+      })
+      .catch((error) => {
+          console.log("Ошибка при выполнении запроса к API: " + error.message);
+          dispatch({
+              type: GET_ORDER_NUMBER_FAILED
+          });
       });
-    })
-    .catch((error) => {
-        console.log("Ошибка при выполнении запроса к API: " + error.message);
-        dispatch({
-            type: GET_ORDER_NUMBER_FAILED
-        });
-    });
-  }
-}
+  };
+};
 
 /**
  * Action Creators

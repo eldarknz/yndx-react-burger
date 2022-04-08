@@ -3,10 +3,6 @@ import { getCookie, setCookie, deleteCookie } from "../utils/cookies";
 
 export class ApiToken {
 
-    //static getToken(token) {
-    //    return localStorage.getItem(token) || "";
-    //}
-
     static getAccessToken() {
         return getCookie(ACCESS_TOKEN);
     }
@@ -20,7 +16,7 @@ export class ApiToken {
         setCookie(REFRESH_TOKEN, refreshToken);
     }
 
-    static clear() {
+    static deleteToken() {
         deleteCookie(ACCESS_TOKEN);
         deleteCookie(REFRESH_TOKEN);
     }

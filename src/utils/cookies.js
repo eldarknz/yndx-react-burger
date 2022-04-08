@@ -3,7 +3,7 @@ export const getCookie = (name) => {
         new RegExp('(?:^|; )' + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + '=([^;]*)') // eslint-disable-line
     );
     return matches ? decodeURIComponent(matches[1]) : undefined;
-  }
+}
   
 export const setCookie = (name, value, props) => {
     props = props || {};
@@ -18,6 +18,7 @@ export const setCookie = (name, value, props) => {
     }
     value = encodeURIComponent(value);
     let updatedCookie = name + '=' + value;
+    //console.log(updatedCookie);
     for (const propName in props) {
         updatedCookie += '; ' + propName;
         const propValue = props[propName];
@@ -26,7 +27,9 @@ export const setCookie = (name, value, props) => {
         }
     }
     document.cookie = updatedCookie;
-  }
+
+    console.log(document.cookie);
+}
   
 export const deleteCookie = (name) => {
     setCookie(name, null, { expires: -1 });

@@ -1,8 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Route, Switch } from 'react-router-dom';
+import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
+import UnprotectedRoute from '../UnprotectedRoute/UnprotectedRoute';
 
 import { ROUTES } from 'utils/constants';
 

@@ -1,7 +1,12 @@
+import { ApiToken } from "api/ApiToken";
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
   LOGIN_FAILED,
+
+  LOGOUT_SUCCESS,
+  LOGOUT_FAILED,
+  LOGOUT_REQUEST,
 
   REGISTER_REQUEST,
   REGISTER_SUCCESS,
@@ -15,12 +20,27 @@ import {
   RESET_PASSWORD_SUCCESS,
   RESET_PASSWORD_FAILED,
 
+  TOKEN_SUCCESS,
+  TOKEN_FAILED,
+  TOKEN_REQUEST,
+
+  GET_USER_SUCCESS,
+  GET_USER_FAILED,
+  GET_USER_REQUEST,
+
 } from "../actions/user";
 
 const initialState = {
+    isAuth: !!ApiToken.getAccessToken(),
+
     user: null,
-    loginFailed: false,
+
     loginRequest: false,
+    loginFailed: false,
+
+    logoutSuccess: false,
+    logoutRequest: false,
+    logoutFailed: false,
 
     registerSuccess: false,
     registerRequest: false,
@@ -33,8 +53,16 @@ const initialState = {
     resetPasswordSuccess: false,
     resetPasswordRequest: false,
     resetPasswordFailed: false,
+
+    tokenRequest: false,
+    tokenSuccess: false,
+    tokenFailed: false,
+
+    getUserRequest: false,
+    getUserSuccess: false,
+    getUserFailed: false,
 };
-  
+
 export const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST: {
@@ -46,7 +74,8 @@ export const userReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS: {
       return {
         ...state,
-        user: action.user,
+        //user: action.user,
+        isAuth: action.isAuth,
         loginRequest: false,
         loginFailed: false
       }
@@ -59,18 +88,41 @@ export const userReducer = (state = initialState, action) => {
       }
     }
 
+    case LOGOUT_REQUEST: {
+      return {
+        ...state,
+        logoutRequest: true
+      }
+    }
+    case LOGOUT_SUCCESS: {
+      return {
+          ...state,
+          //user: null,
+          isAuth: action.isAuth,
+          logoutRequest: false,
+          logoutSuccess: true, 
+          logoutFailed: false,
+      }
+    }
+    case LOGOUT_FAILED: {
+        return {
+            ...state,
+            logoutRequest: false,
+            logoutSuccess: false,
+            logoutFailed: true,
+        }
+    }
+
     case REGISTER_REQUEST: {
       return {
         ...state,
-        registerSuccess: false,
         registerRequest: true,
-        registerFailed: false
       }
     }
     case REGISTER_SUCCESS: {
       return {
         ...state,
-        user: action.user,
+        //user: action.user,
         registerSuccess: true,
         registerRequest: false,
         registerFailed: false
@@ -88,9 +140,7 @@ export const userReducer = (state = initialState, action) => {
     case FORGOT_PASSWORD_REQUEST:{
       return {
         ...state,
-        forgotPasswordSuccess: false,
         forgotPasswordRequest: true,
-        forgotPasswordFailed: false
       }
     }
     case FORGOT_PASSWORD_SUCCESS:{
@@ -112,9 +162,7 @@ export const userReducer = (state = initialState, action) => {
     case RESET_PASSWORD_REQUEST:{
       return {
         ...state,
-        resetPasswordSuccess: false,
         resetPasswordRequest: true,
-        resetPasswordFailed: false,
       }
     }
     case RESET_PASSWORD_SUCCESS:{
@@ -130,6 +178,53 @@ export const userReducer = (state = initialState, action) => {
         resetPasswordSuccess: false,
         resetPasswordRequest: false,
         resetPasswordFailed: true,
+      }
+    }
+
+    case TOKEN_REQUEST: {
+      return{
+          ...state,
+          tokenRequest: true,
+      }
+    }
+    case TOKEN_SUCCESS: {
+      return{
+          ...state,
+          tokenRequest: false,
+          tokenSuccess: true,
+          tokenFailed: false
+      }
+    }
+    case TOKEN_FAILED: {
+        return{
+            ...state,
+            tokenRequest: false,
+            tokenSuccess: false,
+            tokenFailed: true,
+        }
+    }
+
+    case GET_USER_REQUEST: {
+      return {
+        ...state,
+        getUserRequest: true,
+      }
+    }
+    case GET_USER_SUCCESS: {
+      return {
+        ...state,
+        //user: action.user,
+        getUserRequest: false,
+        getUserSuccess: true,
+        getUserFailed: false,
+      }
+    }
+    case GET_USER_FAILED: {
+      return {
+        ...state,
+        getUserRequest: false,
+        getUserSuccess: false,
+        getUserFailed: true
       }
     }
 

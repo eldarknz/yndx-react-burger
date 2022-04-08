@@ -15,10 +15,9 @@ import styles from "./styles.module.css";
 export const RegistrationPage = () => {
   const dispatch = useDispatch();
 
-  const { user, registerSuccess, registerRequest, registerFailed } = useSelector(store => store.user);
+  const { isAuth, registerSuccess, registerRequest, registerFailed } = useSelector(store => store.user);
 
   const location = useLocation();
-  //console.log(location);
 
   const [formData, setFormData] = useState({ name: "", email: "", password: "" });
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -39,15 +38,13 @@ export const RegistrationPage = () => {
     setIsPasswordShow(!isPasswordShow);
   }
 
-  if (user) {
-    const locationFrom = (location.state)?.from;
-    const redirectPath = locationFrom ? locationFrom.pathname : ROUTES.home.path;
+  if (isAuth) {
     return (
-      <Redirect to={{ pathname: redirectPath }} />
+      <Redirect to={location.state?.from || ROUTES.home.path}/>
     );
   }
 
-  if (registerSuccess){
+  if (registerSuccess) {
     return (
       <Redirect to={{ pathname: ROUTES.login.path }} />
     );

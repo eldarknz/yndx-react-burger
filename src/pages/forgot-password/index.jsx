@@ -15,10 +15,14 @@ import styles from "./styles.module.css";
 export const ForgotPasswordPage = () => {
   const dispatch = useDispatch();
 
-  const { user, forgotPasswordSuccess, forgotPasswordRequest, forgotPasswordFailed } = useSelector(store => store.user);
+  const {
+    isAuth,
+    forgotPasswordSuccess,
+    forgotPasswordRequest,
+    forgotPasswordFailed
+  } = useSelector(store => store.user);
 
   const location = useLocation();
-  //console.log(location);
 
   const [formData, setFormData] = useState({ email: "" });
 
@@ -31,15 +35,13 @@ export const ForgotPasswordPage = () => {
     dispatch(forgotPassword({ ...formData }));
   }
 
-  if (user) {
-    const locationFrom = (location.state)?.from;
-    const redirectPath = locationFrom ? locationFrom.pathname : ROUTES.home.path;
+  if (isAuth) {
     return (
-      <Redirect to={{ pathname: redirectPath }} />
+      <Redirect to={location.state?.from || ROUTES.home.path}/>
     );
   }
 
-  if (forgotPasswordSuccess){
+  if (forgotPasswordSuccess) {
     return (
       <Redirect to={{ pathname: ROUTES.reset_password.path }} />
     );

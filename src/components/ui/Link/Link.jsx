@@ -3,7 +3,7 @@ import cn from "classnames";
 import React from "react";
 import PropTypes from 'prop-types';
 
-import { Link, NavLink, useRouteMatch } from 'react-router-dom';
+import { Link, useRouteMatch } from 'react-router-dom';
 
 import styles from "./Link.module.css";
 
@@ -44,14 +44,6 @@ const FancyLink = ({ href, isActive, children, className, onClick, isExact = fal
         >
             {children}
         </Link>
-        /*<NavLink
-            to={href}
-            exact={isExact}
-            className={linkClassName}
-            activeClassName={styles.isActive}
-        >
-            {children}
-        </NavLink>*/
     );
 };
 
