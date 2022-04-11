@@ -2,7 +2,7 @@ import cn from "classnames";
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useLocation } from "react-router-dom";
+import { Redirect, useLocation, useHistory } from "react-router-dom";
 import { forgotPassword } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";
 

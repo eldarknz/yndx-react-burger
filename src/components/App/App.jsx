@@ -1,19 +1,21 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 
-import { Route, Switch, useLocation, useHistory } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-import UnprotectedRoute from '../UnprotectedRoute/UnprotectedRoute';
 
 import { ROUTES } from 'utils/constants';
 
 import { getIngredients } from 'services/actions';
 
 import AppHeader from '../AppHeader/AppHeader';
-import IngredientDetails from '../IngredientDetails/IngredientDetails';
+import Modal from '../../components/Modal/Modal';
+import IngredientDetails from '../../components/IngredientDetails/IngredientDetails';
+
 import {
   HomePage,
   OrdersPage,
+  IngredientPage,
   RegistrationPage,
   LoginPage,
   ForgotPasswordPage,
@@ -58,13 +60,14 @@ function App() {
           <ProtectedRoute path={ROUTES.orders.path} exact={true}>
             <OrdersPage />
           </ProtectedRoute>
-          {/*<Route path={ROUTES.ingredient.path}>
-            <IngredientDetails header="Детали ингредиента"/>
-          </Route>*/}
+          <Route path={ROUTES.ingredient.path} exact={true}>
+            <IngredientPage />
+          </Route>
           <Route>
             <PageNotFoundPage />
           </Route>
         </Switch>
+
       </main>
     </>
   );

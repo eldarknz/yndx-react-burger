@@ -1,3 +1,5 @@
+import { useMemo } from "react";
+import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
 
 export function childrenOf(...types) {
@@ -11,8 +13,16 @@ export function childrenOf(...types) {
     ]);
 }
 
+// check object is empty
 export const isEmpty = (obj) => {
     return Object.keys(obj).length === 0;
+}
+
+// parse query
+export const useQuery = () => {
+    const { search } = useLocation();
+  
+    return useMemo(() => new URLSearchParams(search), [search]);
 }
 
 // convert object to string and store in localStorage

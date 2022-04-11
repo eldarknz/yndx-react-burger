@@ -5,7 +5,7 @@
 import { v4 as uuidv4 } from 'uuid';
 
 import { ApiCall } from "../../api/ApiCall";
-import ApiRoutes from 'api/ApiRoutes';
+import ApiRoutes from '../../api/ApiRoutes'
 
 export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
@@ -19,10 +19,6 @@ export const SWAP_INGREDIENTS = 'SWAP_INGREDIENTS';
 
 export const ADD_ORDER_NUMBER = 'ADD_ORDER_NUMBER';
 export const DELETE_ORDER_NUMBER = 'DELETE_ORDER_NUMBER';
-
-export const GET_ORDER_NUMBER_REQUEST = 'GET_ORDER_NUMBER_REQUEST';
-export const GET_ORDER_NUMBER_SUCCESS = 'GET_ORDER_NUMBER_SUCCESS';
-export const GET_ORDER_NUMBER_FAILED = 'GET_ORDER_NUMBER_FAILED';
 
 export const GET_INGREDIENT_DETAILS = 'GET_INGREDIENT_DETAILS';
 export const DELETE_INGREDIENT_DETAILS = 'DELETE_INGREDIENT_DETAILS';
@@ -74,35 +70,6 @@ export const getIngredients = () => {
           console.log("Ошибка при выполнении запроса к API: " + error.message);
           dispatch({
               type: GET_INGREDIENTS_FAILED
-          });
-      });
-  };
-};
-
-export const getOrderNumber = (data) => {
-  return (dispatch) => {
-      dispatch({
-          type: GET_ORDER_NUMBER_REQUEST
-      });
-      new ApiCall(ApiRoutes.orders).post({ "ingredients": data })
-      .then((response) => {
-          console.log(response);
-          if (response.success) {
-            dispatch({
-              type: GET_ORDER_NUMBER_SUCCESS,
-              orderNumber: response.order.number
-            });
-            dispatch({
-              type: CLEAR_CONSTRUCTOR
-            });
-          } else {
-              dispatch({ type: GET_ORDER_NUMBER_FAILED });
-          }
-      })
-      .catch((error) => {
-          console.log("Ошибка при выполнении запроса к API: " + error.message);
-          dispatch({
-              type: GET_ORDER_NUMBER_FAILED
           });
       });
   };

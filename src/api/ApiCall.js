@@ -1,4 +1,5 @@
 import { ApiToken } from "./ApiToken";
+
 /*export const ApiCall = async (url, data) => {
     let options = null;
 
@@ -24,7 +25,7 @@ import { ApiToken } from "./ApiToken";
 };*/
 
 export class ApiCall {
-
+    
     $url;
     $data = {};
     $privateCall = true;
@@ -71,6 +72,20 @@ export class ApiCall {
         return this.call();
     }
 
+    // PATCH запрос
+    patch(requestData) {
+        this.$data = requestData || null;
+
+        this.$options = {
+            ...this.$options,
+            method: "PATCH",
+            body: JSON.stringify({
+                ...this.$data
+            })
+        };
+        return this.call();
+    }
+
     setHeaders(headers) {
         this.$options = {
             ...this.$options,
@@ -84,7 +99,6 @@ export class ApiCall {
 
     // Вызов сервиса
     async call() {
-        //console.log("Call ---> ", this.$options);
 
         if (this.$privateCall) {
             this.setPrivateCall();

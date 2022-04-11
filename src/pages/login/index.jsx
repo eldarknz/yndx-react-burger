@@ -2,7 +2,8 @@ import cn from "classnames";
 
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useLocation } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { useQuery } from "../../utils/utils";
 import { login } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";
 
@@ -17,7 +18,8 @@ export const LoginPage = () => {
 
   const { isAuth, loginFailed, loginRequest } = useSelector(store => store.user);
 
-  const location = useLocation();
+  const query = useQuery();
+  const redirectUrl = query.get("redirectUrl");
 
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -31,6 +33,7 @@ export const LoginPage = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(login({ ...formData }));
+    setFormData({ ...formData, password: "" });
   }
 
   const toggleShowPassword = () => {
@@ -40,7 +43,7 @@ export const LoginPage = () => {
 
   if (isAuth) {
     return (
-      <Redirect to={location.state?.from || ROUTES.home.path}/>
+      <Redirect to={redirectUrl || ROUTES.home.path}/>
     );
   }
 

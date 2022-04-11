@@ -1,24 +1,19 @@
 import cn from "classnames";
 
-import PropTypes from "prop-types";
 import { useSelector } from 'react-redux';
 
 import { Row, Col } from "components/ui/Grid/Grid";
 
 import styles from "./IngredientDetails.module.css";
 
-const IngredientDetails = (props) => {
+const IngredientDetails = () => {
+
     const currentIngredient = useSelector(store => store.app.viewedIngredient);
 
     const { image_large, name, calories, proteins, fat, carbohydrates } = currentIngredient;
 
     return (
         <div className={styles.ingredientBlock}>
-            { props.header && (
-                <div className={cn(styles.title)}>
-                    <h1 className="text text_type_main-large">AAA</h1>
-                </div>
-            )}
             <div className={styles.image}>
                 <img src={image_large} alt={name}/>
             </div>
@@ -45,10 +40,6 @@ const IngredientDetails = (props) => {
             </Row>
         </div>
     );
-};
-
-IngredientDetails.propTypes = {
-    header: PropTypes.string,
 };
 
 export default IngredientDetails

@@ -28,6 +28,10 @@ import {
   GET_USER_FAILED,
   GET_USER_REQUEST,
 
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_FAILED,
+  UPDATE_USER_REQUEST
+
 } from "../actions/user";
 
 const initialState = {
@@ -61,6 +65,10 @@ const initialState = {
     getUserRequest: false,
     getUserSuccess: false,
     getUserFailed: false,
+
+    updateUserRequest: false,
+    updateUserSuccess: false,
+    updateUserFailed: false,
 };
 
 export const userReducer = (state = initialState, action) => {
@@ -74,7 +82,6 @@ export const userReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS: {
       return {
         ...state,
-        //user: action.user,
         isAuth: action.isAuth,
         loginRequest: false,
         loginFailed: false
@@ -97,7 +104,6 @@ export const userReducer = (state = initialState, action) => {
     case LOGOUT_SUCCESS: {
       return {
           ...state,
-          //user: null,
           isAuth: action.isAuth,
           logoutRequest: false,
           logoutSuccess: true, 
@@ -122,7 +128,6 @@ export const userReducer = (state = initialState, action) => {
     case REGISTER_SUCCESS: {
       return {
         ...state,
-        //user: action.user,
         registerSuccess: true,
         registerRequest: false,
         registerFailed: false
@@ -213,7 +218,6 @@ export const userReducer = (state = initialState, action) => {
     case GET_USER_SUCCESS: {
       return {
         ...state,
-        //user: action.user,
         getUserRequest: false,
         getUserSuccess: true,
         getUserFailed: false,
@@ -225,6 +229,29 @@ export const userReducer = (state = initialState, action) => {
         getUserRequest: false,
         getUserSuccess: false,
         getUserFailed: true
+      }
+    }
+
+    case UPDATE_USER_REQUEST: {
+      return {
+        ...state,
+        updateUserRequest: true,
+      }
+    }
+    case UPDATE_USER_SUCCESS: {
+      return {
+        ...state,
+        updateUserRequest: false,
+        updateUserSuccess: true,
+        updateUserFailed: false,
+      }
+    }
+    case UPDATE_USER_FAILED: {
+      return {
+        ...state,
+        updateUserRequest: false,
+        updateUserSuccess: false,
+        updateUserFailed: true
       }
     }
 

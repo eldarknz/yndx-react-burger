@@ -2,7 +2,7 @@ import cn from "classnames";
 
 import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getUser } from "../../services/actions/user";
+import { getUser, updateUser } from "../../services/actions/user";
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
@@ -12,13 +12,9 @@ const ProfileForm = () => {
 
   const dispatch = useDispatch();
 
-  const { isAuth } = useSelector(store => store.user);
+  const { updateUserRequest, updateUserFailed, updateUserSuccess } = useSelector(store => store.user);
 
-  const [formData, setFormData] = useState({
-    name: "",//user.name,
-    email: "",//user.email,
-    password: ""
-  });
+  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
 
   const [isInputDisabled, setIsInputDisabled] = useState(true);
   const [isPasswordShow, setIsPasswordShow] = useState(false);
@@ -47,31 +43,29 @@ const ProfileForm = () => {
   }
 
   const handleCancel = (e) => {
+    e.preventDefault();
     inputRef.current.type = "password";
     setIsPasswordShow(false);
     setIsInputDisabled(true);
 
+    dispatch(getUser(formData, setFormData));
     setFormData({ ...formData, password: "" });
-
-    e.preventDefault();
-    //setUserForm(initialState);
   }
 
   const handleSave = (e) => {
+    e.preventDefault();
     inputRef.current.type = "password";
     setIsPasswordShow(false);
     setIsInputDisabled(true);
 
+    dispatch(updateUser(formData));
     setFormData({ ...formData, password: "" });
-
-    e.preventDefault();
-    //dispatch(setUser(userForm));
   }
 
   return (
     <div className={styles.formBlock}>
       <form 
-        className={cn(styles.form, 'mb-20')}
+        className={cn(styles.form, 'mb-10')}
       >
         <div className={cn(styles.inputField)}>
           <Input
@@ -124,6 +118,21 @@ const ProfileForm = () => {
             <div><Button type="secondary" size="medium" onClick={handleCancel}>Отмена</Button></div>
         </div>}
       </form>
+      { updateUserRequest && (
+          <div className={styles.text}>
+            <span className="text text_type_main-default">Загрузка...</span>
+          </div>
+      )}
+      { updateUserFailed && (
+          <div className={styles.text}>
+            <span className="text text_type_main-default">Произошла ошибка, попробуйте еще раз.</span>
+          </div>
+      )}
+      { updateUserSuccess && (
+        <div className={styles.text}>
+          <span className="text text_type_main-default">Информация сохранена успешно</span>
+        </div>
+      )}
     </div>  
   );
 };

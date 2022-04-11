@@ -28,7 +28,7 @@ export const setCookie = (name, value, props) => {
     }
     document.cookie = updatedCookie;
 
-    console.log(document.cookie);
+    //console.log(document.cookie);
 }
   
 export const deleteCookie = (name) => {

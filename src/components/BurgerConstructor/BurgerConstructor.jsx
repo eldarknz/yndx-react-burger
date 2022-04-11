@@ -3,6 +3,8 @@ import cn from "classnames";
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from 'react-dnd';
+import { useHistory, useLocation } from 'react-router-dom';
+import { ROUTES } from "../../utils/constants";
 import PropTypes from 'prop-types';
 
 import { Container, Row } from "../ui/Grid/Grid";
@@ -15,8 +17,8 @@ import BurgerConstructorItem from "./BurgerConstructorItem";
 
 import { ingredientType } from "../../utils/types";
 
-import { getOrderNumber } from "services/actions";
-import { addIngredient, addBun } from "services/actions";
+import { getOrderNumber } from "../../services/actions/order";
+import { addIngredient, addBun } from "../../services/actions";
 
 import { isEmpty } from "utils/utils";
 
@@ -47,16 +49,35 @@ const BurgerConstructor = () => {
 
     const dispatch = useDispatch();
 
-    const [modalVisible, setModalVisible] = useState(false);
+    const { isAuth } = useSelector(store => store.user);
+    const { burgerIngredients, burgerBun } = useSelector(store => store.app);
 
-    const burgerIngredients = useSelector(store => store.app.burgerIngredients);
-    const burgerBun         = useSelector(store => store.app.burgerBun);
+    const history = useHistory();
+    const location = useLocation();
+
+    const [modalVisible, setModalVisible] = useState(false);
 
     const totalPrice = burgerIngredients.reduce((acc, item) => acc + item.price, 0) + (!isEmpty(burgerBun) ? burgerBun.price * 2 : 0);
 
     const handleOpenModal = () => setModalVisible(true);
     
     const handleCloseModal = () => setModalVisible(false);
+
+    const handleOrderSubmit = () => {
+        if (isAuth) {
+            if (!isEmpty(burgerBun) && burgerIngredients.length > 0) {
+                const order = burgerIngredients.concat([burgerBun]).map(ingredient => ingredient._id);
+                dispatch(getOrderNumber(order));
+                handleOpenModal();
+            }
+        } else {
+            history.push({
+                pathname: ROUTES.login.path,
+                search: '?redirectUrl=' + location.pathname
+            });
+        }
+    }
+
 
     const [{ isHover }, dropTarget] = useDrop({
         accept: 'ingredient',
@@ -115,12 +136,7 @@ const BurgerConstructor = () => {
                         <Button
                             type="primary"
                             size="large"
-                            onClick={() => {
-                                if(!isEmpty(burgerBun) && burgerIngredients.length > 0) {
-                                    dispatch(getOrderNumber(burgerIngredients.concat([burgerBun]).map(ingredient => ingredient._id)));
-                                    handleOpenModal();
-                                }
-                            }}
+                            onClick={handleOrderSubmit}
                         >
                             Оформить заказ
                         </Button>

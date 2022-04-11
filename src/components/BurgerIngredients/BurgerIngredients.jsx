@@ -2,6 +2,7 @@ import cn from "classnames";
 
 import { useState, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
+import { useHistory } from 'react-router-dom';
 
 import { Container } from "../ui/Grid/Grid";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -21,6 +22,8 @@ import styles from "./BurgerIngredients.module.css";
 const BurgerIngredients = () => {
 
     const dispatch = useDispatch();
+
+    //const history = useHistory();
 
     const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(store => store.app);
 
@@ -45,6 +48,7 @@ const BurgerIngredients = () => {
     const handleCloseModal = () => {
         setModalVisible(false);
         dispatch({ type: DELETE_INGREDIENT_DETAILS });
+        //history.goBack();
     }
 
     const handleScroll = () => {
@@ -53,9 +57,13 @@ const BurgerIngredients = () => {
         const sauceHeaderTop = sauceRef.current.getBoundingClientRect().top;
         const mainHeaderTop = mainRef.current.getBoundingClientRect().top;
 
-        if (bunHeaderTop <= ingredientsTop) handleSwitchTab('bun');
-        if (sauceHeaderTop <= ingredientsTop) handleSwitchTab('sauce');
-        if (mainHeaderTop <= ingredientsTop) handleSwitchTab('main');
+        const closest = [
+            {name: "bun", value: bunHeaderTop},
+            {name: "sauce", value: sauceHeaderTop},
+            {name: "main", value: mainHeaderTop}
+        ].sort( (a, b) => Math.abs(ingredientsTop - a.value) - Math.abs(ingredientsTop - b.value) )[0];
+
+        handleSwitchTab(closest.name);
     };
 
     return (

@@ -30,6 +30,10 @@ export const GET_USER_SUCCESS = 'GET_USER_SUCCESS';
 export const GET_USER_FAILED = 'GET_USER_FAILED';
 export const GET_USER_REQUEST = 'GET_USER_REQUEST';
 
+export const UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+export const UPDATE_USER_FAILED = 'UPDATE_USER_FAILED';
+export const UPDATE_USER_REQUEST = 'UPDATE_USER_REQUEST';
+
 export const register = (data) => {
     return (dispatch) => {
         dispatch({
@@ -37,9 +41,7 @@ export const register = (data) => {
         });
         new ApiCall(ApiRoutes.auth.register).post(data)
         .then((response) => {
-            //console.log(response);
             if (response.success) {
-                //dispatch(({ type: REGISTER_SUCCESS, user: response.user}));
                 dispatch(({ type: REGISTER_SUCCESS, isAuth: true}));
                 ApiToken.setTokens(response.accessToken, response.refreshToken);
             } else {
@@ -56,16 +58,13 @@ export const register = (data) => {
 };
 
 export const login = (data) => {
-    console.log(data);
     return (dispatch) => {
         dispatch({
             type: LOGIN_REQUEST
         });
         new ApiCall(ApiRoutes.auth.login).post(data)
         .then((response) => {
-            console.log(response);
             if (response.success) {
-                //dispatch({ type: LOGIN_SUCCESS, user: response.user });
                 dispatch({ type: LOGIN_SUCCESS, isAuth: true });
                 ApiToken.setTokens(response.accessToken, response.refreshToken);
             } else {
@@ -88,9 +87,7 @@ export const logout = () => {
         });
         new ApiCall(ApiRoutes.auth.logout).post({ token: ApiToken.getRefreshToken() })
         .then((response) => {
-            //console.log(response);
             if (response.success) {
-                //dispatch({ type: LOGOUT_SUCCESS });
                 dispatch({ type: LOGOUT_SUCCESS, isAuth: false });
                 ApiToken.deleteToken();
             } else {
@@ -113,7 +110,6 @@ export const forgotPassword = (data) => {
         });
         new ApiCall(ApiRoutes.password_reset.forgot_password).post(data)
         .then((response) => {
-            //console.log(response);
             if (response.success) {
                 dispatch({ type: FORGOT_PASSWORD_SUCCESS });
             }
@@ -137,7 +133,6 @@ export const resetPassword = (data) => {
         });
         new ApiCall(ApiRoutes.password_reset.reset_password).post(data)
         .then((response) => {
-            //console.log(response);
             if (response.success) {
                 dispatch({ type: RESET_PASSWORD_SUCCESS });
             }
@@ -161,7 +156,6 @@ export const getToken = () => {
         });
         new ApiCall(ApiRoutes.auth.token).post(ApiToken.getRefreshToken())
         .then((response) => {
-            //console.log(response);
             if (response.success) {
                 dispatch({ type: TOKEN_SUCCESS });
                 ApiToken.setTokens(response.accessToken, response.refreshToken);
@@ -191,9 +185,7 @@ export const getUser = (formData, setFormData) => {
 
         new ApiCall(ApiRoutes.auth.user, { privateCall: true }).get()
         .then((response) => {
-            //console.log(response);
             if (response.success) {
-                //dispatch({ type: GET_USER_SUCCESS, user: response.user})
                 dispatch({ type: GET_USER_SUCCESS })
                 setFormData({...formData, ...response.user});
             }
@@ -205,6 +197,34 @@ export const getUser = (formData, setFormData) => {
             console.log("Ошибка при выполнении запроса к API: " + error.message);
             dispatch({
                 type: GET_USER_FAILED
+            });
+        });
+    }
+}
+
+export const updateUser = (formData) => {
+    return function(dispatch) {
+        dispatch({
+            type: UPDATE_USER_REQUEST
+        });
+
+        if (!ApiToken.getAccessToken()) {
+            getToken();
+        }
+
+        new ApiCall(ApiRoutes.auth.user, { privateCall: true }).patch({...formData})
+        .then((response) => {
+            if (response.success) {
+                dispatch({ type: UPDATE_USER_SUCCESS })
+            }
+            else {
+                dispatch({ type: UPDATE_USER_FAILED });
+            }
+        })
+        .catch((error) => {
+            console.log("Ошибка при выполнении запроса к API: " + error.message);
+            dispatch({
+                type: UPDATE_USER_FAILED
             });
         });
     }
