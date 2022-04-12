@@ -78,15 +78,14 @@ const BurgerConstructor = () => {
         }
     }
 
-
     const [{ isHover }, dropTarget] = useDrop({
         accept: 'ingredient',
         collect: monitor => ({
           isHover: monitor.isOver()
         }),
         drop(item) {
-            if (item.type === 'bun' && item._id !== burgerBun._id) {
-                dispatch(addBun(item));
+            if (item.type === 'bun') {
+                if (item._id !== burgerBun._id) dispatch(addBun(item));
             } else {
                 dispatch(addIngredient(item));
             }
