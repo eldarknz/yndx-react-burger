@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import { useHistory, useLocation, useRouteMatch, matchPath  } from 'react-router-dom'
+import { Link, useRouteMatch } from 'react-router-dom';
 import { Container, Row, Col } from "../ui/Grid/Grid";
 
 import { Nav, NavItem } from "../ui/Nav/Nav";
@@ -11,36 +11,6 @@ import FancyLink from "../ui/Link/Link";
 import styles from "./AppHeader.module.css";
 
 const AppHeader = () => {
-
-    //const match = useRouteMatch();
-    //const history = useHistory();
-    //const { state } = useLocation();
-    //const { url } = useRouteMatch();
-    //const location = useLocation();
-    //const { pathname } = useLocation();
-    //console.log(match, history, state, url, location);
-    //console.log(pathname);
-
-    /*const match = useRouteMatch({
-        path: '/profile',
-        exact: true
-    });*/
-    /*const match = matchPath(pathname, {
-        path: url,
-        exact: true,
-        strict: true
-    });*/
-
-    //console.log(history.location, pathname);
-
-    /*const handleIsActive = (path) => {
-        const match = matchPath(pathname, {
-            path: path,
-            exact: false
-        });
-        return match ? true : false;
-    }*/
-
     return (
         <header className={cn(styles.header, "pt-4 pb-4")}>
             <Container>
@@ -67,7 +37,9 @@ const AppHeader = () => {
                     </Col>
                     <Col col="4">
                         <div className={cn(styles.logo, "justifyContentCenter")}>
-                            <Logo />
+                            <Link to={'/'}>
+                                <Logo />
+                            </Link>
                         </div>
                     </Col>
                     <Col col="4">
