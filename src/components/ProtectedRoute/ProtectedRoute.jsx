@@ -1,4 +1,4 @@
-import { useSelector, useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 import { ROUTES } from "../../utils/constants";
 
@@ -9,9 +9,22 @@ const ProtectedRoute = ({ path, exact, children }) => {
   const { isAuth } = useSelector(store => store.user);
 
   return (
-    <Route path={path} exact={exact} render={({location}) => isAuth ? (children) : (
-      <Redirect to={{ pathname: ROUTES.login.path, search: '?redirectUrl=' + location.pathname }} />
-    )} />
+    <Route
+      path={path}
+      exact={exact}
+      render={({ location }) =>
+        isAuth ? (
+          children
+        ) : (
+          <Redirect
+            to={{
+              pathname: ROUTES.login.path,
+              state: { from: location }
+            }}
+          />
+        )
+      }
+    />
   );
 };
 

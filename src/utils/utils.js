@@ -19,6 +19,14 @@ export const isEmpty = (obj) => {
 }
 
 // parse query
+/**
+ * if "search" in location return search value
+ * 
+ * <Redirect to={{ pathname: '/path', search: '?searchValue=' + location.pathname }} />
+ * 
+ * const query = useQuery();
+ * const searchValue = query.get("searchValue");
+ */
 export const useQuery = () => {
     const { search } = useLocation();
   
