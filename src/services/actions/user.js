@@ -45,14 +45,12 @@ export const register = (data) => {
                 dispatch(({ type: REGISTER_SUCCESS, isAuth: true}));
                 ApiToken.setTokens(response.accessToken, response.refreshToken);
             } else {
-                dispatch({ type: REGISTER_FAILED });
+                dispatch(registerFailed());
             }
         })
         .catch((error) => {
             console.log("Ошибка при выполнении запроса к API: " + error.message);
-            dispatch({
-                type: REGISTER_FAILED
-            });
+            dispatch(registerFailed());
         });
     };
 };
@@ -68,14 +66,12 @@ export const login = (data) => {
                 dispatch({ type: LOGIN_SUCCESS, isAuth: true });
                 ApiToken.setTokens(response.accessToken, response.refreshToken);
             } else {
-                dispatch({ type: LOGIN_FAILED });
+                dispatch(loginFailed());
             }
         })
         .catch((error) => {
             console.log("Ошибка при выполнении запроса к API: " + error.message);
-            dispatch({
-                type: LOGIN_FAILED
-            });
+            dispatch(loginFailed());
         });
     };
 };
@@ -91,14 +87,12 @@ export const logout = () => {
                 dispatch({ type: LOGOUT_SUCCESS, isAuth: false });
                 ApiToken.deleteToken();
             } else {
-                dispatch({ type: LOGOUT_FAILED });
+                dispatch(logoutFailed());
             }
         })
         .catch((error) => {
             console.log("Ошибка при выполнении запроса к API: " + error.message);
-            dispatch({
-                type: LOGOUT_FAILED
-            });
+            dispatch(logoutFailed());
         });
     }
 }
@@ -114,14 +108,12 @@ export const forgotPassword = (data) => {
                 dispatch({ type: FORGOT_PASSWORD_SUCCESS });
             }
             else {
-                dispatch({ type: FORGOT_PASSWORD_FAILED });
+                dispatch(forgotPasswordFailed());
             }
         })
         .catch((error) => {
             console.log("Ошибка при выполнении запроса к API: " + error.message);
-            dispatch({
-                type: FORGOT_PASSWORD_FAILED
-            });
+            dispatch(forgotPasswordFailed());
         });
     };
 };
@@ -137,14 +129,12 @@ export const resetPassword = (data) => {
                 dispatch({ type: RESET_PASSWORD_SUCCESS });
             }
             else {
-                dispatch({ type: RESET_PASSWORD_FAILED });
+                dispatch(resetPasswordFailed());
             }
         })
         .catch((error) => {
             console.log("Ошибка при выполнении запроса к API: " + error.message);
-            dispatch({
-                type: RESET_PASSWORD_FAILED
-            });
+            dispatch(resetPasswordFailed());
         });
     }
 };
@@ -161,14 +151,12 @@ export const getToken = () => {
                 ApiToken.setTokens(response.accessToken, response.refreshToken);
             }
             else {
-                dispatch({ type: TOKEN_FAILED });
+                dispatch(tokenFailed());
             }
         })
         .catch((error) => {
             console.log("Ошибка при выполнении запроса к API: " + error.message);
-            dispatch({
-                type: TOKEN_FAILED
-            });
+            dispatch(tokenFailed());
         });
     }
 }
@@ -190,14 +178,12 @@ export const getUser = (formData, setFormData) => {
                 setFormData({...formData, ...response.user});
             }
             else {
-                dispatch({ type: GET_USER_FAILED });
+                dispatch(getUserFailed());
             }
         })
         .catch((error) => {
             console.log("Ошибка при выполнении запроса к API: " + error.message);
-            dispatch({
-                type: GET_USER_FAILED
-            });
+            dispatch(getUserFailed());
         });
     }
 }
@@ -218,14 +204,32 @@ export const updateUser = (formData) => {
                 dispatch({ type: UPDATE_USER_SUCCESS })
             }
             else {
-                dispatch({ type: UPDATE_USER_FAILED });
+                dispatch(updateUserFailed());
             }
         })
         .catch((error) => {
             console.log("Ошибка при выполнении запроса к API: " + error.message);
-            dispatch({
-                type: UPDATE_USER_FAILED
-            });
+            dispatch(updateUserFailed());
         });
     }
 }
+
+/**
+ * Action Creators
+ */
+
+const registerFailed = () => ({ type: REGISTER_FAILED });
+
+const loginFailed = () => ({ type: LOGIN_FAILED });
+
+const logoutFailed = () => ({ type: LOGOUT_FAILED });
+
+const forgotPasswordFailed = () => ({ type: FORGOT_PASSWORD_FAILED });
+
+const resetPasswordFailed = () => ({ type: RESET_PASSWORD_FAILED });
+
+const tokenFailed = () => ({ type: TOKEN_FAILED });
+
+const getUserFailed = () => ({ type: GET_USER_FAILED });
+
+const updateUserFailed = () => ({ type: UPDATE_USER_FAILED });

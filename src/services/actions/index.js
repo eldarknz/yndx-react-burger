@@ -63,14 +63,12 @@ export const getIngredients = () => {
               ingredients: [...response.data]
             });
           } else {
-              dispatch({ type: GET_INGREDIENTS_FAILED });
+              dispatch(getIngredientsFailed());
           }
       })
       .catch((error) => {
           console.log("Ошибка при выполнении запроса к API: " + error.message);
-          dispatch({
-              type: GET_INGREDIENTS_FAILED
-          });
+          dispatch(getIngredientsFailed());
       });
   };
 };
@@ -78,6 +76,8 @@ export const getIngredients = () => {
 /**
  * Action Creators
  */
+
+const getIngredientsFailed = () => ({ type: GET_INGREDIENTS_FAILED });
 
 export const swapIngredients = ( dragIndex, hoverIndex ) => {
   return { 
