@@ -4,9 +4,34 @@ import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, updateUser } from "../../services/actions/user";
 
+import { UPDATE_USER_CLEAR } from "../../services/actions/user";
+
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ProfileForm.module.css';
+
+const ProfileFormMessage = (props) => {
+  const dispatch = useDispatch();
+  const [show, setShow] = useState(true);
+
+  useEffect(() => {
+    let timer = setTimeout(() => {
+      setShow(false);
+      dispatch({ type: UPDATE_USER_CLEAR });
+    }, 3000);
+
+    return () => {
+      clearTimeout(timer);
+    };
+    // eslint-disable-next-line
+  }, []);
+
+  return show ? (
+    <div className={styles.text}>
+      <span className="text text_type_main-default">{props.text}</span>
+    </div>
+  ) : ( null );
+};
 
 const ProfileForm = () => {
 
@@ -31,6 +56,7 @@ const ProfileForm = () => {
       dispatch(getUser(formData, setFormData));
     }
     return () => mounted = false;
+    // eslint-disable-next-line
   }, []);
 
   const toggleDisableInput = () => {
@@ -118,21 +144,9 @@ const ProfileForm = () => {
             <div><Button type="secondary" size="medium" onClick={handleCancel}>Отмена</Button></div>
         </div>}
       </form>
-      { updateUserRequest && (
-          <div className={styles.text}>
-            <span className="text text_type_main-default">Загрузка...</span>
-          </div>
-      )}
-      { updateUserFailed && (
-          <div className={styles.text}>
-            <span className="text text_type_main-default">Произошла ошибка, попробуйте еще раз.</span>
-          </div>
-      )}
-      { updateUserSuccess && (
-        <div className={styles.text}>
-          <span className="text text_type_main-default">Информация сохранена успешно</span>
-        </div>
-      )}
+      { updateUserRequest && <ProfileFormMessage text={'Загрузка...'} />}
+      { updateUserSuccess && <ProfileFormMessage text={'Информация сохранена успешно'} />}
+      { updateUserFailed && <ProfileFormMessage text={'Произошла ошибка, попробуйте еще раз'} />}
     </div>  
   );
 };
