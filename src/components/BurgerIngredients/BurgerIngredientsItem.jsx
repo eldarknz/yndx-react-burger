@@ -2,7 +2,6 @@ import cn from 'classnames';
 
 import { useSelector } from "react-redux";
 import { useDrag } from 'react-dnd';
-import PropTypes from 'prop-types';
 
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -40,7 +39,6 @@ const BurgerIngredientsItem = (props) => {
     return (
         <div
             className={cn(styles.card, "ml-4 mr-2 mb-8")}
-            onClick={() => props.callback(props.ingredient)}
             ref={dragRef}
             style={{ opacity }}
         >
@@ -48,9 +46,6 @@ const BurgerIngredientsItem = (props) => {
                 to={{
                     pathname: `/ingredients/${_id}`,
                     state: { background: location }
-                }}
-                onClick={(event) => {
-                    event.preventDefault()
                 }}
             >
                 {ingredientOccurrences > 0 && (
@@ -76,8 +71,7 @@ const BurgerIngredientsItem = (props) => {
 };
 
 BurgerIngredientsItem.propTypes = {
-    ingredient: ingredientType.isRequired,
-    callback: PropTypes.func.isRequired
+    ingredient: ingredientType.isRequired
 };
 
 export default BurgerIngredientsItem;

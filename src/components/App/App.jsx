@@ -1,13 +1,11 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
-
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
-
 import { ROUTES } from 'utils/constants';
 
-import { getIngredients } from 'services/actions';
+import { getIngredients } from '../../services/actions';
 
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AppHeader from '../AppHeader/AppHeader';
 import Modal from '../../components/Modal/Modal';
 import IngredientDetails from '../../components/IngredientDetails/IngredientDetails';
@@ -30,15 +28,24 @@ function App() {
 
   const dispatch = useDispatch();
 
+  let location = useLocation();
+  let history = useHistory();
+
+  let background = location.state && location.state.background;
+
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
+
+  const handleCloseModal = useCallback(() => {
+    history.push('/');
+  },[history]);
 
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <Switch>
+        <Switch location={background || location}>
           <Route path={ROUTES.home.path} exact={true}>
             <HomePage />
           </Route>
@@ -67,6 +74,17 @@ function App() {
             <PageNotFoundPage />
           </Route>
         </Switch>
+
+        {background && (
+          <Route path={ROUTES.ingredient.path}>
+            <Modal
+              header="Детали ингредиента"
+              onClose={handleCloseModal}
+            >
+              <IngredientDetails />
+            </Modal>
+          </Route>
+        )}
 
       </main>
     </>

@@ -1,19 +1,14 @@
 import cn from "classnames";
 
-import { useState, useRef } from "react";
+import { useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { useHistory } from 'react-router-dom';
 
 import { Container } from "../ui/Grid/Grid";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import IngredientDetails from "../IngredientDetails/IngredientDetails";
-
-import Modal from "../Modal/Modal";
-
 import BurgerIngredientsItem from "./BurgerIngredientsItem";
 
-import { TAB_SWITCH, GET_INGREDIENT_DETAILS, DELETE_INGREDIENT_DETAILS } from "services/actions";
+import { TAB_SWITCH } from "services/actions";
 
 import { INGREDIENT_CATEGORIES } from "utils/constants";
 
@@ -23,13 +18,9 @@ const BurgerIngredients = () => {
 
     const dispatch = useDispatch();
 
-    //const history = useHistory();
-
     const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(store => store.app);
 
     const currentTab = useSelector(store => store.app.currentTab);
-
-    const [modalVisible, setModalVisible] = useState(false);
 
     const ingredientsSection = useRef(null);
     const bunRef = useRef(null);
@@ -39,17 +30,6 @@ const BurgerIngredients = () => {
     const handleSwitchTab = (selectedtTab) => {
         dispatch({ type: TAB_SWITCH, selectedtTab });
     };
-
-    const handleOpenModal = (ingredient) => {
-        dispatch({ type: GET_INGREDIENT_DETAILS, ingredient });
-        setModalVisible(true);
-    }
-    
-    const handleCloseModal = () => {
-        setModalVisible(false);
-        dispatch({ type: DELETE_INGREDIENT_DETAILS });
-        //history.goBack();
-    }
 
     const handleScroll = () => {
         const ingredientsTop = ingredientsSection.current.getBoundingClientRect().top;
@@ -110,7 +90,7 @@ const BurgerIngredients = () => {
                                     <div className={cn(styles.cardGroup, "mb-2")}>
                                         {
                                             ingredients.filter(item => item.type === category.type).map(ingredient => (
-                                                <BurgerIngredientsItem key={ingredient._id} ingredient={ingredient} callback={handleOpenModal}/>
+                                                <BurgerIngredientsItem key={ingredient._id} ingredient={ingredient} />
                                             ))
                                         }
                                     </div>
@@ -120,15 +100,6 @@ const BurgerIngredients = () => {
                     </div>
                 </Container>
             </section>
-
-            {modalVisible && (
-                <Modal
-                    header="Детали ингредиента"
-                    onClose={handleCloseModal}
-                >
-                    <IngredientDetails />
-                </Modal>
-            )}
         </>
     );
 };

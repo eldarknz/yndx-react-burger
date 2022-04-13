@@ -30,7 +30,8 @@ import {
 
   UPDATE_USER_SUCCESS,
   UPDATE_USER_FAILED,
-  UPDATE_USER_REQUEST
+  UPDATE_USER_REQUEST,
+  UPDATE_USER_CLEAR
 
 } from "../actions/user";
 
@@ -252,6 +253,14 @@ export const userReducer = (state = initialState, action) => {
         updateUserRequest: false,
         updateUserSuccess: false,
         updateUserFailed: true
+      }
+    }
+    case UPDATE_USER_CLEAR: {
+      return {
+        ...state,
+        updateUserRequest: false,
+        updateUserSuccess: false,
+        updateUserFailed: false
       }
     }
 
