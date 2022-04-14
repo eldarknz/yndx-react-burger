@@ -2,8 +2,7 @@ import cn from "classnames";
 
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useLocation, useHistory } from "react-router-dom";
-import { useQuery } from "../../utils/utils";
+import { Redirect, useLocation } from "react-router-dom";
 import { resetPassword } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";
 
@@ -17,7 +16,7 @@ export const ResetPasswordPage = () => {
   const dispatch = useDispatch();
 
   const {
-    isAuth,
+    isLoggedIn,
     resetPasswordSuccess,
     resetPasswordRequest,
     resetPasswordFailed,
@@ -45,7 +44,7 @@ export const ResetPasswordPage = () => {
     setIsPasswordShow(!isPasswordShow);
   }
 
-  if (isAuth) {
+  if (isLoggedIn) {
     return (
       <Redirect to={location.state?.from || ROUTES.home.path}/>
     );

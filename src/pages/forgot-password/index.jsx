@@ -2,7 +2,7 @@ import cn from "classnames";
 
 import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useLocation, useHistory } from "react-router-dom";
+import { Redirect, useLocation } from "react-router-dom";
 import { forgotPassword } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";
 
@@ -16,7 +16,7 @@ export const ForgotPasswordPage = () => {
   const dispatch = useDispatch();
 
   const {
-    isAuth,
+    isLoggedIn,
     forgotPasswordSuccess,
     forgotPasswordRequest,
     forgotPasswordFailed
@@ -35,7 +35,7 @@ export const ForgotPasswordPage = () => {
     dispatch(forgotPassword({ ...formData }));
   }
 
-  if (isAuth) {
+  if (isLoggedIn) {
     return (
       <Redirect to={location.state?.from || ROUTES.home.path}/>
     );

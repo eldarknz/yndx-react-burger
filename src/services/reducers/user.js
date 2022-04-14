@@ -1,4 +1,4 @@
-import { ApiToken } from "api/ApiToken";
+//import { ApiToken } from "api/ApiToken";
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -36,7 +36,7 @@ import {
 } from "../actions/user";
 
 const initialState = {
-    isAuth: !!ApiToken.getAccessToken(),
+    isLoggedIn: false,
 
     user: null,
 
@@ -83,7 +83,7 @@ export const userReducer = (state = initialState, action) => {
     case LOGIN_SUCCESS: {
       return {
         ...state,
-        isAuth: action.isAuth,
+        isLoggedIn: action.isLoggedIn,
         loginRequest: false,
         loginFailed: false
       }
@@ -105,7 +105,7 @@ export const userReducer = (state = initialState, action) => {
     case LOGOUT_SUCCESS: {
       return {
           ...state,
-          isAuth: action.isAuth,
+          isLoggedIn: action.isLoggedIn,
           logoutRequest: false,
           logoutSuccess: true, 
           logoutFailed: false,

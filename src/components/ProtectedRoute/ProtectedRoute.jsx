@@ -6,14 +6,14 @@ import PropTypes from 'prop-types';
 
 const ProtectedRoute = ({ path, exact, children }) => {
 
-  const { isAuth } = useSelector(store => store.user);
+  const { isLoggedIn } = useSelector(store => store.user);
 
   return (
     <Route
       path={path}
       exact={exact}
       render={({ location }) =>
-        isAuth ? (
+        isLoggedIn ? (
           children
         ) : (
           <Redirect

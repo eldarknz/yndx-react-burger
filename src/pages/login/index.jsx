@@ -2,7 +2,7 @@ import cn from "classnames";
 
 import { useState, useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useLocation, useHistory } from "react-router-dom";
+import { Redirect, useLocation } from "react-router-dom";
 import { login } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";
 
@@ -11,11 +11,12 @@ import { Container } from "../../components/ui/Grid/Grid";
 import FancyLink from "../../components/ui/Link/Link";
 
 import styles from "./styles.module.css";
+import { ApiToken } from "api/ApiToken";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
 
-  const { isAuth, loginFailed, loginRequest } = useSelector(store => store.user);
+  const { isLoggedIn, loginFailed, loginRequest } = useSelector(store => store.user);
 
   const { state } = useLocation();
 
@@ -39,7 +40,7 @@ export const LoginPage = () => {
     setIsPasswordShow(!isPasswordShow);
   }
 
-  if (isAuth) {
+  if (isLoggedIn && ApiToken.getAccessToken()) {
     return (
       <Redirect to={state?.from || ROUTES.home.path}/>
     );

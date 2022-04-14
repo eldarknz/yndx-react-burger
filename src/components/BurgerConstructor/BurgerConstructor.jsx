@@ -49,7 +49,7 @@ const BurgerConstructor = () => {
 
     const dispatch = useDispatch();
 
-    const { isAuth } = useSelector(store => store.user);
+    const { isLoggedIn } = useSelector(store => store.user);
     const { burgerIngredients, burgerBun } = useSelector(store => store.app);
 
     const history = useHistory();
@@ -64,7 +64,7 @@ const BurgerConstructor = () => {
     const handleCloseModal = () => setModalVisible(false);
 
     const handleOrderSubmit = () => {
-        if (isAuth) {
+        if (isLoggedIn) {
             if (!isEmpty(burgerBun) && burgerIngredients.length > 0) {
                 const order = burgerIngredients.concat([burgerBun]).map(ingredient => ingredient._id);
                 dispatch(getOrderNumber(order));

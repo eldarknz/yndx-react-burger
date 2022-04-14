@@ -42,9 +42,9 @@ export const register = (data) => {
         });
         new ApiCall(ApiRoutes.auth.register).post(data)
         .then((response) => {
+            console.log(response);
             if (response.success) {
-                dispatch(({ type: REGISTER_SUCCESS, isAuth: true}));
-                ApiToken.setTokens(response.accessToken, response.refreshToken);
+                dispatch(({ type: REGISTER_SUCCESS }));
             } else {
                 dispatch(registerFailed());
             }
@@ -64,7 +64,7 @@ export const login = (data) => {
         new ApiCall(ApiRoutes.auth.login).post(data)
         .then((response) => {
             if (response.success) {
-                dispatch({ type: LOGIN_SUCCESS, isAuth: true });
+                dispatch(loginSuccess());
                 ApiToken.setTokens(response.accessToken, response.refreshToken);
             } else {
                 dispatch(loginFailed());
@@ -85,7 +85,7 @@ export const logout = () => {
         new ApiCall(ApiRoutes.auth.logout).post({ token: ApiToken.getRefreshToken() })
         .then((response) => {
             if (response.success) {
-                dispatch({ type: LOGOUT_SUCCESS, isAuth: false });
+                dispatch({ type: LOGOUT_SUCCESS, isLoggedIn: false });
                 ApiToken.deleteToken();
             } else {
                 dispatch(logoutFailed());
@@ -218,6 +218,8 @@ export const updateUser = (formData) => {
 /**
  * Action Creators
  */
+
+export const loginSuccess = () => ({ type: LOGIN_SUCCESS, isLoggedIn: true })
 
 const registerFailed = () => ({ type: REGISTER_FAILED });
 

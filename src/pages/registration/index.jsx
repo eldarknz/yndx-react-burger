@@ -15,7 +15,7 @@ import styles from "./styles.module.css";
 export const RegistrationPage = () => {
   const dispatch = useDispatch();
 
-  const { isAuth, registerSuccess, registerRequest, registerFailed } = useSelector(store => store.user);
+  const { isLoggedIn, registerSuccess, registerRequest, registerFailed } = useSelector(store => store.user);
 
   const location = useLocation();
 
@@ -38,7 +38,7 @@ export const RegistrationPage = () => {
     setIsPasswordShow(!isPasswordShow);
   }
 
-  if (isAuth) {
+  if (isLoggedIn) {
     return (
       <Redirect to={location.state?.from || ROUTES.home.path}/>
     );
