@@ -31,6 +31,7 @@ export const LoginPage = () => {
     if (!isLoggedIn && ApiToken.getAccessToken()) {
       dispatch(loginSuccess());
     }
+    // eslint-disable-next-line
   }, []);
 
   const onChangeFormData = (e) => {
@@ -48,12 +49,7 @@ export const LoginPage = () => {
     setIsPasswordShow(!isPasswordShow);
   }
 
-  //console.log(isLoggedIn, ApiToken.getAccessToken());
-  /*if (!isLoggedIn && ApiToken.getAccessToken()) {
-    dispatch(loginSuccess());
-  }*/
-
-  if (isLoggedIn && ApiToken.getAccessToken()) {
+  if (isLoggedIn) {
     return (
       <Redirect to={state?.from || ROUTES.home.path}/>
     );

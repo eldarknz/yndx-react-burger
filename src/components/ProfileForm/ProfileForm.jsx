@@ -4,13 +4,15 @@ import { useState, useRef, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, updateUser } from "../../services/actions/user";
 
+import PropTypes from 'prop-types';
+
 import { UPDATE_USER_CLEAR } from "../../services/actions/user";
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 import styles from './ProfileForm.module.css';
 
-const ProfileFormMessage = (props) => {
+const ProfileFormMessage = ({ text }) => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(true);
 
@@ -28,9 +30,13 @@ const ProfileFormMessage = (props) => {
 
   return show ? (
     <div className={styles.text}>
-      <span className="text text_type_main-default">{props.text}</span>
+      <span className="text text_type_main-default">{text}</span>
     </div>
   ) : ( null );
+};
+
+ProfileFormMessage.propTypes = {
+  text: PropTypes.string.isRequired
 };
 
 const ProfileForm = () => {
