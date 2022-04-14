@@ -1,17 +1,19 @@
 import cn from "classnames";
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
 import { login } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";
+import { ApiToken } from "api/ApiToken";
+
+import { loginSuccess } from "../../services/actions/user";
 
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Container } from "../../components/ui/Grid/Grid";
 import FancyLink from "../../components/ui/Link/Link";
 
 import styles from "./styles.module.css";
-import { ApiToken } from "api/ApiToken";
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
@@ -24,6 +26,12 @@ export const LoginPage = () => {
   const [isPasswordShow, setIsPasswordShow] = useState(false);
 
   const inputRef = useRef(null)
+
+  useEffect(() => {
+    if (!isLoggedIn && ApiToken.getAccessToken()) {
+      dispatch(loginSuccess());
+    }
+  }, []);
 
   const onChangeFormData = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -39,6 +47,11 @@ export const LoginPage = () => {
     inputRef.current.type = isPasswordShow ? "password" : "text";
     setIsPasswordShow(!isPasswordShow);
   }
+
+  //console.log(isLoggedIn, ApiToken.getAccessToken());
+  /*if (!isLoggedIn && ApiToken.getAccessToken()) {
+    dispatch(loginSuccess());
+  }*/
 
   if (isLoggedIn && ApiToken.getAccessToken()) {
     return (
