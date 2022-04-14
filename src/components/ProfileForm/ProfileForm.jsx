@@ -17,7 +17,7 @@ const ProfileFormMessage = ({ text }) => {
   const [show, setShow] = useState(true);
 
   useEffect(() => {
-    let timer = setTimeout(() => {
+    const timer = setTimeout(() => {
       setShow(false);
       dispatch({ type: UPDATE_USER_CLEAR });
     }, 3000);

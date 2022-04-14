@@ -28,10 +28,10 @@ function App() {
 
   const dispatch = useDispatch();
 
-  let location = useLocation();
-  let history = useHistory();
+  const location = useLocation();
+  const history = useHistory();
 
-  let background = location.state && location.state.background;
+  const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(getIngredients());
