@@ -77,7 +77,7 @@ export const checkAccessToken = () => {
         const decodedToken = jwt_decode(accessToken);
         const currentTime = new Date().getTime();
         if (decodedToken.exp * 1000 < currentTime) {
-            return accessToken ? true : false;
+            return false;
         }
     }
     return accessToken ? true : false;
