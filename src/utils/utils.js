@@ -1,6 +1,8 @@
 import { useMemo } from "react";
 import { useLocation } from "react-router-dom";
 import PropTypes from "prop-types";
+import jwt_decode from "jwt-decode";
+import { ApiToken } from "../api/ApiToken";
 
 export function childrenOf(...types) {
     const childType = PropTypes.shape({
@@ -62,3 +64,21 @@ export const validateEmail = (email) => {
       /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
     );
 };
+
+//
+export const isTokenExpired = (token) => {
+    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
+    return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+}
+
+export const checkAccessToken = () => {
+    const accessToken = ApiToken.getAccessToken();
+    if (accessToken) {
+        const decodedToken = jwt_decode(accessToken);
+        const currentTime = new Date().getTime();
+        if (decodedToken.exp * 1000 < currentTime) {
+            return accessToken ? true : false;
+        }
+    }
+    return accessToken ? true : false;
+}

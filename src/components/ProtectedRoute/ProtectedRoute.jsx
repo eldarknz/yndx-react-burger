@@ -1,12 +1,26 @@
 import { useSelector } from 'react-redux';
-import { Route, Redirect } from 'react-router-dom';
-import { ROUTES } from "../../utils/constants";
-
+import { Route, Redirect, useLocation } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
+import { ROUTES } from "../../utils/constants";
+
+import { checkAccessToken } from "../../utils/utils";
+
 const ProtectedRoute = ({ path, exact, children }) => {
+  const location = useLocation();
 
   const { isLoggedIn } = useSelector(store => store.user);
+
+  if (!checkAccessToken()) {
+    return (
+      <Redirect
+        to={{
+          pathname: ROUTES.login.path,
+          state: { from: location }
+        }}
+      />
+    )
+  }
 
   return (
     <Route

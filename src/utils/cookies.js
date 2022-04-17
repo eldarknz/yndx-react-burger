@@ -18,7 +18,6 @@ export const setCookie = (name, value, props) => {
     }
     value = encodeURIComponent(value);
     let updatedCookie = name + '=' + value;
-    //console.log(updatedCookie);
     for (const propName in props) {
         updatedCookie += '; ' + propName;
         const propValue = props[propName];
@@ -27,8 +26,6 @@ export const setCookie = (name, value, props) => {
         }
     }
     document.cookie = updatedCookie;
-
-    //console.log(document.cookie);
 }
   
 export const deleteCookie = (name) => {

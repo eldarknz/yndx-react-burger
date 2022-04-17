@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
 import { login } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";
-import { ApiToken } from "api/ApiToken";
+import { checkAccessToken } from "../../utils/utils";
 
 import { loginSuccess } from "../../services/actions/user";
 
@@ -20,6 +20,8 @@ export const LoginPage = () => {
 
   const { isLoggedIn, loginFailed, loginRequest } = useSelector(store => store.user);
 
+  const isAccessToken = checkAccessToken();
+
   const { state } = useLocation();
 
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -28,7 +30,7 @@ export const LoginPage = () => {
   const inputRef = useRef(null)
 
   useEffect(() => {
-    if (!isLoggedIn && ApiToken.getAccessToken()) {
+    if (!isLoggedIn && isAccessToken) {
       dispatch(loginSuccess());
     }
     // eslint-disable-next-line
@@ -49,7 +51,7 @@ export const LoginPage = () => {
     setIsPasswordShow(!isPasswordShow);
   }
 
-  if (isLoggedIn) {
+  if (isLoggedIn && isAccessToken) {
     return (
       <Redirect to={state?.from || ROUTES.home.path}/>
     );

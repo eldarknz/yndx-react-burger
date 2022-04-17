@@ -16,11 +16,10 @@ import OrderDetails from "../OrderDetails/OrderDetails";
 import BurgerConstructorItem from "./BurgerConstructorItem";
 
 import { ingredientType } from "../../utils/types";
+import { checkAccessToken, isEmpty } from "../../utils/utils";
 
 import { getOrderNumber } from "../../services/actions/order";
 import { addIngredient, addBun } from "../../services/actions";
-
-import { isEmpty } from "utils/utils";
 
 import styles from "./BurgerConstructor.module.css";
 
@@ -64,7 +63,7 @@ const BurgerConstructor = () => {
     const handleCloseModal = () => setModalVisible(false);
 
     const handleOrderSubmit = () => {
-        if (isLoggedIn) {
+        if (isLoggedIn && checkAccessToken()) {
             if (!isEmpty(burgerBun) && burgerIngredients.length > 0) {
                 const order = burgerIngredients.concat([burgerBun]).map(ingredient => ingredient._id);
                 dispatch(getOrderNumber(order));

@@ -42,7 +42,6 @@ export const register = (data) => {
         });
         new ApiCall(ApiRoutes.auth.register).post(data)
         .then((response) => {
-            console.log(response);
             if (response.success) {
                 dispatch(({ type: REGISTER_SUCCESS }));
             } else {
@@ -64,8 +63,9 @@ export const login = (data) => {
         new ApiCall(ApiRoutes.auth.login).post(data)
         .then((response) => {
             if (response.success) {
+                const accessToken = response.accessToken.split('Bearer ')[1];
+                ApiToken.setTokens(accessToken, response.refreshToken);
                 dispatch(loginSuccess());
-                ApiToken.setTokens(response.accessToken, response.refreshToken);
             } else {
                 dispatch(loginFailed());
             }
@@ -148,8 +148,9 @@ export const getToken = () => {
         new ApiCall(ApiRoutes.auth.token).post(ApiToken.getRefreshToken())
         .then((response) => {
             if (response.success) {
+                const accessToken = response.accessToken.split('Bearer ')[1];
                 dispatch({ type: TOKEN_SUCCESS });
-                ApiToken.setTokens(response.accessToken, response.refreshToken);
+                ApiToken.setTokens(accessToken, response.refreshToken);
             }
             else {
                 dispatch(tokenFailed());

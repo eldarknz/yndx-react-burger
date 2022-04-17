@@ -47,7 +47,7 @@ export class ApiCall {
 
         if (accessToken) {
             this.setHeaders({
-                "authorization": `${accessToken}`
+                "authorization": `Bearer ${accessToken}`
             })
         }
     }
