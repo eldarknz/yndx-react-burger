@@ -1,0 +1,48 @@
+.formBlock {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    margin-left: 60px;
+    max-width: 480px;
+    width: 480px;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.inputField {
+    margin-bottom: 24px;
+}
+
+.inputField,
+.inputField > div,
+.inputField > div > div {
+    width: 100%;
+}
+
+.title {
+    text-align: center;
+}
+
+.text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.link {
+    color: #4C4CFF;
+    transition: var(--common-transition);
+}
+
+.buttonGroup {
+    width: 100%;
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+}

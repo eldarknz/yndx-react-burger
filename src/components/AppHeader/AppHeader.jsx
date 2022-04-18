@@ -1,15 +1,14 @@
 import cn from "classnames";
 
-import React from 'react';
-
-import styles from "./AppHeader.module.css";
-
+import { Link, useRouteMatch } from 'react-router-dom';
 import { Container, Row, Col } from "../ui/Grid/Grid";
 
 import { Nav, NavItem } from "../ui/Nav/Nav";
 import { Logo } from "@ya.praktikum/react-developer-burger-ui-components";
 import { BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-import Link from "../ui/Link/Link";
+import FancyLink from "../ui/Link/Link";
+
+import styles from "./AppHeader.module.css";
 
 const AppHeader = () => {
     return (
@@ -18,40 +17,40 @@ const AppHeader = () => {
                 <Row>
                     <Col col="4">
                         <Nav>
-                            <NavItem
-                                isActive={true}
-                            >
-                                <Link isActive={true}>
+                            <NavItem>
+                                <FancyLink href={'/'} isExact={true}>
                                     <div className={styles.icon}>
                                         <BurgerIcon type="primary" />
                                     </div>
                                     <div className={cn("text", "text_type_main-default", styles.name)}>Конструктор</div>
-                                </Link>
+                                </FancyLink>
                             </NavItem>
                             <NavItem>
-                                <Link href={'/'}>
+                                <FancyLink href={'/orders'} isExact={true}>
                                     <div className={styles.icon}>
                                         <ListIcon type="primary" />
                                     </div>
                                     <div className={cn("text", "text_type_main-default", styles.name)}>Лента заказов</div>
-                                </Link>
+                                </FancyLink>
                             </NavItem>
                         </Nav>
                     </Col>
                     <Col col="4">
                         <div className={cn(styles.logo, "justifyContentCenter")}>
-                            <Logo />
+                            <Link to={'/'}>
+                                <Logo />
+                            </Link>
                         </div>
                     </Col>
                     <Col col="4">
                         <Nav className="justifyContentEnd">
                             <NavItem>
-                                <Link href={'/'}>
+                                <FancyLink href={'/profile'}>
                                 <div className={styles.icon}>
                                         <ProfileIcon type="primary" />
                                     </div>
                                     <div className={cn("text", "text_type_main-default", styles.name)}>Личный кабинет</div>
-                                </Link>
+                                </FancyLink>
                             </NavItem>
                         </Nav>
                     </Col>

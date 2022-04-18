@@ -5,7 +5,7 @@ import { useSelector } from 'react-redux';
 import styles from "./OrderDetails.module.css";
 
 const OrderDetails = () => {
-    const { orderNumber, orderNumberRequest, orderNumberFailed } = useSelector(store => store.app);
+    const { orderNumber, orderNumberRequest, orderNumberFailed } = useSelector(store => store.order);
 
     return (
         <div className={cn(styles.orderBlock, "pb-15")}>

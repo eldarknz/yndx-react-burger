@@ -3,38 +3,57 @@ import cn from "classnames";
 import React from "react";
 import PropTypes from 'prop-types';
 
+import { Link, useRouteMatch } from 'react-router-dom';
+
 import styles from "./Link.module.css";
 
-const Link = ({ href, isActive, children, className, onClick }) => {
+const FancyLink = ({ href, isActive, children, className, onClick, isExact = false}) => {
+
+    const match = useRouteMatch({
+        path: href,
+        exact: isExact
+    });
 
     const linkClassName = cn(styles.link,
-        {
-            [styles.isActive]: isActive
-        },
         className
     );
 
     if (!href) {
         return (
-            <div className={linkClassName} onClick={onClick}>
+            <div
+                className={cn(linkClassName,
+                    {
+                        [styles.isActive]: isActive
+                    }
+                )}
+                onClick={onClick}
+            >
                 {children}
             </div>
         )
     }
 
     return (
-        <a href={href} className={linkClassName}>
+        <Link
+            to={href}
+            className={cn(linkClassName,
+                {
+                    [styles.isActive]: match
+                },
+            )}
+        >
             {children}
-        </a>
+        </Link>
     );
 };
 
-Link.propTypes = {
+FancyLink.propTypes = {
     href: PropTypes.string,
     isActive: PropTypes.bool,
     children: PropTypes.node.isRequired,
     className: PropTypes.string,
     onClick: PropTypes.func,
+    isExact: PropTypes.bool,
 };
 
-export default Link
+export default FancyLink

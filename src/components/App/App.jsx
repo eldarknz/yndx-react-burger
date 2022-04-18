@@ -1,16 +1,26 @@
-import { useEffect } from 'react';
+import { useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { ROUTES } from 'utils/constants';
 
-import { HTML5Backend } from 'react-dnd-html5-backend';
-import { DndProvider } from 'react-dnd';
+import { getIngredients } from '../../services/actions';
 
+import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AppHeader from '../AppHeader/AppHeader';
-import BurgerIngredients from '../BurgerIngredients/BurgerIngredients';
-import BurgerConstructor from '../BurgerConstructor/BurgerConstructor';
+import Modal from '../../components/Modal/Modal';
+import IngredientDetails from '../../components/IngredientDetails/IngredientDetails';
 
-import { Container, Row, Col } from '../ui/Grid/Grid';
-
-import { getIngredients } from 'services/actions';
+import {
+  HomePage,
+  OrdersPage,
+  IngredientPage,
+  RegistrationPage,
+  LoginPage,
+  ForgotPasswordPage,
+  ResetPasswordPage,
+  ProfilePage,
+  PageNotFoundPage
+} from '../../pages';
 
 import styles from "./App.module.css";
 
@@ -18,26 +28,64 @@ function App() {
 
   const dispatch = useDispatch();
 
+  const location = useLocation();
+  const history = useHistory();
+
+  const background = location.state && location.state.background;
+
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
+
+  const handleCloseModal = useCallback(() => {
+    history.push('/');
+  },[history]);
 
   return (
     <>
       <AppHeader />
       <main className={styles.main}>
-        <DndProvider backend={HTML5Backend}>
-          <Container>
-            <Row>
-              <Col col="6">
-                <BurgerIngredients />
-              </Col>
-              <Col col="6">
-                <BurgerConstructor />
-              </Col>
-            </Row>
-          </Container>
-        </DndProvider>
+        <Switch location={background || location}>
+          <Route path={ROUTES.home.path} exact={true}>
+            <HomePage />
+          </Route>
+          <Route path={ROUTES.register.path} exact={true}>
+            <RegistrationPage />
+          </Route>
+          <Route path={ROUTES.login.path} exact={true}>
+            <LoginPage />
+          </Route>
+          <Route path={ROUTES.forgot_password.path} exact={true}>
+            <ForgotPasswordPage />
+          </Route>
+          <Route path={ROUTES.reset_password.path} exact={true}>
+            <ResetPasswordPage />
+          </Route>
+          <ProtectedRoute path={ROUTES.profile.path}>
+            <ProfilePage />
+          </ProtectedRoute>
+          <ProtectedRoute path={ROUTES.orders.path} exact={true}>
+            <OrdersPage />
+          </ProtectedRoute>
+          <Route path={ROUTES.ingredient.path} exact={true}>
+            <IngredientPage />
+          </Route>
+          <Route>
+            <PageNotFoundPage />
+          </Route>
+        </Switch>
+
+        {background && (
+          <Route path={ROUTES.ingredient.path}>
+            <Modal
+              header="Детали ингредиента"
+              onClose={handleCloseModal}
+            >
+              <IngredientDetails />
+            </Modal>
+          </Route>
+        )}
+
       </main>
     </>
   );

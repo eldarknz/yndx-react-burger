@@ -23,9 +23,12 @@ export const NavItem = ({ children, isActive, className }) => {
     );
 };
 
-export const Nav = ({ children, className }) => {
+export const Nav = ({ children, className, direction }) => {
 
     const navClassName = cn(styles.nav,
+        {
+            [styles.vertical]: direction === 'vertical',
+        },
         className
     );
 
@@ -44,5 +47,6 @@ NavItem.propTypes = {
 
 Nav.propTypes = {
     children: childrenOf(NavItem).isRequired,
-    className: PropTypes.string
+    className: PropTypes.string,
+    direction: PropTypes.string
 };

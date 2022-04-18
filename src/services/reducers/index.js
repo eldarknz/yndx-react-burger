@@ -14,11 +14,8 @@ import {
     TAB_SWITCH,
     GET_INGREDIENT_DETAILS,
     DELETE_INGREDIENT_DETAILS,
-    GET_ORDER_NUMBER_REQUEST,
-    GET_ORDER_NUMBER_SUCCESS,
-    GET_ORDER_NUMBER_FAILED,
     CLEAR_CONSTRUCTOR
-} from 'services/actions';
+} from '../actions/index';
 
 const initialState = {
 
@@ -30,10 +27,6 @@ const initialState = {
     burgerBun: {},
 
     viewedIngredient: null,
-
-    orderNumber: null,
-    orderNumberRequest: false,
-    orderNumberFailed: false,
 
     currentTab: 'bun'
 };
@@ -107,28 +100,6 @@ export const appReducer = (state = initialState, action) => {
                 ...state,
                 viewedIngredient: null
             };
-        }
-        case GET_ORDER_NUMBER_REQUEST: {
-            return {
-                ...state,
-                orderNumberRequest: true
-            }
-        }
-        case GET_ORDER_NUMBER_SUCCESS: {
-            return {
-                ...state,
-                orderNumber: action.orderNumber,
-                orderNumberRequest: false,
-                orderNumberFailed: false,
-            }
-        }
-        case GET_ORDER_NUMBER_FAILED: {
-            return {
-                ...state,
-                orderNumber: null,
-                orderNumberRequest: false,
-                orderNumberFailed: true
-            }
         }
         case CLEAR_CONSTRUCTOR: {
             return {

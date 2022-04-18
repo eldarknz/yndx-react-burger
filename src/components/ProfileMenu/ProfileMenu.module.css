@@ -1,0 +1,11 @@
+.container {
+    width: 340px;
+}
+
+.text {
+    padding-left: var(--spacing-5);
+}
+
+.logout {
+    cursor: pointer;
+}
