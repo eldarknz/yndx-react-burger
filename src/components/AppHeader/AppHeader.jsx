@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import { Link, useRouteMatch } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { Container, Row, Col } from "../ui/Grid/Grid";
 
 import { Nav, NavItem } from "../ui/Nav/Nav";

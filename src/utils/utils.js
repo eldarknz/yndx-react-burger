@@ -61,16 +61,18 @@ export const loadFromLocalStorage = () => {
 // validate an email address
 export const validateEmail = (email) => {
     return email.match(
-      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/
+      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/ // eslint-disable-line
     );
 };
 
-//
+// Check token expire
 export const isTokenExpired = (token) => {
-    const expiry = (JSON.parse(atob(token.split('.')[1]))).exp;
-    return (Math.floor((new Date).getTime() / 1000)) >= expiry;
+    const decodedToken = jwt_decode(token);
+    const currentTime = new Date().getTime();
+    return Math.floor(currentTime) >= decodedToken.exp;
 }
 
+// Check access token
 export const checkAccessToken = () => {
     const accessToken = ApiToken.getAccessToken();
     if (accessToken) {
