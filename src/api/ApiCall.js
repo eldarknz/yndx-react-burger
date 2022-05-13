@@ -1,6 +1,7 @@
 import { ApiToken } from "./ApiToken";
 
-/*export const ApiCall = async (url, data) => {
+/*
+export const ApiCall = async (url, data) => {
     let options = null;
 
     if (data) {
@@ -22,7 +23,8 @@ import { ApiToken } from "./ApiToken";
 
     const json = await response.json();
     return json;
-};*/
+};
+*/
 
 export class ApiCall {
     
