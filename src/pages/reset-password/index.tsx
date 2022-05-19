@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import { useState, useRef } from "react";
+import { useState, useRef, ChangeEvent, SyntheticEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
 import { resetPassword } from "../../services/actions/user";
@@ -9,8 +9,20 @@ import { ROUTES } from "../../utils/constants";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Container } from "../../components/ui/Grid/Grid";
 import FancyLink from "../../components/ui/Link/Link";
+import ActionMessage from "components/ActionMessage/ActionMessage";
+
+import { IUserStore, ILocation } from "../../../declarations";
 
 import styles from "./styles.module.css";
+
+interface ILocationStateFrom {
+  from?: ILocation;
+}
+
+interface IFormParams {
+  password: string;
+  token: string;
+}
 
 export const ResetPasswordPage = () => {
   const dispatch = useDispatch();
@@ -21,27 +33,29 @@ export const ResetPasswordPage = () => {
     resetPasswordRequest,
     resetPasswordFailed,
     forgotPasswordSuccess
-  } = useSelector(store => store.user);
+  } = useSelector((store: IUserStore) => store.user);
 
-  const location = useLocation();
+  const location = useLocation<ILocationStateFrom>();
 
-  const [formData, setFormData] = useState({ password: "", token: "" });
+  const [formData, setFormData] = useState<IFormParams>({ password: "", token: "" });
   const [isPasswordShow, setIsPasswordShow] = useState(false);
 
-  const inputRef = useRef(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  const onChangeFormData = (e) => {
+  const onChangeFormData = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(resetPassword({ ...formData }));
   }
 
   const toggleShowPassword = () => {
-    inputRef.current.type = isPasswordShow ? "password" : "text";
-    setIsPasswordShow(!isPasswordShow);
+    if (inputRef.current != null) {
+      inputRef.current.type = isPasswordShow ? "password" : "text";
+      setIsPasswordShow(!isPasswordShow);
+    }
   }
 
   if (isLoggedIn) {
@@ -100,16 +114,12 @@ export const ResetPasswordPage = () => {
             />
           </div>
           {resetPasswordRequest ? (
-            <Button disabled={true} type="primary" size="medium" className="mb-20">Загрузка...</Button>
+            <Button disabled={true} type="primary" size="medium">Загрузка...</Button>
             ) : (
-            <Button disabled={!formData.password && !formData.token} type="primary" size="medium" className="mb-20">Сохранить</Button>
+            <Button disabled={!formData.password && !formData.token} type="primary" size="medium">Сохранить</Button>
           )}
         </form>
-        { resetPasswordFailed && (
-          <div className={styles.text}>
-            <span className="text text_type_main-default">Произошла ошибка, попробуйте еще раз.</span>
-          </div>
-        )}
+        { resetPasswordFailed && <ActionMessage text="Произошла ошибка, попробуйте еще раз." /> }
         <div className={cn(styles.text, "mt-10")}>
           <span className="text text_type_main-default text_color_inactive">Вспомнили пароль?</span>
           <FancyLink href="/login" className={cn(styles.link, "text_type_main-default ml-2")}>Войти</FancyLink>

@@ -1,13 +1,25 @@
 import cn from "classnames";
 
-import React from "react";
-import PropTypes from 'prop-types';
-
-import { childrenOf } from "../../../utils/utils";
+import { FC } from "react";
 
 import styles from "./Nav.module.css";
 
-export const NavItem = ({ children, isActive, className }) => {
+interface INavItemProps {
+    isActive?: boolean;
+    className?: string;
+}
+
+interface INavProps {
+    children: INavItemProps;
+    className?: string;
+    direction?: string;
+};
+
+export const NavItem: FC<INavItemProps> = ({
+    children,
+    isActive,
+    className
+}) => {
     
     const navItemClassName = cn(styles.navItem,
         {
@@ -23,7 +35,11 @@ export const NavItem = ({ children, isActive, className }) => {
     );
 };
 
-export const Nav = ({ children, className, direction }) => {
+export const Nav: FC<INavProps> = ({
+    children,
+    className,
+    direction
+}) => {
 
     const navClassName = cn(styles.nav,
         {
@@ -37,16 +53,4 @@ export const Nav = ({ children, className, direction }) => {
             {children}
         </nav>
     );
-};
-
-NavItem.propTypes = {
-    children: PropTypes.node.isRequired,
-    isActive: PropTypes.bool,
-    className: PropTypes.string
-};
-
-Nav.propTypes = {
-    children: childrenOf(NavItem).isRequired,
-    className: PropTypes.string,
-    direction: PropTypes.string
 };

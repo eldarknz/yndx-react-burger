@@ -12,36 +12,38 @@ import { TAB_SWITCH } from "services/actions";
 
 import { INGREDIENT_CATEGORIES } from "utils/constants";
 
+import { IIngredientsStore } from "../../../declarations";
+
 import styles from "./BurgerIngredients.module.css";
 
 const BurgerIngredients = () => {
 
     const dispatch = useDispatch();
 
-    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(store => store.app);
+    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector((store: IIngredientsStore) => store.app);
 
-    const currentTab = useSelector(store => store.app.currentTab);
+    const currentTab = useSelector((store: IIngredientsStore) => store.app.currentTab);
 
-    const ingredientsSection = useRef(null);
-    const bunRef = useRef(null);
-    const sauceRef = useRef(null);
-    const mainRef = useRef(null);
+    const ingredientsSection = useRef<HTMLDivElement>(null);
+    const bunRef = useRef<HTMLHeadingElement>(null);
+    const sauceRef = useRef<HTMLHeadingElement>(null);
+    const mainRef = useRef<HTMLHeadingElement>(null);
 
-    const handleSwitchTab = (selectedtTab) => {
+    const handleSwitchTab = (selectedtTab: string) => {
         dispatch({ type: TAB_SWITCH, selectedtTab });
     };
 
     const handleScroll = () => {
-        const ingredientsTop = ingredientsSection.current.getBoundingClientRect().top;
-        const bunHeaderTop = bunRef.current.getBoundingClientRect().top;
-        const sauceHeaderTop = sauceRef.current.getBoundingClientRect().top;
-        const mainHeaderTop = mainRef.current.getBoundingClientRect().top;
+        const ingredientsTop = ingredientsSection.current!.getBoundingClientRect().top;
+        const bunHeaderTop = bunRef.current!.getBoundingClientRect().top;
+        const sauceHeaderTop = sauceRef.current!.getBoundingClientRect().top;
+        const mainHeaderTop = mainRef.current!.getBoundingClientRect().top;
 
         const closest = [
             {name: "bun", value: bunHeaderTop},
             {name: "sauce", value: sauceHeaderTop},
             {name: "main", value: mainHeaderTop}
-        ].sort( (a, b) => Math.abs(ingredientsTop - a.value) - Math.abs(ingredientsTop - b.value) )[0];
+        ].sort((a, b) => Math.abs(ingredientsTop - a.value) - Math.abs(ingredientsTop - b.value))[0];
 
         handleSwitchTab(closest.name);
     };

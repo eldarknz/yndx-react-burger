@@ -1,41 +1,56 @@
 import cn from "classnames";
 
-import { useState, useRef } from "react";
+import { useState, useRef, SyntheticEvent, ChangeEvent } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
 import { register } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";
 
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
-import { Container } from "components/ui/Grid/Grid";
-import FancyLink from "components/ui/Link/Link";
+import { Container } from "../../components/ui/Grid/Grid";
+import FancyLink from "../../components/ui/Link/Link";
+import ActionMessage from "../../components/ActionMessage/ActionMessage";
+
+import { IUserStore, ILocation, TUser } from "../../../declarations";
 
 import styles from "./styles.module.css";
+
+interface ILocationStateFrom {
+  from?: ILocation;
+}
+
+interface IFormParams {
+  name: string;
+  email: string;
+  password: string;
+}
 
 export const RegistrationPage = () => {
   const dispatch = useDispatch();
 
-  const { isLoggedIn, registerSuccess, registerRequest, registerFailed } = useSelector(store => store.user);
+  const { isLoggedIn, registerSuccess, registerRequest, registerFailed } = useSelector((store: IUserStore) => store.user);
 
-  const location = useLocation();
+  const location = useLocation<ILocationStateFrom>();
 
-  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [formData, setFormData] = useState<IFormParams>({ name: "", email: "", password: "" });
   const [isPasswordShow, setIsPasswordShow] = useState(false);
 
-  const inputRef = useRef(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  const onChangeFormData = (e) => {
+  const onChangeFormData = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(register({ ...formData }));
   }
 
   const toggleShowPassword = () => {
-    inputRef.current.type = isPasswordShow ? "password" : "text";
-    setIsPasswordShow(!isPasswordShow);
+    if (inputRef.current != null) {
+      inputRef.current.type = isPasswordShow ? "password" : "text";
+      setIsPasswordShow(!isPasswordShow);
+    }
   }
 
   if (isLoggedIn) {
@@ -88,7 +103,7 @@ export const RegistrationPage = () => {
             <Input
               type={"password"}
               placeholder={"Пароль"}
-              value={formData.password}
+              value={formData.password || ""}
               name={"password"}
               error={false}
               errorText={"Ошибка"}
@@ -99,17 +114,13 @@ export const RegistrationPage = () => {
               ref={inputRef}
             />
           </div>
-          {registerRequest ? (
-            <Button disabled={true} type="primary" size="medium" className="mb-20">Загрузка...</Button>
+          { registerRequest ? (
+            <Button disabled={true} type="primary" size="medium">Загрузка...</Button>
             ) : (
-            <Button disabled={!formData.name && !formData.email && !formData.password} type="primary" size="medium" className="mb-20">Зарегистрироваться</Button>
+            <Button disabled={!formData.name && !formData.email && !formData.password} type="primary" size="medium">Зарегистрироваться</Button>
           )}
         </form>
-        { registerFailed && (
-          <div className={styles.text}>
-            <span className="text text_type_main-default">Произошла ошибка, попробуйте еще раз.</span>
-          </div>
-        )}
+        { registerFailed && <ActionMessage text="Произошла ошибка, попробуйте еще раз." />}
         <div className={cn(styles.text, "mt-10")}>
           <span className="text text_type_main-default text_color_inactive">Уже зарегистированы?</span>
           <FancyLink href="/login" className={cn(styles.link, "text_type_main-default ml-2")}>Войти</FancyLink>

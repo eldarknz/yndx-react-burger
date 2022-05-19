@@ -1,37 +1,26 @@
 import { ApiToken } from "./ApiToken";
 
-/*
-export const ApiCall = async (url, data) => {
-    let options = null;
+interface ApiCallHeaders {
+    [key: string] : string
+}
 
-    if (data) {
-        options = {
-            method: 'POST',
-            headers: {
-                "Accept": "application/json",
-                "Content-Type": "application/json",
-            },
-            body: JSON.stringify(data)
-        }
-    }
-
-    const response = await fetch(url, options);
-    
-    if (!response.ok){
-        throw new Error(response.status);
-    }
-
-    const json = await response.json();
-    return json;
-};
-*/
+interface ApiOptions {
+    privateCall: boolean
+}
 
 export class ApiCall {
     
-    $url;
-    $data = {};
-    $privateCall = true;
-    $options = {
+    // Api Endpoint
+    private $url: string;
+
+    // Api Data
+    private $data = {};
+
+    // Api Private call - Использовать JWT авторизацию
+    private readonly $privateCall: boolean = true;
+
+    // Api Options
+    private $options: Record<string, any> = {
         method: "POST",
         headers: {
             "Accept": "application/json",
@@ -39,12 +28,13 @@ export class ApiCall {
         },
     }
 
-    constructor(url, options = {privateCall: false}) {
+    constructor(url: string, options: ApiOptions = {privateCall: false}) {
         this.$url = url;
         this.$privateCall = options.privateCall;
     }
 
-    setPrivateCall() {
+    // Установка запроса с использованием JWT
+    private setPrivateCall() {
         const accessToken = ApiToken.getAccessToken();
 
         if (accessToken) {
@@ -61,7 +51,7 @@ export class ApiCall {
     }
 
     // POST запрос
-    post(requestData) {
+    post(requestData ?: any) {
         this.$data = requestData || null;
 
         this.$options = {
@@ -75,7 +65,7 @@ export class ApiCall {
     }
 
     // PATCH запрос
-    patch(requestData) {
+    patch(requestData ?: any) {
         this.$data = requestData || null;
 
         this.$options = {
@@ -88,7 +78,8 @@ export class ApiCall {
         return this.call();
     }
 
-    setHeaders(headers) {
+    // Установка заголовков запроса
+    setHeaders(headers : ApiCallHeaders) {
         this.$options = {
             ...this.$options,
             headers: {
@@ -100,7 +91,7 @@ export class ApiCall {
     }
 
     // Вызов сервиса
-    async call() {
+    private async call() {
 
         if (this.$privateCall) {
             this.setPrivateCall();
@@ -111,7 +102,7 @@ export class ApiCall {
         });
 
         if (!response.ok){
-            throw new Error(response.status);
+            throw new Error(`${response.status}`);
         }
 
         const json = await response.json();

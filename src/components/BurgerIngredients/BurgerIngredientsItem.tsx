@@ -8,17 +8,21 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { Link, useLocation } from 'react-router-dom';
 
-import { ingredientType } from "../../utils/types";
+import { IIngredientsStore, TIngredient } from '../../../declarations';
 
 import styles from "./BurgerIngredients.module.css";
 
-const BurgerIngredientsItem = (props) => {
+interface IBurgerIngredientsItemProps {
+    ingredient: TIngredient;
+}
+
+const BurgerIngredientsItem = (props: IBurgerIngredientsItemProps) => {
     const location = useLocation();
 
     const { _id, price, image, name } = props.ingredient;
 
-    const burgerIngredients = useSelector(store => store.app.burgerIngredients);
-    const burgerBun = useSelector(store => store.app.burgerBun);
+    const burgerIngredients = useSelector((store: IIngredientsStore) => store.app.burgerIngredients);
+    const burgerBun = useSelector((store: IIngredientsStore) => store.app.burgerBun);
 
     const ingredientOccurrences = burgerIngredients.concat([burgerBun]).reduce(function(sum, ingredient) {
         if (ingredient._id === _id) {
@@ -60,7 +64,7 @@ const BurgerIngredientsItem = (props) => {
                     <div className={cn(styles.cardTitle, "text text_type_digits-default", "pt-1 pb-1")}>
                         {price}
                         <div className={styles.icon}>
-                            <CurrencyIcon tpe="primary" />
+                            <CurrencyIcon type="primary" />
                         </div>
                     </div>
                     <div className={cn(styles.cardText, "text text_type_main-default")}>{name}</div>
@@ -68,10 +72,6 @@ const BurgerIngredientsItem = (props) => {
             </Link>
         </div>
     )
-};
-
-BurgerIngredientsItem.propTypes = {
-    ingredient: ingredientType.isRequired
 };
 
 export default BurgerIngredientsItem;

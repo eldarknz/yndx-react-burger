@@ -9,7 +9,6 @@ import BurgerIngredients from '../../components/BurgerIngredients/BurgerIngredie
 import { Container, Row, Col } from '../../components/ui/Grid/Grid';
 
 export const HomePage = () => {
-
   return (
     <DndProvider backend={HTML5Backend}>
       <Container>

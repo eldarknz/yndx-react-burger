@@ -1,11 +1,30 @@
 import cn from "classnames";
 
-import React from "react";
-import PropTypes from 'prop-types';
+import { FC } from "react";
 
 import styles from "./Grid.module.css";
 
-export const Container = ({ children, fluid, className }) => {
+interface IContainerProps {
+    fluid?: boolean
+    className?: string;
+};
+
+interface IColProps {
+    col?: string;
+    className?: string;
+};
+
+interface IRowProps {
+    justifyContent?: string;
+    alignItems?: string;
+    className?: string;
+};
+
+export const Container: FC<IContainerProps>= ({
+    children,
+    fluid,
+    className
+}) => {
 
     const containerClassName = cn(
         {
@@ -21,7 +40,12 @@ export const Container = ({ children, fluid, className }) => {
     );
 };
 
-export const Row = ({ children, justifyContent, alignItems, className }) => {
+export const Row: FC<IRowProps> = ({
+    children,
+    justifyContent,
+    alignItems,
+    className
+}) => {
     
     const rowClassName = cn(styles.row,
         {
@@ -49,7 +73,11 @@ export const Row = ({ children, justifyContent, alignItems, className }) => {
     );
 };
 
-export const Col = ({ children, col, className }) => {
+export const Col: FC<IColProps> = ({
+    children,
+    col,
+    className
+}) => {
 
     const colClassName = cn(styles.col,
         {
@@ -73,23 +101,4 @@ export const Col = ({ children, col, className }) => {
             {children}
         </div> 
     );
-};
-
-Container.propTypes = {
-    children: PropTypes.node.isRequired,
-    fluid: PropTypes.bool,
-    className: PropTypes.string
-};
-
-Col.propTypes = {
-    children: PropTypes.node.isRequired,
-    col: PropTypes.string,
-    className: PropTypes.string
-};
-
-Row.propTypes = {
-    children: PropTypes.node.isRequired,
-    justifyContent: PropTypes.string,
-    alignItems: PropTypes.string,
-    className: PropTypes.string
 };
