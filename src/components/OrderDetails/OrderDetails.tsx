@@ -2,10 +2,12 @@ import cn from "classnames";
 
 import { useSelector } from 'react-redux';
 
+import { IOrderStore } from "../../../declarations";
+
 import styles from "./OrderDetails.module.css";
 
 const OrderDetails = () => {
-    const { orderNumber, orderNumberRequest, orderNumberFailed } = useSelector(store => store.order);
+    const { orderNumber, orderNumberRequest, orderNumberFailed } = useSelector((store: IOrderStore) => store.order);
 
     return (
         <div className={cn(styles.orderBlock, "pb-15")}>

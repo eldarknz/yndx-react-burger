@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import { useState } from "react";
+import { ChangeEvent, SyntheticEvent, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
 import { forgotPassword } from "../../services/actions/user";
@@ -9,8 +9,19 @@ import { ROUTES } from "../../utils/constants";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Container } from "../../components/ui/Grid/Grid";
 import FancyLink from "../../components/ui/Link/Link";
+import ActionMessage from "components/ActionMessage/ActionMessage";
+
+import { ILocation, IUserStore } from "../../../declarations";
 
 import styles from "./styles.module.css";
+
+interface ILocationStateFrom {
+  from?: ILocation;
+}
+
+interface IFormParams {
+  email: string;
+}
 
 export const ForgotPasswordPage = () => {
   const dispatch = useDispatch();
@@ -20,17 +31,17 @@ export const ForgotPasswordPage = () => {
     forgotPasswordSuccess,
     forgotPasswordRequest,
     forgotPasswordFailed
-  } = useSelector(store => store.user);
+  } = useSelector((store: IUserStore) => store.user);
 
-  const location = useLocation();
+  const location = useLocation<ILocationStateFrom>();
 
-  const [formData, setFormData] = useState({ email: "" });
+  const [formData, setFormData] = useState<IFormParams>({ email: "" });
 
-  const onChangeFormData = (e) => {
+  const onChangeFormData = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(forgotPassword({ ...formData }));
   }
@@ -70,16 +81,12 @@ export const ForgotPasswordPage = () => {
             />
           </div>
           {forgotPasswordRequest ? (
-            <Button disabled={true} type="primary" size="medium" className="mb-20">Загрузка...</Button>
+            <Button disabled={true} type="primary" size="medium">Загрузка...</Button>
             ) : (
-            <Button disabled={!formData.email} type="primary" size="medium" className="mb-20">Восстановить</Button>
+            <Button disabled={!formData.email} type="primary" size="medium">Восстановить</Button>
           )}
         </form>
-        { forgotPasswordFailed && (
-          <div className={styles.text}>
-            <span className="text text_type_main-default">Произошла ошибка, попробуйте еще раз.</span>
-          </div>
-        )}
+        { forgotPasswordFailed && <ActionMessage text="Произошла ошибка, попробуйте еще раз." /> }
         <div className={cn(styles.text, "mt-10")}>
           <span className="text text_type_main-default text_color_inactive">Вспомнили пароль?</span>
           <FancyLink href="/login" className={cn(styles.link, "text_type_main-default ml-2")}>Войти</FancyLink>

@@ -11,7 +11,7 @@ export class ApiToken {
         return getCookie(REFRESH_TOKEN);
     }
 
-    static setTokens(accessToken, refreshToken) {
+    static setTokens(accessToken: string, refreshToken: string) {
         setCookie(ACCESS_TOKEN, accessToken, {expires: 20 * 60});
         setCookie(REFRESH_TOKEN, refreshToken);
     }

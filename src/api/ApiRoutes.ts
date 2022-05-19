@@ -16,4 +16,4 @@ const ApiRoutes = {
     orders: `${API_URL}/orders`
 };
 
-export default ApiRoutes;
+export default ApiRoutes

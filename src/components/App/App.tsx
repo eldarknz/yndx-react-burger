@@ -10,6 +10,8 @@ import AppHeader from '../AppHeader/AppHeader';
 import Modal from '../../components/Modal/Modal';
 import IngredientDetails from '../../components/IngredientDetails/IngredientDetails';
 
+import { ILocation } from '../../../declarations';
+
 import {
   HomePage,
   OrdersPage,
@@ -24,11 +26,15 @@ import {
 
 import styles from "./App.module.css";
 
-function App() {
+interface ILocationBackground {
+  background?: ILocation;
+}
+
+const App = () => {
 
   const dispatch = useDispatch();
 
-  const location = useLocation();
+  const location = useLocation<ILocationBackground>();
   const history = useHistory();
 
   const background = location.state && location.state.background;
@@ -39,7 +45,7 @@ function App() {
 
   const handleCloseModal = useCallback(() => {
     history.push('/');
-  },[history]);
+  }, [history]);
 
   return (
     <>

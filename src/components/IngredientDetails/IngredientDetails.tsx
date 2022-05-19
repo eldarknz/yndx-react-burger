@@ -5,15 +5,17 @@ import { useParams } from 'react-router-dom';
 
 import { Row, Col } from "../../components/ui/Grid/Grid";
 
+import { IIngredientsStore, TIngredient } from "../../../declarations";
+
 import styles from "./IngredientDetails.module.css";
 
 const IngredientDetails = () => {
 
-    const { id } = useParams();
+    const { id } = useParams<{ id: string }>();
 
-    const { ingredients } = useSelector(store => store.app);
+    const { ingredients } = useSelector((store: IIngredientsStore) => store.app);
 
-    const viewedIngredient = ingredients.find(ingredient => ingredient._id === id);
+    const viewedIngredient = ingredients.find((ingredient: TIngredient) => ingredient._id === id);
 
     return (
         <div className={styles.ingredientBlock}>

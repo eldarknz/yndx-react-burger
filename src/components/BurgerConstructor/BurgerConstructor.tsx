@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { useDrop } from 'react-dnd';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ROUTES } from "../../utils/constants";
-import PropTypes from 'prop-types';
 
 import { Container, Row } from "../ui/Grid/Grid";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -15,17 +14,23 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import BurgerConstructorItem from "./BurgerConstructorItem";
 
-import { ingredientType } from "../../utils/types";
 import { checkAccessToken, isEmpty } from "../../utils/utils";
 
 import { getOrderNumber } from "../../services/actions/order";
 import { addIngredient, addBun } from "../../services/actions";
 
+import { IUserStore, IIngredientsStore, TIngredient } from "../../../declarations";
+
 import styles from "./BurgerConstructor.module.css";
 
-const Bun = (props) => {
+interface IBunProps {
+    type: "top" | "bottom" | undefined;
+    ingredient: TIngredient;
+}
+
+const Bun = (props: IBunProps) => {
     return (
-        <Row align="center">
+        <Row alignItems="center">
             <div className={styles.block}>
                 <ConstructorElement
                     type={props.type}
@@ -39,17 +44,12 @@ const Bun = (props) => {
     );
 };
 
-Bun.propTypes = {
-    type: PropTypes.string.isRequired,
-    ingredient: ingredientType.isRequired,
-};
-
 const BurgerConstructor = () => {
 
     const dispatch = useDispatch();
 
-    const { isLoggedIn } = useSelector(store => store.user);
-    const { burgerIngredients, burgerBun } = useSelector(store => store.app);
+    const { isLoggedIn } = useSelector((store: IUserStore) => store.user);
+    const { burgerIngredients, burgerBun } = useSelector((store: IIngredientsStore) => store.app);
 
     const history = useHistory();
     const location = useLocation();
@@ -77,12 +77,9 @@ const BurgerConstructor = () => {
         }
     }
 
-    const [{ isHover }, dropTarget] = useDrop({
+    const [, dropTarget] = useDrop({
         accept: 'ingredient',
-        collect: monitor => ({
-          isHover: monitor.isOver()
-        }),
-        drop(item) {
+        drop(item: TIngredient) {
             if (item.type === 'bun') {
                 if (item._id !== burgerBun._id) dispatch(addBun(item));
             } else {
@@ -107,10 +104,7 @@ const BurgerConstructor = () => {
                     {
                         <div 
                             className={cn(styles.ingredientsBlock,
-                                "mt-25 ml-4",
-                                {
-                                    [styles.onHover]: isHover
-                                }
+                                "mt-25 ml-4"
                             )}
                             ref={dropTarget}
                         >

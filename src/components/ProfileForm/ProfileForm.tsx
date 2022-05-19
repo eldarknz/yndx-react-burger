@@ -1,18 +1,22 @@
 import cn from "classnames";
 
-import { useState, useRef, useEffect } from 'react';
+import { FC, useState, useRef, useEffect, ChangeEvent, SyntheticEvent } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, updateUser } from "../../services/actions/user";
-
-import PropTypes from 'prop-types';
 
 import { UPDATE_USER_CLEAR } from "../../services/actions/user";
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
+import { IUserStore, TUser } from "../../../declarations";
+
 import styles from './ProfileForm.module.css';
 
-const ProfileFormMessage = ({ text }) => {
+interface IProfileFormMessageProps {
+  text: string;
+};
+
+const ProfileFormMessage = ({ text }: IProfileFormMessageProps) => {
   const dispatch = useDispatch();
   const [show, setShow] = useState(true);
 
@@ -35,24 +39,20 @@ const ProfileFormMessage = ({ text }) => {
   ) : ( null );
 };
 
-ProfileFormMessage.propTypes = {
-  text: PropTypes.string.isRequired
-};
-
-const ProfileForm = () => {
+const ProfileForm: FC = () => {
 
   const dispatch = useDispatch();
 
-  const { updateUserRequest, updateUserFailed, updateUserSuccess } = useSelector(store => store.user);
+  const { updateUserRequest, updateUserFailed, updateUserSuccess } = useSelector((store: IUserStore) => store.user);
 
-  const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+  const [formData, setFormData] = useState<TUser>({ name: "", email: "", password: "" });
 
   const [isInputDisabled, setIsInputDisabled] = useState(true);
   const [isPasswordShow, setIsPasswordShow] = useState(false);
 
-  const inputRef = useRef(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
-  const onChangeFormData = (e) => {
+  const onChangeFormData = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
@@ -61,7 +61,9 @@ const ProfileForm = () => {
     if (mounted) {
       dispatch(getUser(formData, setFormData));
     }
-    return () => mounted = false;
+    return () => {
+      mounted = false;
+    }
     // eslint-disable-next-line
   }, []);
 
@@ -70,13 +72,17 @@ const ProfileForm = () => {
   }
 
   const toggleShowPassword = () => {
-    inputRef.current.type = isPasswordShow ? "password" : "text";
-    setIsPasswordShow(!isPasswordShow);
+    if (inputRef.current != null) {
+      inputRef.current.type = isPasswordShow ? "password" : "text";
+      setIsPasswordShow(!isPasswordShow);
+    }
   }
 
-  const handleCancel = (e) => {
+  const handleCancel = (e: SyntheticEvent) => {
     e.preventDefault();
-    inputRef.current.type = "password";
+    if (inputRef.current != null) {
+      inputRef.current.type = "password";
+    }
     setIsPasswordShow(false);
     setIsInputDisabled(true);
 
@@ -84,9 +90,11 @@ const ProfileForm = () => {
     setFormData({ ...formData, password: "" });
   }
 
-  const handleSave = (e) => {
+  const handleSave = (e: SyntheticEvent) => {
     e.preventDefault();
-    inputRef.current.type = "password";
+    if (inputRef.current != null) {
+      inputRef.current.type = "password";
+    }
     setIsPasswordShow(false);
     setIsInputDisabled(true);
 
@@ -133,7 +141,7 @@ const ProfileForm = () => {
           <Input
             type={'password'}
             placeholder={'Пароль'}
-            value={formData.password}
+            value={formData.password || ""}
             name={'password'}
             error={false}
             errorText={'Ошибка'}

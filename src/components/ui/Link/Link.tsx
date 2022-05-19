@@ -1,13 +1,27 @@
 import cn from "classnames";
 
-import React from "react";
-import PropTypes from 'prop-types';
+import React, { FC } from "react";
 
 import { Link, useRouteMatch } from 'react-router-dom';
 
 import styles from "./Link.module.css";
 
-const FancyLink = ({ href, isActive, children, className, onClick, isExact = false}) => {
+interface IFancyLinkProps {
+    href?: string;
+    isActive?: boolean;
+    className?: string;
+    onClick?: React.MouseEventHandler<HTMLElement>;
+    isExact?: boolean;
+}
+
+const FancyLink: FC<IFancyLinkProps> = ({
+    href,
+    isActive,
+    children,
+    className,
+    onClick,
+    isExact = false
+}) => {
 
     const match = useRouteMatch({
         path: href,
@@ -45,15 +59,6 @@ const FancyLink = ({ href, isActive, children, className, onClick, isExact = fal
             {children}
         </Link>
     );
-};
-
-FancyLink.propTypes = {
-    href: PropTypes.string,
-    isActive: PropTypes.bool,
-    children: PropTypes.node.isRequired,
-    className: PropTypes.string,
-    onClick: PropTypes.func,
-    isExact: PropTypes.bool,
 };
 
 export default FancyLink

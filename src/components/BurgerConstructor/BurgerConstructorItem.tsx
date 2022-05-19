@@ -1,7 +1,6 @@
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
 import { useDispatch } from 'react-redux';
-import PropTypes from 'prop-types';
 
 import { Row } from "../ui/Grid/Grid";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -9,17 +8,26 @@ import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { deleteIngredient, swapIngredients } from 'services/actions';
 
-import { ingredientType } from "../../utils/types";
+import { TIngredient } from '../../../declarations';
 
 import styles from "./BurgerConstructor.module.css";
 
-const BurgerConstructorItem = (props) => {
+interface IBurgerConstructorItemProps {
+    ingredient: TIngredient;
+    index: number;
+}
+
+type TItemDraggable = TIngredient & {
+    index: number;
+}
+
+const BurgerConstructorItem = (props: IBurgerConstructorItemProps) => {
 
     const dispatch = useDispatch();
 
     const { price, image, name } = props.ingredient;
 
-    const ref = useRef(null);
+    const ref = useRef<HTMLDivElement>(null);
 
     const [{ opacity }, dragRef] = useDrag({
         type: 'burgerIngredient',
@@ -31,7 +39,7 @@ const BurgerConstructorItem = (props) => {
 
     const [, dropRef] = useDrop({
         accept: 'burgerIngredient',
-        hover: (item, monitor) => {
+        hover: (item: TItemDraggable, monitor) => {
             if (!ref.current) return;
             
             const dragIndex = item.index;
@@ -43,7 +51,7 @@ const BurgerConstructorItem = (props) => {
             const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2;
             const clientOffset = monitor.getClientOffset();
 
-            const hoverClientY = clientOffset.y - hoverBoundingRect.top;
+            const hoverClientY = clientOffset != null ? (clientOffset.y - hoverBoundingRect.top) : 0;
 
             if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) return;
             if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) return;
@@ -58,7 +66,7 @@ const BurgerConstructorItem = (props) => {
 
     return (
         <div ref={ref} style={{ opacity }}>
-            <Row align="center">
+            <Row alignItems="center">
                 {
                     <div 
                         className={styles.block}
@@ -79,11 +87,6 @@ const BurgerConstructorItem = (props) => {
             </Row>
         </div>
     );
-};
-
-BurgerConstructorItem.propTypes = {
-    index: PropTypes.number.isRequired,
-    ingredient: ingredientType.isRequired
 };
 
 export default BurgerConstructorItem

@@ -1,6 +1,6 @@
 import cn from "classnames";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, SyntheticEvent, ChangeEvent  } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect, useLocation } from "react-router-dom";
 import { login } from "../../services/actions/user";
@@ -12,22 +12,34 @@ import { loginSuccess } from "../../services/actions/user";
 import { Button, Input } from "@ya.praktikum/react-developer-burger-ui-components";
 import { Container } from "../../components/ui/Grid/Grid";
 import FancyLink from "../../components/ui/Link/Link";
+import ActionMessage from "components/ActionMessage/ActionMessage";
+
+import { IUserStore, ILocation } from "../../../declarations";
 
 import styles from "./styles.module.css";
+
+interface ILocationStateFrom {
+  from?: ILocation;
+}
+
+interface IFormParams {
+  email: string;
+  password: string;
+}
 
 export const LoginPage = () => {
   const dispatch = useDispatch();
 
-  const { isLoggedIn, loginFailed, loginRequest } = useSelector(store => store.user);
+  const { isLoggedIn, loginFailed, loginRequest } = useSelector((store: IUserStore) => store.user);
+
+  const location = useLocation<ILocationStateFrom>();
 
   const isAccessToken = checkAccessToken();
 
-  const { state } = useLocation();
-
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState<IFormParams>({ email: "", password: "" });
   const [isPasswordShow, setIsPasswordShow] = useState(false);
 
-  const inputRef = useRef(null)
+  const inputRef = useRef<HTMLInputElement>(null)
 
   useEffect(() => {
     if (!isLoggedIn && isAccessToken) {
@@ -36,24 +48,33 @@ export const LoginPage = () => {
     // eslint-disable-next-line
   }, []);
 
-  const onChangeFormData = (e) => {
+  const onChangeFormData = (e: ChangeEvent<HTMLInputElement>) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: SyntheticEvent) => {
     e.preventDefault();
     dispatch(login({ ...formData }));
     setFormData({ ...formData, password: "" });
   }
 
   const toggleShowPassword = () => {
-    inputRef.current.type = isPasswordShow ? "password" : "text";
-    setIsPasswordShow(!isPasswordShow);
+    if (inputRef.current != null) {
+      inputRef.current.type = isPasswordShow ? "password" : "text";
+      setIsPasswordShow(!isPasswordShow);
+    }
   }
 
   if (isLoggedIn && isAccessToken) {
     return (
-      <Redirect to={state?.from || ROUTES.home.path}/>
+      <Redirect to={location.state?.from || ROUTES.home.path}/>
+      /**
+       * location.state.from doesn't work when change url in browser's address bar.
+       * It need fixing, but i don't know how yet.
+       * 
+       * location.state.from doesn't work when change url in browser's address bar.
+       * <Redirect to={location.state?.from || ROUTES.home.path}/>
+       */
     );
   }
 
@@ -77,7 +98,7 @@ export const LoginPage = () => {
               errorText={"Ошибка"}
               size={"default"}
               onChange={onChangeFormData}
-              onFocus={true}
+              //onFocus={true}
             />
           </div>
           <div className={cn(styles.inputField)}>
@@ -96,16 +117,12 @@ export const LoginPage = () => {
             />
           </div>
           {loginRequest ? (
-            <Button disabled={true} type="primary" size="medium" className="mb-20">Загрузка...</Button>
+            <Button disabled={true} type="primary" size="medium">Загрузка...</Button>
             ) : (
-            <Button type="primary" size="medium" className="mb-20">Войти</Button>
+            <Button type="primary" size="medium">Войти</Button>
           )}
         </form>
-        { loginFailed && (
-          <div className={styles.text}>
-            <span className="text text_type_main-default">Произошла ошибка, попробуйте еще раз.</span>
-          </div>
-        )}
+        { loginFailed && <ActionMessage text="Произошла ошибка, попробуйте еще раз." />}
         <div className={cn(styles.text, "mt-10 mb-4")}>
           <span className="text text_type_main-default text_color_inactive">Вы — новый пользователь?</span>
           <FancyLink href="/register" className={cn(styles.link, "text_type_main-default ml-2")}>Зарегистироваться</FancyLink>
