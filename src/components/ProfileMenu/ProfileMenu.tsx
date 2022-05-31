@@ -39,9 +39,16 @@ const ProfileMenu = () => {
                     </FancyLink>
                 </NavItem>
             </Nav>
-            { location.pathname === '/profile' && (
-                <p className={cn(styles.text, "text text_type_main-default text_color_inactive mt-20")}>В этом разделе вы можете изменить свои персональные данные</p>
-            )}
+            {
+                location.pathname === '/profile' && (
+                    <p className={cn(styles.text, "text text_type_main-default text_color_inactive mt-20")}>В этом разделе вы можете изменить свои персональные данные</p>
+                )
+            }
+            {
+                location.pathname === '/profile/orders' && (
+                    <p className={cn(styles.text, "text text_type_main-default text_color_inactive mt-20")}>В этом разделе вы можете просмотреть свою историю заказов</p>
+                )
+            }
         </div>
     )
 }
