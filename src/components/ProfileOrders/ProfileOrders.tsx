@@ -1,37 +1,57 @@
 import cn from "classnames";
 
-import { Container, Row, Col } from "components/ui/Grid/Grid";
+import { OrderItems } from "./OrderItem";
 
 import styles from "./ProfileOrders.module.css";
 
 const ProfileOrders = () => {
 
-    const orders: any = [
-        {
-            id: "0",
-            dateCreate: "Сегодня, 16:20 i-GMT+3",
-            orderNumber: "034535",
-            burgerName: "Death Star Starship Main бургер",
-            orderId: "Создан",
-            ingredients: []
-        },
-        {
-            id: "1",
-            dateCreate: "Сегодня, 13:20 i-GMT+3",
-            orderNumber: "034534",
-            burgerName: "Interstellar бургер",
-            orderId: "Готовится",
-            ingredients: []
-        },
-        {
-            id: "2",
-            dateCreate: "Сегодня, 13:50 i-GMT+3",
-            orderNumber: "034533",
-            burgerName: "Black Hole Singularity острый бургер",
-            orderId: "Выполнен",
-            ingredients: []
-        },
-    ]
+    const data: any = {
+        "success": true,
+        "orders": [
+            {
+                _id: "0",
+                createdAt: "2021-06-23T20:13:23.654Z",
+                updatedAt: "2021-06-23T20:13:23.657Z",
+                number: "034535",
+                name: "Death Star Starship Main бургер",
+                status: "created",
+                ingredients: [
+                    "60d3b41abdacab0026a733c6"
+                ]
+            },
+            {
+                _id: "1",
+                createdAt: "2021-06-23T20:11:01.403Z",
+                updatedAt: "2021-06-23T20:11:01.406Z",
+                number: "034534",
+                name: "Interstellar бургер",
+                status: "pending",
+                ingredients: [
+                    "60d3b41abdacab0026a733c7",
+                    "60d3b41abdacab0026a733c9",
+                    "60d3b41abdacab0026a733cd"
+                ]
+            },
+            {
+                _id: "2",
+                createdAt: "2021-06-23T14:43:22.587Z",
+                updatedAt: "2021-06-23T14:43:22.603Z",
+                number: "034533",
+                name: "Black Hole Singularity острый бургер",
+                status: "done",
+                ingredients: [
+                    "60d3b41abdacab0026a733c6",
+                    "60d3b41abdacab0026a733ca",
+                    "60d3b41abdacab0026a733cb",
+                    "60d3b41abdacab0026a733cf",
+                    "60d3b41abdacab0026a733d0",
+                    "60d3b41abdacab0026a733d1",
+                    "60d3b41abdacab0026a733d2"
+                ]
+            },
+        ]
+    }
     const ordersRequest: boolean = false;
     const ordersFailed: boolean = false;
 
@@ -45,33 +65,8 @@ const ProfileOrders = () => {
                 {
                     <div className={styles.cardGroup}>
                         {
-                            !ordersFailed && !ordersRequest && orders.map((order: any) => (
-                                <div key={order.id} className={cn(styles.card, "mb-6")}>
-                                    <Row>
-                                        <Col col="auto">
-                                            <p className="text text_type_digits-default">{`#${order.orderNumber}`}</p>
-                                        </Col>
-                                        <Col>
-                                            <p className="text text_type_main-default text_color_inactive" style={{ textAlign: 'right' }}>{order.dateCreate}</p>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col col="12">
-                                            <p className="text text_type_main-medium pb-2">{order.burgerName}</p>
-                                        </Col>
-                                        <Col col="12">
-                                            <p className="text text_type_main-small">{order.orderId}</p>
-                                        </Col>
-                                    </Row>
-                                    <Row>
-                                        <Col>
-                                            <p className="text text_type_digits-default">{`#${order.orderNumber}`}</p>
-                                        </Col>
-                                        <Col col="auto">
-                                            <p className="text text_type_main-default text_color_inactive" style={{ textAlign: 'right' }}>{order.dateCreate}</p>
-                                        </Col>
-                                    </Row>
-                                </div>
+                            !ordersFailed && !ordersRequest && data.orders.map((order: any) => (
+                                <OrderItems key={order._id} order={order} />
                             ))
                         }
                     </div>

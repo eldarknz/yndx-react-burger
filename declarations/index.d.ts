@@ -20,6 +20,16 @@ export type TUser = {
     password?: string 
 }
 
+export type TOrder = {
+    ingredients: string[],
+    name: string,
+    _id: string,
+    status: 'done' | 'pending' | 'created';
+    number: number,
+    createdAt: string,
+    updatedAt: string
+}
+
 export interface IUserStore {
     user: {
         isLoggedIn: boolean;

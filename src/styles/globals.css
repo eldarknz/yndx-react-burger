@@ -31,6 +31,10 @@ a:active {
     margin-right: auto;
 }
 
+.displayFlex {
+    display: flex;
+}
+
 .alignItemsCenter {
     align-items: center;
 }

@@ -2,6 +2,8 @@
  * Для теста
  */
 //import { getItemsRequest } from "../initialIngredients";
+import { getOrdersRequest } from "../orders";
+
 import { v4 as uuidv4 } from 'uuid';
 
 import { ApiCall } from "../../api/ApiCall";
@@ -30,6 +32,26 @@ export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
 /**
  * Для теста
  */
+/*export const getOrders = () => {
+  return (dispatch) => {
+    dispatch({
+      type: GET_ORDERS_REQUEST
+    });
+    getOrdersRequest().then(res => {
+      if (res && res.success) {
+        dispatch({
+          type: GET_ORDERS_SUCCESS,
+          ingredients: res.data
+        });
+      } else {
+        dispatch({
+          type: GET_ORDERS_FAILED
+        });
+      }
+    });
+  };
+}*/
+
 /*export const getIngredients = () => {
     return (dispatch) => {
       dispatch({
