@@ -24,7 +24,7 @@ const BurgerIngredientsItem = (props: IBurgerIngredientsItemProps) => {
     const burgerIngredients = useSelector((store: IIngredientsStore) => store.app.burgerIngredients);
     const burgerBun = useSelector((store: IIngredientsStore) => store.app.burgerBun);
 
-    const ingredientOccurrences = burgerIngredients.concat([burgerBun]).reduce(function(sum, ingredient) {
+    const ingredientOccurrences = burgerIngredients.concat(burgerBun ? [burgerBun] : []).reduce(function(sum, ingredient) {
         if (ingredient._id === _id) {
             if (ingredient.type === 'bun') return sum + 2;
             return sum + 1;
@@ -42,7 +42,7 @@ const BurgerIngredientsItem = (props: IBurgerIngredientsItemProps) => {
 
     return (
         <div
-            className={cn(styles.card, "ml-4 mr-2 mb-8")}
+            className={cn(styles.card, "ml-4 mr-1 mb-8")}
             ref={dragRef}
             style={{ opacity }}
         >

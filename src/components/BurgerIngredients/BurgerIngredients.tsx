@@ -8,9 +8,9 @@ import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import BurgerIngredientsItem from "./BurgerIngredientsItem";
 
-import { TAB_SWITCH } from "services/actions";
+import { TAB_SWITCH } from "../../services/constants/burger";
 
-import { INGREDIENT_CATEGORIES } from "utils/constants";
+import { INGREDIENT_CATEGORIES } from "../../utils/constants";
 
 import { IIngredientsStore } from "../../../declarations";
 
@@ -29,8 +29,8 @@ const BurgerIngredients = () => {
     const sauceRef = useRef<HTMLHeadingElement>(null);
     const mainRef = useRef<HTMLHeadingElement>(null);
 
-    const handleSwitchTab = (selectedtTab: string) => {
-        dispatch({ type: TAB_SWITCH, selectedtTab });
+    const handleSwitchTab = (selectedTab: string) => {
+        dispatch({ type: TAB_SWITCH, selectedTab });
     };
 
     const handleScroll = () => {

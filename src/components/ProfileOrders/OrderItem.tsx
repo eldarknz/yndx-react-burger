@@ -3,7 +3,7 @@ import cn from "classnames";
 import { FC } from "react";
 import { useSelector } from "react-redux";
 
-import { Container, Row, Col } from "../../components/ui/Grid/Grid";
+import { Row, Col } from "../../components/ui/Grid/Grid";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { IIngredientsStore, TIngredient, TOrder } from "../../../declarations";

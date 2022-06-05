@@ -2,14 +2,29 @@
  * Для теста
  */
 //import { getItemsRequest } from "../initialIngredients";
-import { getOrdersRequest } from "../orders";
+//import { getOrdersRequest } from "../orders";
 
 import { v4 as uuidv4 } from 'uuid';
 
 import { ApiCall } from "../../api/ApiCall";
 import ApiRoutes from '../../api/ApiRoutes'
 
-export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
+import {
+  GET_INGREDIENTS_REQUEST,
+  GET_INGREDIENTS_SUCCESS,
+  GET_INGREDIENTS_FAILED,
+  ADD_INGREDIENT,
+  DELETE_INGREDIENT,
+  ADD_BUN,
+  SWAP_INGREDIENTS,
+  GET_INGREDIENT_DETAILS,
+  DELETE_INGREDIENT_DETAILS,
+  CLEAR_CONSTRUCTOR,
+  TAB_SWITCH
+} from "../constants/burger"
+import { TIngredient } from "../../../declarations";
+
+/*export const GET_INGREDIENTS_REQUEST = 'GET_INGREDIENTS_REQUEST';
 export const GET_INGREDIENTS_SUCCESS = 'GET_INGREDIENTS_SUCCESS';
 export const GET_INGREDIENTS_FAILED = 'GET_INGREDIENTS_FAILED';
 
@@ -27,7 +42,7 @@ export const DELETE_INGREDIENT_DETAILS = 'DELETE_INGREDIENT_DETAILS';
 
 export const TAB_SWITCH = 'TAB_SWITCH';
 
-export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
+export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';*/
 
 /**
  * Для теста
@@ -72,8 +87,73 @@ export const CLEAR_CONSTRUCTOR = 'CLEAR_CONSTRUCTOR';
     };
 }*/
 
+/**
+ * Ingredients actions typing
+ */
+
+export interface IGetIngredientsRequestAction {
+  readonly type: typeof GET_INGREDIENTS_REQUEST;
+}
+
+export interface IGetIngredientsSuccessAction {
+  readonly type: typeof GET_INGREDIENTS_SUCCESS;
+  readonly ingredients: TIngredient;
+}
+
+export interface IGetIngredientsFailedAction {
+  readonly type: typeof GET_INGREDIENTS_FAILED;
+}
+
+export interface IAddIngredientAction {
+  readonly type: typeof ADD_INGREDIENT;
+  readonly payload: {
+    readonly ingredient: TIngredient;
+    readonly uuid: string;
+  }
+}
+
+export interface IDeleteIngredientAction {
+  readonly type: typeof DELETE_INGREDIENT;
+  readonly ingredient: TIngredient;
+}
+
+export interface IAddBunAction {
+  readonly type: typeof ADD_BUN;
+  readonly ingredient: TIngredient;
+}
+
+export interface ISwapIngredientsAction {
+  readonly type: typeof SWAP_INGREDIENTS;
+  readonly payload: {
+    readonly dragIndex: number;
+    readonly hoverIndex: number;
+  }
+}
+
+export interface IGetIngredientDetailsAction {
+  readonly type: typeof GET_INGREDIENT_DETAILS;
+  readonly ingredient: TIngredient;
+}
+
+export interface IDeleteIngredientDetailsAction {
+  readonly type: typeof DELETE_INGREDIENT_DETAILS;
+}
+
+export interface IClearConstructionAction {
+  readonly type: typeof CLEAR_CONSTRUCTOR;
+}
+
+export interface ITabSwitchAction {
+  readonly type: typeof TAB_SWITCH;
+  readonly selectedTab: string;
+}
+
+/**
+ * Ingredients thunk
+ */
+
 export const getIngredients = () => {
-  return (dispatch) => {
+  return (dispatch: any) => {
       dispatch({
           type: GET_INGREDIENTS_REQUEST
       });
@@ -101,7 +181,7 @@ export const getIngredients = () => {
 
 const getIngredientsFailed = () => ({ type: GET_INGREDIENTS_FAILED });
 
-export const swapIngredients = ( dragIndex, hoverIndex ) => {
+export const swapIngredients = (dragIndex: number, hoverIndex: number): ISwapIngredientsAction => {
   return { 
     type: SWAP_INGREDIENTS,
     payload: {
@@ -111,7 +191,7 @@ export const swapIngredients = ( dragIndex, hoverIndex ) => {
   };
 }
 
-export const addIngredient = ( ingredient ) => {
+export const addIngredient = (ingredient: TIngredient): IAddIngredientAction => {
   return {
     type: ADD_INGREDIENT,
     payload: {
@@ -121,15 +201,33 @@ export const addIngredient = ( ingredient ) => {
   };
 }
 
-export const deleteIngredient = ( ingredient ) => {
+export const deleteIngredient = (ingredient: TIngredient): IDeleteIngredientAction => {
   return {
-    type: DELETE_INGREDIENT, ingredient
+    type: DELETE_INGREDIENT,
+    ingredient
   };
 };
 
-export const addBun = ( ingredient ) => {
+export const addBun = (ingredient: TIngredient): IAddBunAction => {
   return {
     type: ADD_BUN,
     ingredient 
   };
 };
+
+/**
+ * Union type
+ */
+
+ export type TBurgerActions =
+ | IGetIngredientsRequestAction
+ | IGetIngredientsSuccessAction
+ | IGetIngredientsFailedAction
+ | IAddIngredientAction
+ | IDeleteIngredientAction
+ | IAddBunAction
+ | ISwapIngredientsAction
+ | IGetIngredientDetailsAction
+ | IDeleteIngredientDetailsAction
+ | IClearConstructionAction
+ | ITabSwitchAction;

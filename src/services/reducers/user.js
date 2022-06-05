@@ -33,7 +33,7 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_CLEAR
 
-} from "../actions/user";
+} from "../constants/user";
 
 const initialState = {
     isLoggedIn: false,

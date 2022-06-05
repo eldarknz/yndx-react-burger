@@ -14,7 +14,10 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import BurgerConstructorItem from "./BurgerConstructorItem";
 
-import { checkAccessToken, isEmpty } from "../../utils/utils";
+import {
+    checkAccessToken,
+    //isEmpty
+} from "../../utils/utils";
 
 import { getOrderNumber } from "../../services/actions/order";
 import { addIngredient, addBun } from "../../services/actions";
@@ -56,7 +59,8 @@ const BurgerConstructor = () => {
 
     const [modalVisible, setModalVisible] = useState(false);
 
-    const totalPrice = burgerIngredients.reduce((acc, item) => acc + item.price, 0) + (!isEmpty(burgerBun) ? burgerBun.price * 2 : 0);
+    //const totalPrice = burgerIngredients.reduce((acc, item) => acc + item.price, 0) + (!isEmpty(burgerBun) ? burgerBun.price * 2 : 0);
+    const totalPrice = burgerIngredients.reduce((acc, item) => acc + item.price, 0) + (burgerBun ? burgerBun.price * 2 : 0);
 
     const handleOpenModal = () => setModalVisible(true);
     
@@ -64,7 +68,8 @@ const BurgerConstructor = () => {
 
     const handleOrderSubmit = () => {
         if (isLoggedIn && checkAccessToken()) {
-            if (!isEmpty(burgerBun) && burgerIngredients.length > 0) {
+            //if (!isEmpty(burgerBun) && burgerIngredients.length > 0) {
+            if (burgerBun && burgerIngredients.length > 0) {
                 const order = burgerIngredients.concat([burgerBun]).map(ingredient => ingredient._id);
                 dispatch(getOrderNumber(order));
                 handleOpenModal();
@@ -108,14 +113,17 @@ const BurgerConstructor = () => {
                             )}
                             ref={dropTarget}
                         >
-                            {isEmpty(burgerBun) && burgerIngredients.length === 0 && (
+                            {/*isEmpty(burgerBun) && burgerIngredients.length === 0 && (*/}
+                            {!burgerBun && burgerIngredients.length === 0 && (
                                 <p className="text text_type_main-default pt-4 pr-10 pb-4 pl-10">Добавьте ингредиенты</p>
                             )}
-                            { !isEmpty(burgerBun) && <Bun type={'top'} ingredient={burgerBun} /> }
+                            {/*!isEmpty(burgerBun) && <Bun type={'top'} ingredient={burgerBun} /> */}
+                            {burgerBun && <Bun type={'top'} ingredient={burgerBun} /> }
                             <div className={styles.blockList}>
                                 {content()}
                             </div>
-                            { !isEmpty(burgerBun) && <Bun type={'bottom'} ingredient={burgerBun} />}
+                            {/*!isEmpty(burgerBun) && <Bun type={'tobottomp'} ingredient={burgerBun} /> */}
+                            {burgerBun && <Bun type={'bottom'} ingredient={burgerBun} />}
                         </div>
                     }
                     <Row alignItems="center" justifyContent="flex-end" className={cn(styles.priceBlock, "pt-10")}>

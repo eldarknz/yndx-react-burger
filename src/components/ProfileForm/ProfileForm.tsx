@@ -4,7 +4,7 @@ import { FC, useState, useRef, useEffect, ChangeEvent, SyntheticEvent } from 're
 import { useDispatch, useSelector } from 'react-redux';
 import { getUser, updateUser } from "../../services/actions/user";
 
-import { UPDATE_USER_CLEAR } from "../../services/actions/user";
+import { UPDATE_USER_CLEAR } from "../../services/constants/user";
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 

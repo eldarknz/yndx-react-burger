@@ -2,7 +2,7 @@ import {
     GET_ORDER_NUMBER_REQUEST,
     GET_ORDER_NUMBER_SUCCESS,
     GET_ORDER_NUMBER_FAILED
-} from '../actions/order';
+} from '../constants/order';
 
 const initialState = {
     orderNumber: null,

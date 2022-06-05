@@ -11,7 +11,7 @@ import { Container } from "../../components/ui/Grid/Grid";
 import FancyLink from "../../components/ui/Link/Link";
 import ActionMessage from "../../components/ActionMessage/ActionMessage";
 
-import { IUserStore, ILocation, TUser } from "../../../declarations";
+import { IUserStore, ILocation } from "../../../declarations";
 
 import styles from "./styles.module.css";
 

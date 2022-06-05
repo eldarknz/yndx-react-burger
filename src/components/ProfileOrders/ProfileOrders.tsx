@@ -1,5 +1,3 @@
-import cn from "classnames";
-
 import { OrderItems } from "./OrderItem";
 
 import styles from "./ProfileOrders.module.css";

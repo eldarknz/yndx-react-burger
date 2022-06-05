@@ -3,6 +3,9 @@
  */
 //import { bun, ingredients } from '../initialIngredients';
 
+import { TBurgerActions } from '../actions/index';
+import { TIngredient } from '../../../declarations';
+
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
@@ -15,28 +18,42 @@ import {
     GET_INGREDIENT_DETAILS,
     DELETE_INGREDIENT_DETAILS,
     CLEAR_CONSTRUCTOR
-} from '../actions/index';
+} from '../constants/burger';
 
-const initialState = {
+export type TBurgerState = {
+    ingredients: Array<TIngredient>,
+    ingredientsRequest: boolean,
+    ingredientsFailed: boolean,
+
+    burgerIngredients: Array<TIngredient>,
+    burgerBun: TIngredient | null,
+
+    viewedIngredient: TIngredient | null,
+
+    currentTab: string
+}
+
+const initialState: TBurgerState = {
 
     ingredients: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
 
     burgerIngredients: [],
-    burgerBun: {},
+    burgerBun: null,
 
     viewedIngredient: null,
 
     currentTab: 'bun'
 };
 
-export const appReducer = (state = initialState, action) => {
+export const appReducer = (state = initialState, action: TBurgerActions) => {
     switch (action.type) {
         case TAB_SWITCH: {
             return {
                 ...state,
-                currentTab: state.currentTab !== action.selectedtTab ? action.selectedtTab : state.currentTab
+                currentTab: action.selectedTab
+                //currentTab: state.currentTab !== action.selectedTab ? action.selectedTab : state.currentTab
             };
         }
         case GET_INGREDIENTS_REQUEST: {
