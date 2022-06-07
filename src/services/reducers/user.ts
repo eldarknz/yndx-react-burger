@@ -1,4 +1,6 @@
 //import { ApiToken } from "api/ApiToken";
+import { TUserActions } from "services/actions/user";
+
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -35,10 +37,43 @@ import {
 
 } from "../constants/user";
 
-const initialState = {
-    isLoggedIn: false,
+export type TUserState = {
+  isLoggedIn: boolean,
 
-    user: null,
+  loginRequest: boolean,
+  loginFailed: boolean,
+
+  logoutSuccess: boolean,
+  logoutRequest: boolean,
+  logoutFailed: boolean,
+
+  registerSuccess: boolean,
+  registerRequest: boolean,
+  registerFailed: boolean,
+
+  forgotPasswordSuccess: boolean,
+  forgotPasswordRequest: boolean,
+  forgotPasswordFailed: boolean,
+
+  resetPasswordSuccess: boolean,
+  resetPasswordRequest: boolean,
+  resetPasswordFailed: boolean,
+
+  tokenRequest: boolean,
+  tokenSuccess: boolean,
+  tokenFailed: boolean,
+
+  getUserRequest: boolean,
+  getUserSuccess: boolean,
+  getUserFailed: boolean,
+
+  updateUserRequest: boolean,
+  updateUserSuccess: boolean,
+  updateUserFailed: boolean,
+}
+
+const initialState: TUserState = {
+    isLoggedIn: false,
 
     loginRequest: false,
     loginFailed: false,
@@ -72,7 +107,7 @@ const initialState = {
     updateUserFailed: false,
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions) => {
   switch (action.type) {
     case LOGIN_REQUEST: {
       return {
@@ -143,13 +178,13 @@ export const userReducer = (state = initialState, action) => {
       }
     }
 
-    case FORGOT_PASSWORD_REQUEST:{
+    case FORGOT_PASSWORD_REQUEST: {
       return {
         ...state,
         forgotPasswordRequest: true,
       }
     }
-    case FORGOT_PASSWORD_SUCCESS:{
+    case FORGOT_PASSWORD_SUCCESS: {
       return {
         ...state,
         forgotPasswordSuccess: true,
@@ -165,13 +200,13 @@ export const userReducer = (state = initialState, action) => {
       }
     }
 
-    case RESET_PASSWORD_REQUEST:{
+    case RESET_PASSWORD_REQUEST: {
       return {
         ...state,
         resetPasswordRequest: true,
       }
     }
-    case RESET_PASSWORD_SUCCESS:{
+    case RESET_PASSWORD_SUCCESS: {
       return {
         ...state,
         resetPasswordSuccess: true,

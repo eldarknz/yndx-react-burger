@@ -21,6 +21,7 @@ export interface IGetOrderNumberRequestAction {
 
 export interface IGetOrderNumberSuccessAction {
   readonly type: typeof GET_ORDER_NUMBER_SUCCESS;
+  readonly orderNumber: string;
 }
 
 export interface IGetOrderNumberFailedAction {
@@ -71,5 +72,5 @@ const getOrderNumberFailed = (): IGetOrderNumberFailedAction => ({
 
  export type TGetOrderNumberActions =
  | IGetOrderNumberRequestAction
- | IGetOrderNumberFailedAction
+ | IGetOrderNumberSuccessAction
  | IGetOrderNumberFailedAction;

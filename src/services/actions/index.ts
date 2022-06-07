@@ -219,7 +219,7 @@ export const addBun = (ingredient: TIngredient): IAddBunAction => {
  * Union type
  */
 
- export type TBurgerActions =
+export type TBurgerActions =
  | IGetIngredientsRequestAction
  | IGetIngredientsSuccessAction
  | IGetIngredientsFailedAction

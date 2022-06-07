@@ -130,6 +130,7 @@ export interface ILogoutRequestAction {
 
 export interface ILogoutSuccessAction {
     readonly type: typeof LOGOUT_SUCCESS;
+    readonly isLoggedIn: boolean;
 }
 
 export interface ILogoutFailedAction {
@@ -349,6 +350,10 @@ export interface IUpdateUserFailedAction {
     readonly type: typeof UPDATE_USER_FAILED;
 }
 
+export interface IUpdateUserClearAction {
+    readonly type: typeof UPDATE_USER_CLEAR;
+}
+
 /**
  * UpdateUser thunk
  */
@@ -448,4 +453,5 @@ export type TUserActions =
     | IGetUserFailedAction
     | IUpdateUserRequestAction
     | IUpdateUserSuccessAction
-    | IUpdateUserFailedAction;
+    | IUpdateUserFailedAction
+    | IUpdateUserClearAction;
