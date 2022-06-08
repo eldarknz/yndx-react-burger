@@ -3,7 +3,7 @@
  */
 //import { bun, ingredients } from '../initialIngredients';
 
-import { TBurgerActions } from '../actions/index';
+import { TBurgerActions } from '../actions/burger';
 import { TIngredient } from '../../../declarations';
 
 import {
@@ -122,7 +122,7 @@ export const appReducer = (state = initialState, action: TBurgerActions) => {
             return {
                 ...state,
                 burgerIngredients: [],
-                burgerBun: {},
+                burgerBun: null,
             }
         }
         default: {

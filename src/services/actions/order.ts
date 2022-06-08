@@ -70,7 +70,7 @@ const getOrderNumberFailed = (): IGetOrderNumberFailedAction => ({
  * Union type
  */
 
- export type TGetOrderNumberActions =
+ export type TOrderActions =
  | IGetOrderNumberRequestAction
  | IGetOrderNumberSuccessAction
  | IGetOrderNumberFailedAction;

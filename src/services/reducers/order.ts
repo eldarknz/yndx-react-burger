@@ -1,4 +1,4 @@
-import { TGetOrderNumberActions } from 'services/actions/order';
+import { TOrderActions } from 'services/actions/order';
 import {
     GET_ORDER_NUMBER_REQUEST,
     GET_ORDER_NUMBER_SUCCESS,
@@ -17,7 +17,7 @@ const initialState: TOrderState = {
     orderNumberFailed: false,
 };
 
-export const orderReducer = (state = initialState, action: TGetOrderNumberActions) => {
+export const orderReducer = (state = initialState, action: TOrderActions) => {
     switch (action.type) {
         case GET_ORDER_NUMBER_REQUEST: {
             return {

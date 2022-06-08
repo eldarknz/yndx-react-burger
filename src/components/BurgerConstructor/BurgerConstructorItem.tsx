@@ -6,7 +6,7 @@ import { Row } from "../ui/Grid/Grid";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { deleteIngredient, swapIngredients } from 'services/actions';
+import { deleteIngredient, swapIngredients } from '../../services/actions/burger';
 
 import { TIngredient } from '../../../declarations';
 

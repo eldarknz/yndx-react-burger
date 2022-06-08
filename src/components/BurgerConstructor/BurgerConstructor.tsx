@@ -20,7 +20,7 @@ import {
 } from "../../utils/utils";
 
 import { getOrderNumber } from "../../services/actions/order";
-import { addIngredient, addBun } from "../../services/actions";
+import { addIngredient, addBun } from '../../services/actions/burger';
 
 import { IUserStore, IIngredientsStore, TIngredient } from "../../../declarations";
 
@@ -52,6 +52,7 @@ const BurgerConstructor = () => {
     const dispatch = useDispatch();
 
     const { isLoggedIn } = useSelector((store: IUserStore) => store.user);
+    console.log("ИСПРАВИТЬ !!!!! ===> ", isLoggedIn);
     const { burgerIngredients, burgerBun } = useSelector((store: IIngredientsStore) => store.app);
 
     const history = useHistory();
@@ -85,11 +86,7 @@ const BurgerConstructor = () => {
     const [, dropTarget] = useDrop({
         accept: 'ingredient',
         drop(item: TIngredient) {
-            if (item.type === 'bun') {
-                if (item._id !== burgerBun._id) dispatch(addBun(item));
-            } else {
-                dispatch(addIngredient(item));
-            }
+            dispatch(item.type === 'bun' ? addBun(item) : addIngredient(item));
         },
     });
 

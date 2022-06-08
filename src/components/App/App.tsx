@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { ROUTES } from 'utils/constants';
 
-import { getIngredients } from '../../services/actions';
+import { getIngredients } from '../../services/actions/burger';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AppHeader from '../AppHeader/AppHeader';
