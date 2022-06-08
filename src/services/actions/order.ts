@@ -1,3 +1,4 @@
+import { AppDispatch, AppThunk } from "services/types";
 import { ApiCall } from "../../api/ApiCall";
 import ApiRoutes from '../../api/ApiRoutes'
 
@@ -32,39 +33,36 @@ export interface IGetOrderNumberFailedAction {
  * GetOrderNumber thunk
  */
 
-export const getOrderNumber = (data: any) => {
-  return (dispatch: any) => {
-      dispatch({
-          type: GET_ORDER_NUMBER_REQUEST
-      });
-      new ApiCall(ApiRoutes.orders).post({ "ingredients": data })
-      .then((response) => {
-          if (response.success) {
-            dispatch({
-              type: GET_ORDER_NUMBER_SUCCESS,
-              orderNumber: response.order.number
-            });
-            dispatch({
-              type: CLEAR_CONSTRUCTOR
-            });
-          } else {
-            dispatch(getOrderNumberFailed());
-          }
-      })
-      .catch((error) => {
-        console.log("Ошибка при выполнении запроса к API: " + error.message);
-        dispatch(getOrderNumberFailed());
-      });
-  };
+export const getOrderNumber: AppThunk = (data: any) => (dispatch: AppDispatch) => {
+    dispatch(getOrderNumberRequest());
+    new ApiCall(ApiRoutes.orders).post({ "ingredients": data })
+    .then((response) => {
+        if (response.success) {
+          dispatch(getOrderNumberSuccess(response.order.number));
+          dispatch({
+            type: CLEAR_CONSTRUCTOR
+          });
+        } else {
+          dispatch(getOrderNumberFailed());
+        }
+    })
+    .catch((error) => {
+      console.log("Ошибка при выполнении запроса к API: " + error.message);
+      dispatch(getOrderNumberFailed());
+    });
 };
 
 /**
  * GetOrderNumber action creators
  */
 
-const getOrderNumberFailed = (): IGetOrderNumberFailedAction => ({ 
-  type: GET_ORDER_NUMBER_FAILED
-});
+
+const getOrderNumberRequest = (): IGetOrderNumberRequestAction => ({ type: GET_ORDER_NUMBER_REQUEST })
+const getOrderNumberSuccess = (orderNumber: string): IGetOrderNumberSuccessAction => ({
+  type: GET_ORDER_NUMBER_SUCCESS,
+  orderNumber
+})
+const getOrderNumberFailed = (): IGetOrderNumberFailedAction => ({ type: GET_ORDER_NUMBER_FAILED });
 
 /**
  * Union type

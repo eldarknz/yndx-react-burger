@@ -34,7 +34,6 @@ export type TBurgerState = {
 }
 
 const initialState: TBurgerState = {
-
     ingredients: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
