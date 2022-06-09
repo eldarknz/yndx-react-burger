@@ -1,5 +1,5 @@
 import { useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/types/hooks';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { ROUTES } from 'utils/constants';
 

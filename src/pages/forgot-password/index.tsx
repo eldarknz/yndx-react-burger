@@ -1,7 +1,7 @@
 import cn from "classnames";
 
 import { ChangeEvent, SyntheticEvent, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hooks";
 import { Redirect, useLocation } from "react-router-dom";
 import { forgotPassword } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";
@@ -11,7 +11,7 @@ import { Container } from "../../components/ui/Grid/Grid";
 import FancyLink from "../../components/ui/Link/Link";
 import ActionMessage from "components/ActionMessage/ActionMessage";
 
-import { ILocation, IUserStore } from "../../../declarations";
+import { ILocation } from "../../../declarations";
 
 import styles from "./styles.module.css";
 
@@ -31,7 +31,7 @@ export const ForgotPasswordPage = () => {
     forgotPasswordSuccess,
     forgotPasswordRequest,
     forgotPasswordFailed
-  } = useSelector((store: IUserStore) => store.user);
+  } = useSelector(store => store.user);
 
   const location = useLocation<ILocationStateFrom>();
 

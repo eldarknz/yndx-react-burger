@@ -1,7 +1,7 @@
 import cn from "classnames";
 
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import { useDrop } from 'react-dnd';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ROUTES } from "../../utils/constants";
@@ -22,7 +22,7 @@ import {
 import { getOrderNumber } from "../../services/actions/order";
 import { addIngredient, addBun } from '../../services/actions/burger';
 
-import { IUserStore, IIngredientsStore, TIngredient } from "../../../declarations";
+import { TIngredient } from "../../../declarations";
 
 import styles from "./BurgerConstructor.module.css";
 
@@ -51,9 +51,9 @@ const BurgerConstructor = () => {
 
     const dispatch = useDispatch();
 
-    const { isLoggedIn } = useSelector((store: IUserStore) => store.user);
+    const { isLoggedIn } = useSelector(store => store.user);
     console.log("ИСПРАВИТЬ !!!!! ===> ", isLoggedIn);
-    const { burgerIngredients, burgerBun } = useSelector((store: IIngredientsStore) => store.app);
+    const { burgerIngredients, burgerBun } = useSelector(store => store.app);
 
     const history = useHistory();
     const location = useLocation();

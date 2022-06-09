@@ -8,10 +8,7 @@ import { TUserActions } from "services/actions/user";
 export type RootState = ReturnType<typeof store.getState>;
 
 // Typing of all application actions
-type TApplicationActions = 
-    | TBurgerActions
-    | TOrderActions 
-    | TUserActions;
+type TApplicationActions = TBurgerActions | TOrderActions | TUserActions;
 
 // Typing thunks in our application
 export type AppThunk<TReturn = void> = ActionCreator<
@@ -19,6 +16,6 @@ export type AppThunk<TReturn = void> = ActionCreator<
 >;
 
 // Dispatch method typing for validation of sent action
-export type AppDispatch = typeof store.dispatch;
+export type AppDispatch = Dispatch<TApplicationActions>; 
 // Or the equivalent
-// export type AppDispatch = Dispatch<TApplicationActions>; 
+// export type AppDispatch = typeof store.dispatch;

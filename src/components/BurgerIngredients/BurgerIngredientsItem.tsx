@@ -1,6 +1,6 @@
 import cn from 'classnames';
 
-import { useSelector } from "react-redux";
+import { useSelector } from '../../services/types/hooks';
 import { useDrag } from 'react-dnd';
 
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
@@ -8,7 +8,7 @@ import { Counter } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { Link, useLocation } from 'react-router-dom';
 
-import { IIngredientsStore, TIngredient } from '../../../declarations';
+import { TIngredient } from '../../../declarations';
 
 import styles from "./BurgerIngredients.module.css";
 
@@ -21,10 +21,9 @@ const BurgerIngredientsItem = (props: IBurgerIngredientsItemProps) => {
 
     const { _id, price, image, name } = props.ingredient;
 
-    const burgerIngredients = useSelector((store: IIngredientsStore) => store.app.burgerIngredients);
-    const burgerBun = useSelector((store: IIngredientsStore) => store.app.burgerBun);
+    const { burgerIngredients, burgerBun } = useSelector(store => store.app);
 
-    const ingredientOccurrences = burgerIngredients.concat(burgerBun ? [burgerBun] : []).reduce(function(sum, ingredient) {
+    const ingredientOccurrences = burgerIngredients.concat(burgerBun ? [burgerBun] : []).reduce((sum, ingredient) => {
         if (ingredient._id === _id) {
             if (ingredient.type === 'bun') return sum + 2;
             return sum + 1;

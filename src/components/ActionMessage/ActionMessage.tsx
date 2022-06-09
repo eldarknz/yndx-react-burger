@@ -1,5 +1,4 @@
 import { useState, useEffect } from "react";
-//import { useDispatch } from "react-redux";
 
 import styles from "./ActionMessage.module.css";
 
@@ -11,13 +10,11 @@ const ActionMessage = ({
   text,
 }: IActionMessage) => {
 
-    //const dispatch = useDispatch();
     const [show, setShow] = useState(true);
   
     useEffect(() => {
       const timer = setTimeout(() => {
         setShow(false);
-        //dispatch(action);
       }, 3000);
   
       return () => {

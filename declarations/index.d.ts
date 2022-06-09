@@ -30,66 +30,6 @@ export type TOrder = {
     updatedAt: string
 }
 
-export interface IUserStore {
-    user: {
-        isLoggedIn: boolean;
-
-        loginRequest: boolean;
-        loginFailed: boolean;
-
-        logoutSuccess: boolean;
-        logoutRequest: boolean;
-        logoutFailed: boolean;
-
-        registerSuccess: boolean;
-        registerRequest: boolean;
-        registerFailed: boolean;
-
-        forgotPasswordSuccess: boolean;
-        forgotPasswordRequest: boolean;
-        forgotPasswordFailed: boolean;
-
-        resetPasswordSuccess: boolean;
-        resetPasswordRequest: boolean;
-        resetPasswordFailed: boolean;
-
-        tokenRequest: boolean;
-        tokenSuccess: boolean;
-        tokenFailed: boolean;
-
-        getUserRequest: boolean;
-        getUserSuccess: boolean;
-        getUserFailed: boolean;
-
-        updateUserRequest: boolean;
-        updateUserSuccess: boolean;
-        updateUserFailed: boolean;
-    }
-};
-
-export interface IIngredientsStore {
-    app: {
-        ingredients: TIngredient[];
-        ingredientsRequest: boolean;
-        ingredientsFailed: boolean;
-    
-        burgerIngredients: TIngredient[];
-        burgerBun: TIngredient;
-    
-        viewedIngredient: TIngredient | null;
-    
-        currentTab: string;
-    }
-}
-
-export interface IOrderStore {
-    order: {
-        orderNumber: string;
-        orderNumberRequest: boolean;
-        orderNumberFailed: boolean;
-    }
-};
-
 export interface ILocation {
     hash: string;
     key: string;

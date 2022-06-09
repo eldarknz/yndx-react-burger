@@ -1,6 +1,7 @@
 import cn from "classnames";
 
-import { useDispatch } from "react-redux";
+import { useDispatch } from '../../services/types/hooks';
+
 import { useLocation, useHistory } from 'react-router-dom'
 import { logout } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";

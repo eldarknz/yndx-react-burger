@@ -1,12 +1,12 @@
 import cn from "classnames";
 
 import { FC } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from '../../services/types/hooks';
 
 import { Row, Col } from "../../components/ui/Grid/Grid";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { IIngredientsStore, TIngredient, TOrder } from "../../../declarations";
+import { TOrder } from "../../../declarations";
 
 import styles from "./ProfileOrders.module.css";
 
@@ -44,7 +44,7 @@ const statusValue = (status: 'created' | 'pending' | 'done') => {
 
 export const OrderItems: FC<IOrderItemProps> = ({ order }) => {
 
-    const { ingredients } = useSelector((store: IIngredientsStore) => store.app);
+    const { ingredients } = useSelector(store => store.app);
 
     let images: Array<IImageProps> = [];
     let totalValue = 0;
@@ -53,7 +53,7 @@ export const OrderItems: FC<IOrderItemProps> = ({ order }) => {
     const restItemsValue = order.ingredients.length - 6;
 
     order.ingredients.slice(0, 6).forEach(ingredientItem => {
-        let ingredient = ingredients.find((component: TIngredient) => component._id === ingredientItem);
+        let ingredient = ingredients.find(component => component._id === ingredientItem);
     
         if (!ingredient) {
           return;

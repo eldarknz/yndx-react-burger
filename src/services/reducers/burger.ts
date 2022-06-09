@@ -11,21 +11,21 @@ import {
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
     ADD_INGREDIENT,
-    DELETE_INGREDIENT,
+    REMOVE_INGREDIENT,
     ADD_BUN,
     SWAP_INGREDIENTS,
     TAB_SWITCH,
     GET_INGREDIENT_DETAILS,
-    DELETE_INGREDIENT_DETAILS,
-    CLEAR_CONSTRUCTOR
+    REMOVE_INGREDIENT_DETAILS,
+    REMOVE_SELECTED_INGREDIENTS
 } from '../constants/burger';
 
 export type TBurgerState = {
-    ingredients: Array<TIngredient>,
+    ingredients: TIngredient[],
     ingredientsRequest: boolean,
     ingredientsFailed: boolean,
 
-    burgerIngredients: Array<TIngredient>,
+    burgerIngredients: TIngredient[],
     burgerBun: TIngredient | null,
 
     viewedIngredient: TIngredient | null,
@@ -46,7 +46,7 @@ const initialState: TBurgerState = {
     currentTab: 'bun'
 };
 
-export const appReducer = (state = initialState, action: TBurgerActions) => {
+export const appReducer = (state = initialState, action: TBurgerActions): TBurgerState => {
     switch (action.type) {
         case TAB_SWITCH: {
             return {
@@ -64,7 +64,10 @@ export const appReducer = (state = initialState, action: TBurgerActions) => {
         case GET_INGREDIENTS_SUCCESS: {
             return {
                 ...state,
-                ingredients: action.ingredients,
+
+                ingredients: action.ingredients.map((item: TIngredient) => {
+                    return { ...item }
+                }),
                 ingredientsRequest: false,
                 ingredientsFailed: false,
             };
@@ -83,7 +86,7 @@ export const appReducer = (state = initialState, action: TBurgerActions) => {
                 burgerIngredients: [...state.burgerIngredients, {...ingredient, uuid:uuid}]
             };
         }
-        case DELETE_INGREDIENT: {
+        case REMOVE_INGREDIENT: {
             return {
                 ...state,
                 burgerIngredients: [...state.burgerIngredients].filter(ingredient => ingredient.uuid !== action.ingredient.uuid)
@@ -111,13 +114,13 @@ export const appReducer = (state = initialState, action: TBurgerActions) => {
                 viewedIngredient: action.ingredient
             };
         }
-        case DELETE_INGREDIENT_DETAILS: {
+        case REMOVE_INGREDIENT_DETAILS: {
             return {
                 ...state,
                 viewedIngredient: null
             };
         }
-        case CLEAR_CONSTRUCTOR: {
+        case REMOVE_SELECTED_INGREDIENTS: {
             return {
                 ...state,
                 burgerIngredients: [],

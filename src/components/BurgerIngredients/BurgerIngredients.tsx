@@ -1,18 +1,16 @@
 import cn from "classnames";
 
 import { useRef } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch, useSelector } from '../../services/types/hooks';
 
 import { Container } from "../ui/Grid/Grid";
 import { Tab } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import BurgerIngredientsItem from "./BurgerIngredientsItem";
 
-import { TAB_SWITCH } from "../../services/constants/burger";
+import { tabSwitch } from "../../services/actions/burger";
 
 import { INGREDIENT_CATEGORIES } from "../../utils/constants";
-
-import { IIngredientsStore } from "../../../declarations";
 
 import styles from "./BurgerIngredients.module.css";
 
@@ -20,9 +18,9 @@ const BurgerIngredients = () => {
 
     const dispatch = useDispatch();
 
-    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector((store: IIngredientsStore) => store.app);
+    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(store => store.app);
 
-    const currentTab = useSelector((store: IIngredientsStore) => store.app.currentTab);
+    const currentTab = useSelector(store => store.app.currentTab);
 
     const ingredientsSection = useRef<HTMLDivElement>(null);
     const bunRef = useRef<HTMLHeadingElement>(null);
@@ -30,7 +28,7 @@ const BurgerIngredients = () => {
     const mainRef = useRef<HTMLHeadingElement>(null);
 
     const handleSwitchTab = (selectedTab: string) => {
-        dispatch({ type: TAB_SWITCH, selectedTab });
+        dispatch(tabSwitch(selectedTab));
     };
 
     const handleScroll = () => {

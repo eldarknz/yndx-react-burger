@@ -17,7 +17,7 @@ const initialState: TOrderState = {
     orderNumberFailed: false,
 };
 
-export const orderReducer = (state = initialState, action: TOrderActions) => {
+export const orderReducer = (state = initialState, action: TOrderActions): TOrderState => {
     switch (action.type) {
         case GET_ORDER_NUMBER_REQUEST: {
             return {
