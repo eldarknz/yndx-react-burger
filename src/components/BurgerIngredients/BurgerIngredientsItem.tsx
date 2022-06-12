@@ -21,7 +21,7 @@ const BurgerIngredientsItem = (props: IBurgerIngredientsItemProps) => {
 
     const { _id, price, image, name } = props.ingredient;
 
-    const { burgerIngredients, burgerBun } = useSelector(store => store.app);
+    const { burgerIngredients, burgerBun } = useSelector(store => store.burger);
 
     const ingredientOccurrences = burgerIngredients.concat(burgerBun ? [burgerBun] : []).reduce((sum, ingredient) => {
         if (ingredient._id === _id) {

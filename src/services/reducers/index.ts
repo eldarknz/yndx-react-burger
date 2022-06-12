@@ -2,13 +2,13 @@ import { combineReducers } from 'redux';
 import { appReducer } from './burger';
 import { orderReducer } from './order';
 import { userReducer } from './user';
-//import { feedReducer } from './feed';
-//import { profileFeedReducer } from './profileFeed';
+import { feedReducer } from './wsFeed';
+import { profileOrdersReducer } from './wsProfileOrders';
 
 export const rootReducer = combineReducers({
-  app: appReducer,
+  burger: appReducer,
   order: orderReducer,
   user: userReducer,
-  //feed: feedReducer,
-  //profileFeed: profileFeedReducer
+  feed: feedReducer,
+  profileOrders: profileOrdersReducer,
 });

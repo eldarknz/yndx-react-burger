@@ -53,7 +53,7 @@ const BurgerConstructor = () => {
 
     const { isLoggedIn } = useSelector(store => store.user);
     console.log("ИСПРАВИТЬ !!!!! ===> ", isLoggedIn);
-    const { burgerIngredients, burgerBun } = useSelector(store => store.app);
+    const { burgerIngredients, burgerBun } = useSelector(store => store.burger);
 
     const history = useHistory();
     const location = useLocation();

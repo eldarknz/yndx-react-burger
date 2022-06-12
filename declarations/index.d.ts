@@ -21,13 +21,35 @@ export type TUser = {
 }
 
 export type TOrder = {
-    ingredients: string[],
+    ingredients: Array<string>,
     name: string,
     _id: string,
     status: 'done' | 'pending' | 'created';
     number: number,
     createdAt: string,
     updatedAt: string
+}
+
+export type TOrderList = {
+    orders: Array<TOrder>,
+    total: number,
+    totalToday: number
+}
+
+export type TFeed = {
+    orders: ReadonlyArray<IFeedItem>,
+    total: number,
+    totalToday: number   
+}
+
+export type TFeedItem = {
+    ingredients: ReadonlyArray<string>;
+    _id: string;
+    status: string;
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+    name: string;
 }
 
 export interface ILocation {

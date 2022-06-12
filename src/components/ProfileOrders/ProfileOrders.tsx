@@ -1,8 +1,24 @@
+import { useEffect } from "react";
+import { wsProfileOrdersConnectionStart } from "services/actions/wsProfileOrders";
+import { useDispatch, useSelector } from "../../services/types/hooks";
+
 import { OrderItems } from "./OrderItem";
 
 import styles from "./ProfileOrders.module.css";
 
 const ProfileOrders = () => {
+    /*const dispatch = useDispatch();
+
+    const { orders, wsProfileConnected } = useSelector(store => store.profileOrders);
+
+    useEffect(() => {
+        if (!wsProfileConnected) {
+            dispatch(wsProfileOrdersConnectionStart());
+        }
+
+    }, [dispatch, wsProfileConnected])
+
+    console.log(orders);*/
 
     const data: any = {
         "success": true,
@@ -63,7 +79,7 @@ const ProfileOrders = () => {
                 {
                     <div className={styles.cardGroup}>
                         {
-                            !ordersFailed && !ordersRequest && data.orders.map((order: any) => (
+                            !ordersFailed && !ordersRequest && data.orders.map((order: any, index: number) => (
                                 <OrderItems key={order._id} order={order} />
                             ))
                         }

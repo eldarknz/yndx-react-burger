@@ -1,14 +1,23 @@
-import { ThunkAction } from "redux-thunk";
 import { Action, ActionCreator, Dispatch } from 'redux';
-import store from "../store";
+import { ThunkAction } from "redux-thunk";
+
 import { TBurgerActions } from "../actions/burger";
-import { TOrderActions } from "services/actions/order";
-import { TUserActions } from "services/actions/user";
+import { TOrderActions } from "../actions/order";
+import { TUserActions } from "../actions/user";
+import { TWSFeedActions } from "../actions/wsFeed";
+import { TWSProfileOrdersActions } from "../actions/wsProfileOrders";
+
+import store from "../store";
 
 export type RootState = ReturnType<typeof store.getState>;
 
 // Typing of all application actions
-type TApplicationActions = TBurgerActions | TOrderActions | TUserActions;
+type TApplicationActions =
+    | TBurgerActions
+    | TOrderActions
+    | TUserActions
+    | TWSFeedActions
+    | TWSProfileOrdersActions;
 
 // Typing thunks in our application
 export type AppThunk<TReturn = void> = ActionCreator<

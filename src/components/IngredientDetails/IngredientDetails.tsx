@@ -13,7 +13,7 @@ const IngredientDetails = () => {
 
     const { id } = useParams<{ id: string }>();
 
-    const { ingredients } = useSelector(store => store.app);
+    const { ingredients } = useSelector(store => store.burger);
 
     const viewedIngredient = ingredients.find((ingredient: TIngredient) => ingredient._id === id);
 

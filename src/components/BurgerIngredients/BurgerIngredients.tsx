@@ -18,9 +18,9 @@ const BurgerIngredients = () => {
 
     const dispatch = useDispatch();
 
-    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(store => store.app);
+    const { ingredients, ingredientsRequest, ingredientsFailed } = useSelector(store => store.burger);
 
-    const currentTab = useSelector(store => store.app.currentTab);
+    const currentTab = useSelector(store => store.burger.currentTab);
 
     const ingredientsSection = useRef<HTMLDivElement>(null);
     const bunRef = useRef<HTMLHeadingElement>(null);

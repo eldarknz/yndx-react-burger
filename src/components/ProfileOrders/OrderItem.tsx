@@ -44,7 +44,7 @@ const statusValue = (status: 'created' | 'pending' | 'done') => {
 
 export const OrderItems: FC<IOrderItemProps> = ({ order }) => {
 
-    const { ingredients } = useSelector(store => store.app);
+    const { ingredients } = useSelector(store => store.burger);
 
     let images: Array<IImageProps> = [];
     let totalValue = 0;
@@ -90,11 +90,11 @@ export const OrderItems: FC<IOrderItemProps> = ({ order }) => {
                         {
                             images.length > 0 && images.map((image: IImageProps, index: number) => (
                                 <div
+                                    key={index}
                                     className={styles.imageBlock}
                                     style={{zIndex: 10 - index}}
                                 >
                                     <img
-                                        key={index}
                                         className={`${styles.imageBackground} ${index === 5 && isItemsMore && styles.imageOpacity}`}
                                         
                                         src={image.src}
