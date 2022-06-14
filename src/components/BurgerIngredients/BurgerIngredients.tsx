@@ -47,60 +47,58 @@ const BurgerIngredients = () => {
     };
 
     return (
-        <>
-            <section className={styles.section}>
-                <Container fluid={true}>
-                    <h1 className="text text_type_main-large pt-10">Соберите бургер</h1>
-                    <div className="pt-5" style={{ display: "flex" }}>
-                        {
+        <section className={styles.section}>
+            <Container fluid={true}>
+                <h1 className="text text_type_main-large pt-10">Соберите бургер</h1>
+                <div className="pt-5" style={{ display: "flex" }}>
+                    {
+                        INGREDIENT_CATEGORIES.map((category) => (
+                            <Tab
+                                key={category._id}
+                                value={category.type}
+                                active={currentTab === category.type}
+                                onClick={() => {
+                                    handleSwitchTab(category.type);
+                                    if (category.type === 'bun' && bunRef.current) bunRef.current.scrollIntoView();
+                                    if (category.type === 'sauce' && sauceRef.current) sauceRef.current.scrollIntoView();
+                                    if (category.type === 'main' && mainRef.current) mainRef.current.scrollIntoView();
+                                }}
+                            >
+                                {category.title}
+                            </Tab>
+                        ))
+                    }
+                </div>
+                <div
+                    className={cn(styles.blockList, "mt-10")}
+                    ref={ingredientsSection}
+                    onScroll={handleScroll}
+                >
+                    { ingredientsFailed && <p className="text text_type_main-default pb-3">Произошла ошибка при получении данных</p> }
+                    { ingredientsRequest && <p className="text text_type_main-default pb-3">Загрузка...</p> }
+                    {
+                        !ingredientsFailed && !ingredientsRequest && ingredients && (
                             INGREDIENT_CATEGORIES.map((category) => (
-                                <Tab
-                                    key={category._id}
-                                    value={category.type}
-                                    active={currentTab === category.type}
-                                    onClick={() => {
-                                        handleSwitchTab(category.type);
-                                        if (category.type === 'bun' && bunRef.current) bunRef.current.scrollIntoView();
-                                        if (category.type === 'sauce' && sauceRef.current) sauceRef.current.scrollIntoView();
-                                        if (category.type === 'main' && mainRef.current) mainRef.current.scrollIntoView();
-                                    }}
+                            <section key={category._id} className={styles.block}>
+                                <h3
+                                    className={cn(styles.title, "text text_type_main-medium mb-6")}
+                                    ref={category.type === 'bun' ? bunRef : category.type === 'sauce' ? sauceRef : mainRef}
                                 >
                                     {category.title}
-                                </Tab>
-                            ))
-                        }
-                    </div>
-                    <div
-                        className={cn(styles.blockList, "mt-10")}
-                        ref={ingredientsSection}
-                        onScroll={handleScroll}
-                    >
-                        { ingredientsFailed && <p className="text text_type_main-default pb-3">Произошла ошибка при получении данных</p> }
-                        { ingredientsRequest && <p className="text text_type_main-default pb-3">Загрузка...</p> }
-                        {
-                            !ingredientsFailed && !ingredientsRequest && ingredients && (
-                                INGREDIENT_CATEGORIES.map((category) => (
-                                <section key={category._id} className={styles.block}>
-                                    <h3
-                                        className={cn(styles.title, "text text_type_main-medium mb-6")}
-                                        ref={category.type === 'bun' ? bunRef : category.type === 'sauce' ? sauceRef : mainRef}
-                                    >
-                                        {category.title}
-                                    </h3>
-                                    <div className={cn(styles.cardGroup, "mb-2")}>
-                                        {
-                                            ingredients.filter(item => item.type === category.type).map(ingredient => (
-                                                <BurgerIngredientsItem key={ingredient._id} ingredient={ingredient} />
-                                            ))
-                                        }
-                                    </div>
-                                </section>
-                            )))
-                        }
-                    </div>
-                </Container>
-            </section>
-        </>
+                                </h3>
+                                <div className={cn(styles.cardGroup, "mb-2")}>
+                                    {
+                                        ingredients.filter(item => item.type === category.type).map(ingredient => (
+                                            <BurgerIngredientsItem key={ingredient._id} ingredient={ingredient} />
+                                        ))
+                                    }
+                                </div>
+                            </section>
+                        )))
+                    }
+                </div>
+            </Container>
+        </section>
     );
 };
 

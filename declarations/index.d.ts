@@ -36,6 +36,11 @@ export type TOrderList = {
     totalToday: number
 }
 
+export type TOrderBoard = {
+    done: Array<number>;
+    pending: Array<number>;
+}
+
 export type TFeed = {
     orders: ReadonlyArray<IFeedItem>,
     total: number,

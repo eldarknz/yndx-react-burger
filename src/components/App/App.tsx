@@ -9,12 +9,14 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AppHeader from '../AppHeader/AppHeader';
 import Modal from '../../components/Modal/Modal';
 import IngredientDetails from '../../components/IngredientDetails/IngredientDetails';
+import OrderComposition from '../../components/OrderComposition/OrderComposition';
 
 import { ILocation } from '../../../declarations';
 
 import {
   HomePage,
-  OrdersPage,
+  FeedPage,
+  OrderCompositionPage,
   IngredientPage,
   RegistrationPage,
   LoginPage,
@@ -36,16 +38,21 @@ const App = () => {
 
   const location = useLocation<ILocationBackground>();
   const history = useHistory();
-
   const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const handleCloseModal = useCallback(() => {
+  const handleCloseModalIngredient = useCallback(() => {
     history.push('/');
   }, [history]);
+
+  const handleCloseModalOrder = useCallback(() => {
+    history.push('/feed');
+  }, [history]);
+
+  //console.log(background, location);
 
   return (
     <>
@@ -70,11 +77,14 @@ const App = () => {
           <ProtectedRoute path={ROUTES.profile.path}>
             <ProfilePage />
           </ProtectedRoute>
-          <ProtectedRoute path={ROUTES.orders.path} exact={true}>
-            <OrdersPage />
-          </ProtectedRoute>
+          <Route path={ROUTES.feed.path} exact={true}>
+            <FeedPage />
+          </Route>
           <Route path={ROUTES.ingredient.path} exact={true}>
             <IngredientPage />
+          </Route>
+          <Route path={ROUTES.order.path} exact={true}>
+            <OrderCompositionPage />
           </Route>
           <Route>
             <PageNotFoundPage />
@@ -82,14 +92,23 @@ const App = () => {
         </Switch>
 
         {background && (
-          <Route path={ROUTES.ingredient.path}>
-            <Modal
-              header="Детали ингредиента"
-              onClose={handleCloseModal}
-            >
-              <IngredientDetails />
-            </Modal>
-          </Route>
+          <Switch>
+            <Route path={ROUTES.ingredient.path}>
+              <Modal
+                header="Детали ингредиента"
+                onClose={handleCloseModalIngredient}
+              >
+                <IngredientDetails />
+              </Modal>
+            </Route>
+            <Route path={ROUTES.order.path}>
+              <Modal
+                onClose={handleCloseModalOrder}
+              >
+                <OrderComposition />
+              </Modal>
+            </Route>
+          </Switch>
         )}
 
       </main>

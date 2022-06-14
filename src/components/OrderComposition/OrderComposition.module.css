@@ -1,0 +1,18 @@
+.orderBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    width: 640px;
+}
+
+.title {
+    display: flex;
+    flex: 0 1 auto;
+    align-items: center;
+    height: 64px;
+}
+
+.image {
+    width: 480px;
+    height: 240px;
+}

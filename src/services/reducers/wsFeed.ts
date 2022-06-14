@@ -1,4 +1,5 @@
-import { TFeedItem, TOrder } from "../../../declarations";
+import { ORDER_STATUS } from "utils/constants";
+import { TOrderBoard, TOrder } from "../../../declarations";
 import { TWSFeedActions } from "../actions/wsFeed";
 
 import {
@@ -11,12 +12,21 @@ import {
 
 type TFeedState = {
     wsConnected: boolean,
-    orders: ReadonlyArray<TOrder>,
+    orders: Array<TOrder>,
+    orderBoard: TOrderBoard,
+    total: number,
+    totalToday: number
 }
 
 const initialState: TFeedState = {
     wsConnected: false,
     orders: [],
+    orderBoard: {
+        done: [],
+        pending: []
+    },
+    total: 0,
+    totalToday: 0
 }
 
 export const feedReducer = (state = initialState, action: TWSFeedActions): TFeedState => {
@@ -45,10 +55,21 @@ export const feedReducer = (state = initialState, action: TWSFeedActions): TFeed
             }
         }
         case WS_GET_MESSAGE: {
-            console.log("action ---> ", action.orders);
+            //console.log("action ---> ", action.data.orders);
+            const done = action.data.orders.filter(order => order.status === ORDER_STATUS.DONE).map(order => order.number);
+            const pending = action.data.orders.filter(order => order.status !== ORDER_STATUS.DONE).map(order => order.number);
+
+
             return {
                 ...state,
-                orders: action.orders
+                orders: action.data.orders,
+                orderBoard: {
+                    ...state.orderBoard,
+                    done: done,
+                    pending: pending
+                },
+                total: action.data.total,
+                totalToday: action.data.totalToday
             }
         }
 

@@ -29,9 +29,7 @@ export interface IWSFeedConnectionClosedAction {
 
 export interface IWSFeedGetMessageAction {
     readonly type: typeof WS_GET_MESSAGE;
-    readonly orders: Array<TOrder>;
-    readonly total: number;
-    readonly totalToday: number;
+    readonly data: TOrderList;
 }
 
 /*export interface IWSFeedGetMessageAction {
@@ -47,11 +45,9 @@ export const wsFeedConnectionStart = (): IWSFeedConnectionStartAction => ({ type
 export const wsFeedConnectionSuccess = (): IWSFeedConnectionSuccessAction => ({ type: WS_CONNECTION_SUCCESS });
 export const wsFeedConnectionError = (): IWSFeedConnectionErrorAction => ({ type: WS_CONNECTION_ERROR });
 export const wsFeedConnectionClosed = (): IWSFeedConnectionClosedAction => ({ type: WS_CONNECTION_CLOSED });
-export const wsFeedGetMessage = (orders: Array<TOrder>, total: number, totalToday: number): IWSFeedGetMessageAction => ({
+export const wsFeedGetMessage = (data: TOrderList): IWSFeedGetMessageAction => ({
     type: WS_GET_MESSAGE,
-    orders,
-    total,
-    totalToday,
+    data: data
 });
 
 /*export const wsFeedGetMessage = (feed: TFeed, ingredients: ReadonlyArray<TIngredient>): IWSFeedGetMessageAction => ({

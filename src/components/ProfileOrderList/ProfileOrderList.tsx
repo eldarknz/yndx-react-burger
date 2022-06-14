@@ -2,9 +2,10 @@ import { useEffect } from "react";
 import { wsProfileOrdersConnectionStart } from "services/actions/wsProfileOrders";
 import { useDispatch, useSelector } from "../../services/types/hooks";
 
-import { OrderItems } from "./OrderItem";
+//import ProfileOrderItem from "./ProfileOrderItem";
+import OrderItem from "../../components/OrderItem/OrderItem";
 
-import styles from "./ProfileOrders.module.css";
+import styles from "./ProfileOrderList.module.css";
 
 const ProfileOrders = () => {
     /*const dispatch = useDispatch();
@@ -80,7 +81,7 @@ const ProfileOrders = () => {
                     <div className={styles.cardGroup}>
                         {
                             !ordersFailed && !ordersRequest && data.orders.map((order: any, index: number) => (
-                                <OrderItems key={order._id} order={order} />
+                                <OrderItem key={order._id} order={order} isStatusView={true} />
                             ))
                         }
                     </div>

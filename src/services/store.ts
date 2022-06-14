@@ -37,13 +37,13 @@ const wsFeedActions:wsActions = {
   onMessage: WS_GET_MESSAGE
 };
 
-const wsProfileOrders: wsActions = {
+/*const wsProfileOrders: wsActions = {
   wsInit: WS_PROFILE_CONNECTION_START,
   onOpen: WS_PROFILE_CONNECTION_SUCCESS,
   onClose: WS_PROFILE_CONNECTION_CLOSED,
   onError: WS_PROFILE_CONNECTION_ERROR,
   onMessage: WS_PROFILE_GET_MESSAGE
-}
+}*/
 
 const feedWsUrl = "wss://norma.nomoreparties.space/orders/all";
 const profileOrdersWsUrl = "wss://norma.nomoreparties.space/orders";

@@ -47,6 +47,10 @@ a:active {
     justify-content: flex-end;
 }
 
+.textAlignLeft {
+    text-align: left;
+}
+
 .textAlignCenter {
     text-align: center;
 }
