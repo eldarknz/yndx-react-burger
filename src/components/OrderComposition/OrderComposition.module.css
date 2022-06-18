@@ -12,7 +12,47 @@
     height: 64px;
 }
 
-.image {
-    width: 480px;
-    height: 240px;
+.blockComposition {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    max-height: 312px;
+    overflow-y: auto;
+    padding-right: 24px;
+}
+
+.ingredientBlock {
+    display: flex;
+    width: 100%;
+    gap: 16px;
+}
+
+.ingredientImage {
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    background-image: linear-gradient(to right, #801AB2, #4C4CFF);
+    position: relative;
+}
+
+.ingredientName {
+    display: flex;
+    align-items: center;
+}
+
+.ingredientPrice {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end
+}
+
+.imageBackground {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    background-image: linear-gradient(black, black);
+    object-fit: cover;
 }

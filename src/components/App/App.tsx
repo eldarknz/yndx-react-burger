@@ -105,7 +105,7 @@ const App = () => {
               <Modal
                 onClose={handleCloseModalOrder}
               >
-                <OrderComposition />
+                <OrderComposition isModal={true}/>
               </Modal>
             </Route>
           </Switch>

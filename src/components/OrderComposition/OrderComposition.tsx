@@ -6,11 +6,45 @@ import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../services/types/hooks';
 import { wsFeedConnectionStart } from '../../services/actions/wsFeed';
 
-import { Row, Col } from "../../components/ui/Grid/Grid";
+import { Row, Col, Container } from "../../components/ui/Grid/Grid";
 
-import { TOrder } from "../../../declarations";
+import { TIngredient, TOrder } from "../../../declarations";
+
+import BurgerComposition from "./BurgerComposition";
 
 import styles from "./OrderComposition.module.css";
+
+export type TIngredientType = {
+    count: number,
+    ingredient: TIngredient | null
+}
+
+export type IBurgerComposition = {
+    bun: TIngredient | null
+    ingredients: {
+        [T: string]: TIngredientType
+    }
+}
+
+const getBurgerComposition = (burgerIngredients: Array<TIngredient>) => {
+    let burgerComposition: IBurgerComposition = {
+        bun: null,
+        ingredients: {}
+    }
+
+    burgerIngredients.forEach(ingredient => {
+        if (ingredient.type === "bun") {
+            if (!burgerComposition.bun)
+                burgerComposition.bun = ingredient
+        } else {
+            if (!(ingredient._id in burgerComposition.ingredients))
+                burgerComposition.ingredients[ingredient._id] = { count: 0, ingredient: ingredient }
+            burgerComposition.ingredients[ingredient._id]["count"] += 1
+        }
+    })
+
+    return burgerComposition;
+};
 
 const statusValue = (status: 'done' | 'created' | 'pending') => {
     const style: any = {};
@@ -35,7 +69,7 @@ const statusValue = (status: 'done' | 'created' | 'pending') => {
     );
 }
 
-const OrderComposition = () => {
+const OrderComposition = ({ isModal = false }: { isModal?: boolean } ) => {
 
     const dispatch = useDispatch();
 
@@ -43,6 +77,8 @@ const OrderComposition = () => {
 
     const { wsConnected, orders } = useSelector(store => store.feed);
   
+    const { ingredients } = useSelector(store => store.burger);
+
     useEffect(() => {
       if (!wsConnected) {
           dispatch(wsFeedConnectionStart());
@@ -51,49 +87,49 @@ const OrderComposition = () => {
 
     const viewedOrder = orders.find((order: TOrder) => order._id === id);
 
+    let burgerIngredients: Array<TIngredient> = [];
+    let total = 0;
+
+    viewedOrder?.ingredients.forEach(number => {
+        const ingredient = ingredients.find(ingredient => ingredient._id === number);
+        if (ingredient)
+            burgerIngredients.push(ingredient);
+    });
+
+    const burgerComposition = getBurgerComposition(burgerIngredients);
+
+    console.log(burgerComposition);
+
     return (
-        <div className={styles.orderBlock}>
-            {!viewedOrder ? <div className="text text_type_main-default textAlignCenter">Загрузка...</div> : (
+        <Container className={styles.orderBlock}>
+            {!viewedOrder ? (
+                <Row justifyContent={isModal ? "flex-start" : "center"} className={cn("mb-10", { "mt-5": isModal })}>
+                    <p className="text text_type_main-default">Загрузка...</p>
+                </Row>
+            ) : (
                 <>
-                    <div className="mb-10">
-                        <h5 className="text text_type_digits-default textAlignCenter">{`#${viewedOrder.number}`}</h5>
-                    </div>
-                    <div className="mb-3">
-                        <h3 className="text text_type_main-medium">{viewedOrder.name}</h3>
-                    </div>
-                    <div className="mb-15">
-                        {statusValue(viewedOrder.status)}
-                    </div>
-                    <div className="mb-10">
-                        <h3 className="text text_type_main-medium">Состав:</h3>
-                    </div>
-                    {/*<div className={styles.image}>
-                        <img src={viewedOrder.image_large} alt={viewedIngredient.name}/>
-                    </div>
-                    <div className={cn(styles.title, "pb-8")}>
-                        <h3 className="text text_type_main-medium">{viewedIngredient.name}</h3>
-                    </div>
+                    <Row justifyContent={isModal ? "flex-start" : "center"} className={cn("mb-10", { "mt-5": isModal })}>
+                        <h5 className="text text_type_digits-default">{`#${viewedOrder.number}`}</h5>
+                    </Row>
+                    <Row className="mb-15">
+                        <Col>
+                            <h3 className="text text_type_main-medium mb-3">{viewedOrder.name}</h3>
+                            {statusValue(viewedOrder.status)}
+                        </Col>
+                    </Row>
+                    <Row className="mb-10">
+                        <Col>
+                            <h3 className="text text_type_main-medium mb-6">Состав:</h3>
+                            <BurgerComposition bun={burgerComposition.bun} ingredients={burgerComposition.ingredients}/>
+                        </Col>
+                    </Row>
                     <Row>
-                        <Col col="3" className="textAlignCenter">
-                            <p className="text text_type_main-default text_color_inactive pb-2">Калории,ккал</p>
-                            <p className="text text_type_main-default text_color_inactive pb-2">{viewedIngredient.calories}</p>
-                        </Col>
-                        <Col col="3" className="textAlignCenter">
-                            <p className="text text_type_main-default text_color_inactive pb-2">Белки, г</p>
-                            <p className="text text_type_main-default text_color_inactive pb-2">{viewedIngredient.proteins}</p>
-                        </Col>
-                        <Col col="3" className="textAlignCenter">
-                            <p className="text text_type_main-default text_color_inactive pb-2">Жиры, г</p>
-                            <p className="text text_type_main-default text_color_inactive pb-2">{viewedIngredient.fat}</p>
-                        </Col>
-                        <Col col="3" className="textAlignCenter">
-                            <p className="text text_type_main-default text_color_inactive pb-2">Углеводы, г</p>
-                            <p className="text text_type_main-default text_color_inactive pb-2">{viewedIngredient.carbohydrates}</p>
-                        </Col>
-                    </Row>*/}
+                        <Col>1</Col>
+                        <Col col="auto">{total}</Col>
+                    </Row>
                 </>
             )}
-        </div>
+        </Container>
     );
 };
 
