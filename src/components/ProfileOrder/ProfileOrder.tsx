@@ -1,50 +1,19 @@
 import cn from "classnames";
 
 import { useEffect } from "react";
-
 import { useParams } from 'react-router-dom';
+
 import { useDispatch, useSelector } from '../../services/types/hooks';
-import { wsFeedConnectionStart } from '../../services/actions/wsFeed';
-
-import { Row, Col, Container } from "../../components/ui/Grid/Grid";
-
+import { wsProfileOrdersConnectionStart } from "services/actions/wsProfileOrders";
+import { getBurgerComposition, dateFormatConverter } from "../../utils/utils";
 import { TIngredient, TOrder } from "../../../declarations";
 
-import BurgerComposition from "./BurgerComposition";
+import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
+import { Row, Col, Container } from "../../components/ui/Grid/Grid";
 
-import styles from "./OrderComposition.module.css";
+import BurgerComposition from "../BurgerComposition/BurgerComposition";
 
-export type TIngredientType = {
-    count: number,
-    ingredient: TIngredient | null
-}
-
-export type IBurgerComposition = {
-    bun: TIngredient | null
-    ingredients: {
-        [T: string]: TIngredientType
-    }
-}
-
-const getBurgerComposition = (burgerIngredients: Array<TIngredient>) => {
-    let burgerComposition: IBurgerComposition = {
-        bun: null,
-        ingredients: {}
-    }
-
-    burgerIngredients.forEach(ingredient => {
-        if (ingredient.type === "bun") {
-            if (!burgerComposition.bun)
-                burgerComposition.bun = ingredient
-        } else {
-            if (!(ingredient._id in burgerComposition.ingredients))
-                burgerComposition.ingredients[ingredient._id] = { count: 0, ingredient: ingredient }
-            burgerComposition.ingredients[ingredient._id]["count"] += 1
-        }
-    })
-
-    return burgerComposition;
-};
+import styles from "./ProfileOrder.module.css";
 
 const statusValue = (status: 'done' | 'created' | 'pending') => {
     const style: any = {};
@@ -69,36 +38,33 @@ const statusValue = (status: 'done' | 'created' | 'pending') => {
     );
 }
 
-const OrderComposition = ({ isModal = false }: { isModal?: boolean } ) => {
+const ProfileOrder = ({ isModal = false }: { isModal?: boolean } ) => {
 
     const dispatch = useDispatch();
 
     const { id } = useParams<{ id: string }>();
 
-    const { wsConnected, orders } = useSelector(store => store.feed);
+    const { wsProfileConnected, orders } = useSelector(store => store.profileOrders);
   
     const { ingredients } = useSelector(store => store.burger);
 
     useEffect(() => {
-      if (!wsConnected) {
-          dispatch(wsFeedConnectionStart());
+      if (!wsProfileConnected) {
+          dispatch(wsProfileOrdersConnectionStart());
       }
-    }, [dispatch, wsConnected])
+    }, [dispatch, wsProfileConnected])
 
     const viewedOrder = orders.find((order: TOrder) => order._id === id);
 
-    let burgerIngredients: Array<TIngredient> = [];
-    let total = 0;
+    let orderIngredients: Array<TIngredient> = [];
 
     viewedOrder?.ingredients.forEach(number => {
         const ingredient = ingredients.find(ingredient => ingredient._id === number);
         if (ingredient)
-            burgerIngredients.push(ingredient);
+            orderIngredients.push(ingredient);
     });
 
-    const burgerComposition = getBurgerComposition(burgerIngredients);
-
-    console.log(burgerComposition);
+    const burgerComposition = getBurgerComposition(orderIngredients);
 
     return (
         <Container className={styles.orderBlock}>
@@ -120,12 +86,21 @@ const OrderComposition = ({ isModal = false }: { isModal?: boolean } ) => {
                     <Row className="mb-10">
                         <Col>
                             <h3 className="text text_type_main-medium mb-6">Состав:</h3>
-                            <BurgerComposition bun={burgerComposition.bun} ingredients={burgerComposition.ingredients}/>
+                            <BurgerComposition {...burgerComposition} />
                         </Col>
                     </Row>
                     <Row>
-                        <Col>1</Col>
-                        <Col col="auto">{total}</Col>
+                        <Col>
+                            <p className="text text_type_main-default text_color_inactive">{dateFormatConverter(viewedOrder.createdAt)}</p>
+                        </Col>
+                        <Col col="auto" className="displayFlex alignItemsCenter justifyContentCenter">
+                            <Row>
+                                <div className={"text text_type_digits-default mr-2"}>
+                                    {burgerComposition.totalValue}
+                                </div>
+                                <CurrencyIcon type="primary" />
+                            </Row>
+                        </Col>
                     </Row>
                 </>
             )}
@@ -133,4 +108,4 @@ const OrderComposition = ({ isModal = false }: { isModal?: boolean } ) => {
     );
 };
 
-export default OrderComposition
+export default ProfileOrder

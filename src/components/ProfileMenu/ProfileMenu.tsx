@@ -25,12 +25,12 @@ const ProfileMenu = () => {
         <div className={styles.container}>
             <Nav direction='vertical'>
                 <NavItem>
-                    <FancyLink href={'/profile'} isExact={true}>
+                    <FancyLink href={ROUTES.profile.path} isExact={true}>
                         <div className={"text text_type_main-medium"}>Профиль</div>
                     </FancyLink>
                 </NavItem>
                 <NavItem>
-                    <FancyLink href={'/profile/orders'}>
+                    <FancyLink href={ROUTES.profile_orders.path}>
                         <div className={"text text_type_main-medium"}>История заказов</div>
                     </FancyLink>
                 </NavItem>
@@ -41,12 +41,12 @@ const ProfileMenu = () => {
                 </NavItem>
             </Nav>
             {
-                location.pathname === '/profile' && (
+                location.pathname === ROUTES.profile.path && (
                     <p className={cn(styles.text, "text text_type_main-default text_color_inactive mt-20")}>В этом разделе вы можете изменить свои персональные данные</p>
                 )
             }
             {
-                location.pathname === '/profile/orders' && (
+                location.pathname.includes(ROUTES.profile_orders.path) && (
                     <p className={cn(styles.text, "text text_type_main-default text_color_inactive mt-20")}>В этом разделе вы можете просмотреть свою историю заказов</p>
                 )
             }

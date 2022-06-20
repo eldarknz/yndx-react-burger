@@ -1,27 +1,18 @@
-import cn from "classnames";
-
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
 import { Row, Col } from "../../components/ui/Grid/Grid";
+import { ImageBlock } from "../../components/OrderItem/OrderItem";
 
-import { IBurgerComposition, TIngredientType } from "./OrderComposition";
+import { TBurgerComposition, TBurgerCompositionIngredient } from "../../../declarations";
 
-import styles from "./OrderComposition.module.css";
+import styles from "./BurgerComposition.module.css";
 
-const IngredientBlock = ({ingredient, count}: TIngredientType) => {
+const IngredientBlock = ({ingredient, count}: TBurgerCompositionIngredient) => {
     return (
         ingredient ? (
             <Row className={styles.ingredientBlock}>
                 <Col col="auto">
-                    <div
-                        className={styles.ingredientImage}
-                    >
-                        <img
-                            className={styles.imageBackground}
-                            src={ingredient.image_mobile}
-                            alt={ingredient.name}
-                        />
-                    </div>
+                    <ImageBlock ingredient={ingredient}/>
                 </Col>
                 <Col className={styles.ingredientName}>
                     <span className={`text text_type_main-default`}>{ingredient.name}</span>
@@ -37,7 +28,9 @@ const IngredientBlock = ({ingredient, count}: TIngredientType) => {
     );
 };
 
-const BurgerComposition = ({bun, ingredients}: IBurgerComposition) => {
+const BurgerComposition = (props: TBurgerComposition) => {
+    const { bun, ingredients } = props;
+
     return (
         <div className={styles.blockComposition}>
             {

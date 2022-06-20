@@ -1,15 +1,13 @@
 import cn from "classnames";
 
-import { FC } from "react";
-import { useSelector } from '../../services/types/hooks';
+import React, { FC } from "react";
 import { Link, useLocation } from "react-router-dom";
+import { useSelector } from '../../services/types/hooks';
+import { TIngredient, TOrder } from "../../../declarations";
+import { getBurgerComposition, dateFormatConverter } from "../../utils/utils";
 
 import { Row, Col } from "../../components/ui/Grid/Grid";
 import { CurrencyIcon } from "@ya.praktikum/react-developer-burger-ui-components";
-
-import { TOrder } from "../../../declarations";
-
-import { ORDER_STATUS } from "../../utils/constants";
 
 import styles from "./OrderItem.module.css";
 
@@ -18,13 +16,14 @@ interface IOrderItemProps {
     isStatusView?: boolean;
 }
 
-interface IImageProps {
-    src: string;
-    name: string;
+interface IImageBlockProps {
+    ingredient: TIngredient | null;
+    className?: string;
+    style?: React.CSSProperties;
 }
 
 const statusValue = (status: 'done' | 'created' | 'pending') => {
-    const style: any = {};
+    const style: React.CSSProperties = {};
     let text = '';
 
     switch (status) {
@@ -46,47 +45,65 @@ const statusValue = (status: 'done' | 'created' | 'pending') => {
     );
 }
 
+export const ImageBlock = ({
+    ingredient,
+    style = {},
+    className
+}: IImageBlockProps) => {
+    return (
+        ingredient ? (
+            <div
+                className={cn(styles.imageBlock, className)}
+                style={style}
+            >
+                <img
+                    className={styles.imageBackground}
+                    src={ingredient.image_mobile}
+                    alt={ingredient.name}
+                />
+            </div>
+        ) : null
+    );
+};
+
 const OrderItem: FC<IOrderItemProps> = ({ order, isStatusView = false }) => {
     const location = useLocation();
 
     const { ingredients } = useSelector(store => store.burger);
 
-    //console.log(order);
+    let orderIngredients: Array<TIngredient> = [];
 
-    let images: Array<IImageProps> = [];
-    let totalValue = 0;
-
-    const isItemsMore = order.ingredients.length > 6;
-    const restItemsValue = order.ingredients.length - 6;
-
-    order.ingredients.slice(0, 6).forEach(ingredientItem => {
-        let ingredient = ingredients.find(component => component._id === ingredientItem);
-    
-        if (!ingredient) {
-          return;
-        }
-    
-        totalValue += ingredient.price;
-        images.push({
-            src: ingredient.image_mobile,
-            name: ingredient.name
-        });
+    order?.ingredients.forEach(number => {
+        const ingredient = ingredients.find(ingredient => ingredient._id === number);
+        if (ingredient)
+        orderIngredients.push(ingredient);
     });
+
+    const {
+        bun,
+        ingredients: burgerIngredients,
+        totalValue
+    } = getBurgerComposition(orderIngredients);
+
+    const zIndex = 10;
+    const isItemsMore = (bun ? 1 : 0) + (Object.keys(burgerIngredients).length) > 6;
+    const restItemsValue = (bun ? 1 : 0) + (Object.keys(burgerIngredients).length) - 6;
+    const maxIngredients = 6 - (bun ? 1 : 0);
 
     return (
         <Link 
             to={{
-                pathname: `/feed/${order._id}`,
+                pathname: `${location.pathname}/${order._id}`,
                 state: { background: location }
             }}
         >
             <div className={cn(styles.card, "mb-6", "mr-2")}>
                 <Row>
-                    <Col col="auto">
+                    <Col>
                         <p className="text text_type_digits-default">{`#${order.number}`}</p>
                     </Col>
-                    <Col>
-                        <p className="text text_type_main-default text_color_inactive" style={{ textAlign: 'right' }}>{order.createdAt}</p>
+                    <Col col="auto">
+                        <p className="text text_type_main-default text_color_inactive">{dateFormatConverter(order.createdAt)}</p>
                     </Col>
                 </Row>
                 <Row>
@@ -111,19 +128,21 @@ const OrderItem: FC<IOrderItemProps> = ({ order, isStatusView = false }) => {
                     <Col className="displayFlex">
                         <div className={styles.imageList}>
                             {
-                                images.length > 0 && images.map((image: IImageProps, index: number) => (
-                                    <div
-                                        key={index}
-                                        className={styles.imageBlock}
-                                        style={{zIndex: 10 - index}}
-                                    >
-                                        <img
-                                            className={`${styles.imageBackground} ${index === 5 && isItemsMore && styles.imageOpacity}`}
-                                            
-                                            src={image.src}
-                                            alt={image.name}
-                                        />
-                                    </div>
+                                bun && (
+                                    <ImageBlock
+                                        ingredient={bun}
+                                        style={{zIndex: zIndex}}
+                                    />
+                                )
+                            }
+                            {
+                                Object.keys(burgerIngredients).sort().slice(0, maxIngredients).map((item, index) => (
+                                    <ImageBlock
+                                        key={item}
+                                        ingredient={burgerIngredients[item].ingredient}
+                                        style={{zIndex: (zIndex - (bun ? 1 : 0)) - index}}
+                                        className={`${index === (maxIngredients - 1) && isItemsMore && styles.imageOpacity}`}
+                                    />
                                 ))
                             }
                             {isItemsMore && 

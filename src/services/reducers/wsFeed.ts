@@ -55,10 +55,8 @@ export const feedReducer = (state = initialState, action: TWSFeedActions): TFeed
             }
         }
         case WS_GET_MESSAGE: {
-            //console.log("action ---> ", action.data.orders);
             const done = action.data.orders.filter(order => order.status === ORDER_STATUS.DONE).map(order => order.number);
             const pending = action.data.orders.filter(order => order.status !== ORDER_STATUS.DONE).map(order => order.number);
-
 
             return {
                 ...state,

@@ -41,6 +41,27 @@ export type TOrderBoard = {
     pending: Array<number>;
 }
 
+export type TBurgerCompositionIngredient = {
+    count: number,
+    ingredient: TIngredient | null
+}
+
+export type TBurgerComposition = {
+    bun: TIngredient | null
+    ingredients: {
+        [T: string]: TBurgerCompositionIngredient
+    },
+    totalValue: number
+}
+
+export interface ILocation {
+    hash: string;
+    key: string;
+    pathname: string;
+    search: string;
+    state: undefined;
+}
+
 export type TFeed = {
     orders: ReadonlyArray<IFeedItem>,
     total: number,
@@ -55,12 +76,4 @@ export type TFeedItem = {
     createdAt: string;
     updatedAt: string;
     name: string;
-}
-
-export interface ILocation {
-    hash: string;
-    key: string;
-    pathname: string;
-    search: string;
-    state: undefined;
 }

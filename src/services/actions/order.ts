@@ -43,7 +43,7 @@ export const removeSelectedIngredients = (): IRemoveSelectedIngredientsAction =>
  */
  export const getOrderNumber: AppThunk = (data: Array<string>) => (dispatch: AppDispatch) => {
   dispatch(getOrderNumberRequest());
-  new ApiCall(ApiRoutes.orders).post({ "ingredients": data })
+  new ApiCall(ApiRoutes.orders, { privateCall: true }).post({ "ingredients": data })
   .then((response) => {
       if (response.success) {
         dispatch(getOrderNumberSuccess(response.order.number));

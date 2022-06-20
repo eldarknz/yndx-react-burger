@@ -92,7 +92,6 @@ export class ApiCall {
 
     // Вызов сервиса
     private async call() {
-
         if (this.$privateCall) {
             this.setPrivateCall();
         }

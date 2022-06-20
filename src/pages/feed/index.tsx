@@ -14,8 +14,6 @@ export const FeedPage = () => {
 
   const { wsConnected, orders, total, totalToday, orderBoard } = useSelector(store => store.feed);
 
-  //const { ingredients } = useSelector(store => store.burger);
-
   useEffect(() => {
     if (!wsConnected) {
         dispatch(wsFeedConnectionStart());

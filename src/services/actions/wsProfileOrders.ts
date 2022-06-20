@@ -1,4 +1,4 @@
-import { TIngredient, TFeed, TFeedItem, TOrder } from "../../../declarations";
+import { TOrderList } from "../../../declarations";
 
 import {
     WS_PROFILE_CONNECTION_START,
@@ -8,6 +8,9 @@ import {
     WS_PROFILE_GET_MESSAGE,
 } from "../constants/ws";
 
+/**
+ * Action typing
+ */
 export interface IWSProfileOrdersConnectionStartAction {
     readonly type: typeof WS_PROFILE_CONNECTION_START;
 }
@@ -26,14 +29,8 @@ export interface IWSProfileOrdersConnectionClosedAction {
 
 export interface IWSProfileOrdersGetMessageAction {
     readonly type: typeof WS_PROFILE_GET_MESSAGE;
-    readonly orders: Array<TOrder>;
+    readonly data: TOrderList;
 }
-
-/*export interface IWSProfileOrdersGetMessageAction {
-    readonly type: typeof WS_PROFILE_GET_MESSAGE;
-    readonly feed: TFeed;
-    readonly ingredients: ReadonlyArray<TIngredient>;
-}*/
 
 /**
  * Action creator
@@ -42,15 +39,10 @@ export const wsProfileOrdersConnectionStart = (): IWSProfileOrdersConnectionStar
 export const wsProfileOrdersConnectionSuccess = (): IWSProfileOrdersConnectionSuccessAction => ({ type: WS_PROFILE_CONNECTION_SUCCESS });
 export const wsProfileOrdersConnectionError = (): IWSProfileOrdersConnectionErrorAction => ({ type: WS_PROFILE_CONNECTION_ERROR });
 export const wsProfileOrdersConnectionClosed = (): IWSProfileOrdersConnectionClosedAction => ({ type: WS_PROFILE_CONNECTION_CLOSED });
-export const wsProfileOrdersGetMessage = (orders: Array<TOrder>): IWSProfileOrdersGetMessageAction => ({
+export const wsProfileOrdersGetMessage = (data: TOrderList): IWSProfileOrdersGetMessageAction => ({
     type: WS_PROFILE_GET_MESSAGE,
-    orders
+    data: data
 });
-/*export const wsProfileOrdersGetMessage = (feed: TFeed, ingredients: ReadonlyArray<TIngredient>): IWSProfileOrdersGetMessageAction => ({
-    type: WS_PROFILE_GET_MESSAGE,
-    feed,
-    ingredients
-});*/
 
 /**
  * Union type

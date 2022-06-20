@@ -1,8 +1,6 @@
 import cn from "classnames";
 
 import { FC } from "react";
-import { useLocation } from "react-router-dom";
-import { useSelector } from "../../services/types/hooks";
 
 import { TOrder } from "../../../declarations";
 
@@ -22,8 +20,6 @@ const OrderList: FC<IOrderListProps> = ({
     orders,
 }) => {
 
-    const { ingredients } = useSelector(store => store.burger);
-
     return (
         <section className={styles.section}>
             <Container fluid={true}>
@@ -34,7 +30,7 @@ const OrderList: FC<IOrderListProps> = ({
                     {
                         <div className={styles.cardGroup}>
                             {
-                                isWsConnected && orders.map((order: any, index: number) => (
+                                isWsConnected && orders.map(order => (
                                     <OrderItem key={order._id} order={order} />
                                 ))
                             }

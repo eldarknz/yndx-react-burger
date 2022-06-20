@@ -1,4 +1,4 @@
-import { TFeedItem } from "../../../declarations";
+import { TOrder } from "../../../declarations";
 import { TWSProfileOrdersActions } from "../../services/actions/wsProfileOrders";
 
 import {
@@ -11,12 +11,12 @@ import {
 
 type TProfileOrdersState = {
     wsProfileConnected: boolean,
-    orders: ReadonlyArray<TFeedItem>,
+    orders: Array<TOrder>,
 }
 
 const initialState: TProfileOrdersState = {
     wsProfileConnected: false,
-    orders: [],
+    orders: []
 }
 
 export const profileOrdersReducer = (state = initialState, action: TWSProfileOrdersActions): TProfileOrdersState => {
@@ -47,7 +47,7 @@ export const profileOrdersReducer = (state = initialState, action: TWSProfileOrd
         case WS_PROFILE_GET_MESSAGE: {
             return {
                 ...state,
-                orders: action.orders
+                orders: action.data.orders,
             }
         }
 

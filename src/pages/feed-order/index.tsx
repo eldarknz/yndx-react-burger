@@ -1,14 +1,14 @@
 import { Container } from 'components/ui/Grid/Grid';
 
-import OrderComposition from '../../components/OrderComposition/OrderComposition';
+import FeedOrder from '../../components/FeedOrder/FeedOrder';
 
 import styles from './styles.module.css';
 
-export const OrderCompositionPage = () => {
+export const FeedOrderPage = () => {
     return (
         <Container>
             <div className={styles.block}>
-                <OrderComposition />
+                <FeedOrder />
             </div>
         </Container>
     );

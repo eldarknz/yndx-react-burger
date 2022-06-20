@@ -16,8 +16,8 @@ type TApplicationActions =
     | TBurgerActions
     | TOrderActions
     | TUserActions
-    | TWSFeedActions;
-    //| TWSProfileOrdersActions;
+    | TWSFeedActions
+    | TWSProfileOrdersActions;
 
 // Typing thunks in our application
 export type AppThunk<TReturn = void> = ActionCreator<

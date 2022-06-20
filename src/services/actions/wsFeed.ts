@@ -1,4 +1,4 @@
-import { TIngredient, TFeed, TFeedItem, TOrder, TOrderList } from "../../../declarations";
+import { TOrderList } from "../../../declarations";
 
 import {
     WS_CONNECTION_START,
@@ -6,7 +6,7 @@ import {
     WS_CONNECTION_ERROR,
     WS_CONNECTION_CLOSED,
     WS_GET_MESSAGE
-} from "../constants/wsFeed";
+} from "../constants/ws";
 
 /**
  * Action typing
@@ -32,12 +32,6 @@ export interface IWSFeedGetMessageAction {
     readonly data: TOrderList;
 }
 
-/*export interface IWSFeedGetMessageAction {
-    readonly type: typeof WS_GET_MESSAGE;
-    readonly feed: TFeed;
-    readonly ingredients: ReadonlyArray<TIngredient>;
-}*/
-
 /**
  * Action creator
  */
@@ -49,12 +43,6 @@ export const wsFeedGetMessage = (data: TOrderList): IWSFeedGetMessageAction => (
     type: WS_GET_MESSAGE,
     data: data
 });
-
-/*export const wsFeedGetMessage = (feed: TFeed, ingredients: ReadonlyArray<TIngredient>): IWSFeedGetMessageAction => ({
-    type: WS_GET_MESSAGE,
-    feed,
-    ingredients
-});*/
 
 /**
  * Union type

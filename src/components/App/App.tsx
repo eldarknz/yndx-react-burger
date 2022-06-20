@@ -1,7 +1,7 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch } from '../../services/types/hooks';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import { ROUTES } from 'utils/constants';
+import { ROUTES } from '../../utils/constants';
 
 import { getIngredients } from '../../services/actions/burger';
 
@@ -9,20 +9,21 @@ import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AppHeader from '../AppHeader/AppHeader';
 import Modal from '../../components/Modal/Modal';
 import IngredientDetails from '../../components/IngredientDetails/IngredientDetails';
-import OrderComposition from '../../components/OrderComposition/OrderComposition';
+import FeedOrder from '../../components/FeedOrder/FeedOrder';
 
 import { ILocation } from '../../../declarations';
 
 import {
   HomePage,
   FeedPage,
-  OrderCompositionPage,
+  FeedOrderPage,
   IngredientPage,
   RegistrationPage,
   LoginPage,
   ForgotPasswordPage,
   ResetPasswordPage,
   ProfilePage,
+  ProfileOrderPage,
   PageNotFoundPage
 } from '../../pages';
 
@@ -48,11 +49,9 @@ const App = () => {
     history.push('/');
   }, [history]);
 
-  const handleCloseModalOrder = useCallback(() => {
+  const handleCloseModalFeedOrder = useCallback(() => {
     history.push('/feed');
   }, [history]);
-
-  //console.log(background, location);
 
   return (
     <>
@@ -74,17 +73,20 @@ const App = () => {
           <Route path={ROUTES.reset_password.path} exact={true}>
             <ResetPasswordPage />
           </Route>
+          <ProtectedRoute path={ROUTES.profile_order.path} exact={true}>
+            <ProfileOrderPage />
+          </ProtectedRoute>
           <ProtectedRoute path={ROUTES.profile.path}>
             <ProfilePage />
           </ProtectedRoute>
           <Route path={ROUTES.feed.path} exact={true}>
             <FeedPage />
           </Route>
+          <Route path={ROUTES.feed_order.path} exact={true}>
+            <FeedOrderPage />
+          </Route>
           <Route path={ROUTES.ingredient.path} exact={true}>
             <IngredientPage />
-          </Route>
-          <Route path={ROUTES.order.path} exact={true}>
-            <OrderCompositionPage />
           </Route>
           <Route>
             <PageNotFoundPage />
@@ -101,11 +103,11 @@ const App = () => {
                 <IngredientDetails />
               </Modal>
             </Route>
-            <Route path={ROUTES.order.path}>
+            <Route path={ROUTES.feed_order.path}>
               <Modal
-                onClose={handleCloseModalOrder}
+                onClose={handleCloseModalFeedOrder}
               >
-                <OrderComposition isModal={true}/>
+                <FeedOrder isModal={true}/>
               </Modal>
             </Route>
           </Switch>

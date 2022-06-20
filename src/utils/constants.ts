@@ -1,4 +1,6 @@
 export const API_URL = "https://norma.nomoreparties.space/api";
+export const WS_FEED_URL = 'wss://norma.nomoreparties.space/orders/all';
+export const WS_PROFILE_ORDERS_URL = 'wss://norma.nomoreparties.space/orders';
 
 export const ACCESS_TOKEN = 'accessToken';
 export const REFRESH_TOKEN = 'refreshToken';
@@ -11,9 +13,10 @@ export const ROUTES = {
     reset_password: { title: "Восстановление пароля", path: "/reset-password" },
     ingredient: { title: "Ингредиент", path: "/ingredients/:id" },
     feed: { title: "Лента заказов", path: "/feed" },
-    order: { title: "", path: "/feed/:id" },
+    feed_order: { title: "", path: "/feed/:id" },
     profile: { title: "Личный кабинет", path: "/profile" },
-    profile_orders: { title: "", path: "/profile/orders" }
+    profile_orders: { title: "", path: "/profile/orders" },
+    profile_order: { title: "", path: "/profile/orders/:id"}
 }
 
 export const INGREDIENT_CATEGORIES = [
