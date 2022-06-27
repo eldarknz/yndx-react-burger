@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import { wsProfileOrdersConnectionStart } from "services/actions/wsProfileOrders";
+import { wsProfileOrdersConnectionStart, wsProfileOrdersConnectionClosed } from "services/actions/wsProfileOrders";
 import { useDispatch, useSelector } from "../../services/types/hooks";
 
 import OrderItem from "../../components/OrderItem/OrderItem";
@@ -15,9 +15,12 @@ const ProfileOrders = () => {
         if (!wsProfileConnected) {
             dispatch(wsProfileOrdersConnectionStart());
         }
+        return () => {
+            if (wsProfileConnected) {
+                dispatch(wsProfileOrdersConnectionClosed());
+            }
+        }
     }, [dispatch, wsProfileConnected])
-
-    console.log(orders);
 
     return (
         <div className={styles.section}>

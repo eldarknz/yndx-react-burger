@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from '../../services/types/hooks';
-import { wsFeedConnectionStart } from '../../services/actions/wsFeed';
+import { wsFeedConnectionStart, wsFeedConnectionClosed } from '../../services/actions/wsFeed';
 import { getBurgerComposition, dateFormatConverter } from "../../utils/utils";
 import { TIngredient, TOrder } from "../../../declarations";
 
@@ -49,9 +49,14 @@ const FeedOrder = ({ isModal = false }: { isModal?: boolean } ) => {
     const { ingredients } = useSelector(store => store.burger);
 
     useEffect(() => {
-      if (!wsConnected) {
-          dispatch(wsFeedConnectionStart());
-      }
+        if (!wsConnected) {
+            dispatch(wsFeedConnectionStart());
+        }
+        return () => {
+            if (wsConnected) {
+                dispatch(wsFeedConnectionClosed());
+            }
+        }
     }, [dispatch, wsConnected])
 
     const viewedOrder = orders.find((order: TOrder) => order._id === id);

@@ -41,7 +41,8 @@ export const profileOrdersReducer = (state = initialState, action: TWSProfileOrd
         case WS_PROFILE_CONNECTION_CLOSED: {
             return {
                 ...state,
-                wsProfileConnected: false
+                wsProfileConnected: false,
+                orders: []
             }
         }
         case WS_PROFILE_GET_MESSAGE: {

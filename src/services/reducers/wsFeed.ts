@@ -51,7 +51,14 @@ export const feedReducer = (state = initialState, action: TWSFeedActions): TFeed
         case WS_CONNECTION_CLOSED: {
             return {
                 ...state,
-                wsConnected: false
+                wsConnected: false,
+                orders: [],
+                orderBoard: {
+                    done: [],
+                    pending: []
+                },
+                total: 0,
+                totalToday: 0
             }
         }
         case WS_GET_MESSAGE: {

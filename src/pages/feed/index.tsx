@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 
 import { useDispatch, useSelector } from "../../services/types/hooks";
-import { wsFeedConnectionStart } from '../../services/actions/wsFeed';
+import { wsFeedConnectionClosed, wsFeedConnectionStart } from '../../services/actions/wsFeed';
 
 import { Container, Row, Col } from '../../components/ui/Grid/Grid';
 
@@ -17,6 +17,11 @@ export const FeedPage = () => {
   useEffect(() => {
     if (!wsConnected) {
         dispatch(wsFeedConnectionStart());
+    }
+    return () => {
+      if (wsConnected) {
+        dispatch(wsFeedConnectionClosed());
+      }
     }
   }, [dispatch, wsConnected])
 

@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { useParams } from 'react-router-dom';
 
 import { useDispatch, useSelector } from '../../services/types/hooks';
-import { wsProfileOrdersConnectionStart } from "services/actions/wsProfileOrders";
+import { wsProfileOrdersConnectionStart, wsProfileOrdersConnectionClosed } from "services/actions/wsProfileOrders";
 import { getBurgerComposition, dateFormatConverter } from "../../utils/utils";
 import { TIngredient, TOrder } from "../../../declarations";
 
@@ -49,9 +49,14 @@ const ProfileOrder = ({ isModal = false }: { isModal?: boolean } ) => {
     const { ingredients } = useSelector(store => store.burger);
 
     useEffect(() => {
-      if (!wsProfileConnected) {
-          dispatch(wsProfileOrdersConnectionStart());
-      }
+        if (!wsProfileConnected) {
+            dispatch(wsProfileOrdersConnectionStart());
+        }
+        return () => {
+            if (wsProfileConnected) {
+                dispatch(wsProfileOrdersConnectionClosed());
+            }
+        }
     }, [dispatch, wsProfileConnected])
 
     const viewedOrder = orders.find((order: TOrder) => order._id === id);
