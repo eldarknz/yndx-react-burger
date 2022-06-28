@@ -1,4 +1,6 @@
 //import { ApiToken } from "api/ApiToken";
+import { TUserActions } from "services/actions/user";
+
 import {
   LOGIN_REQUEST,
   LOGIN_SUCCESS,
@@ -33,12 +35,45 @@ import {
   UPDATE_USER_REQUEST,
   UPDATE_USER_CLEAR
 
-} from "../actions/user";
+} from "../constants/user";
 
-const initialState = {
+export type TUserState = {
+  isLoggedIn: boolean,
+
+  loginRequest: boolean,
+  loginFailed: boolean,
+
+  logoutSuccess: boolean,
+  logoutRequest: boolean,
+  logoutFailed: boolean,
+
+  registerSuccess: boolean,
+  registerRequest: boolean,
+  registerFailed: boolean,
+
+  forgotPasswordSuccess: boolean,
+  forgotPasswordRequest: boolean,
+  forgotPasswordFailed: boolean,
+
+  resetPasswordSuccess: boolean,
+  resetPasswordRequest: boolean,
+  resetPasswordFailed: boolean,
+
+  tokenRequest: boolean,
+  tokenSuccess: boolean,
+  tokenFailed: boolean,
+
+  getUserRequest: boolean,
+  getUserSuccess: boolean,
+  getUserFailed: boolean,
+
+  updateUserRequest: boolean,
+  updateUserSuccess: boolean,
+  updateUserFailed: boolean,
+}
+
+const initialState: TUserState = {
     isLoggedIn: false,
-
-    user: null,
 
     loginRequest: false,
     loginFailed: false,
@@ -72,7 +107,7 @@ const initialState = {
     updateUserFailed: false,
 };
 
-export const userReducer = (state = initialState, action) => {
+export const userReducer = (state = initialState, action: TUserActions): TUserState => {
   switch (action.type) {
     case LOGIN_REQUEST: {
       return {
@@ -104,20 +139,20 @@ export const userReducer = (state = initialState, action) => {
     }
     case LOGOUT_SUCCESS: {
       return {
-          ...state,
-          isLoggedIn: action.isLoggedIn,
-          logoutRequest: false,
-          logoutSuccess: true, 
-          logoutFailed: false,
+        ...state,
+        isLoggedIn: action.isLoggedIn,
+        logoutRequest: false,
+        logoutSuccess: true, 
+        logoutFailed: false,
       }
     }
     case LOGOUT_FAILED: {
-        return {
-            ...state,
-            logoutRequest: false,
-            logoutSuccess: false,
-            logoutFailed: true,
-        }
+      return {
+        ...state,
+        logoutRequest: false,
+        logoutSuccess: false,
+        logoutFailed: true,
+      }
     }
 
     case REGISTER_REQUEST: {
@@ -143,13 +178,13 @@ export const userReducer = (state = initialState, action) => {
       }
     }
 
-    case FORGOT_PASSWORD_REQUEST:{
+    case FORGOT_PASSWORD_REQUEST: {
       return {
         ...state,
         forgotPasswordRequest: true,
       }
     }
-    case FORGOT_PASSWORD_SUCCESS:{
+    case FORGOT_PASSWORD_SUCCESS: {
       return {
         ...state,
         forgotPasswordSuccess: true,
@@ -159,19 +194,20 @@ export const userReducer = (state = initialState, action) => {
     }
     case FORGOT_PASSWORD_FAILED: {
       return {
+        ...state,
         forgotPasswordSuccess: false,
         forgotPasswordRequest: false,
         forgotPasswordFailed: true
       }
     }
 
-    case RESET_PASSWORD_REQUEST:{
+    case RESET_PASSWORD_REQUEST: {
       return {
         ...state,
         resetPasswordRequest: true,
       }
     }
-    case RESET_PASSWORD_SUCCESS:{
+    case RESET_PASSWORD_SUCCESS: {
       return {
         ...state,
         resetPasswordSuccess: true,
@@ -181,6 +217,7 @@ export const userReducer = (state = initialState, action) => {
     }
     case RESET_PASSWORD_FAILED: {
       return {
+        ...state,
         resetPasswordSuccess: false,
         resetPasswordRequest: false,
         resetPasswordFailed: true,
@@ -189,25 +226,25 @@ export const userReducer = (state = initialState, action) => {
 
     case TOKEN_REQUEST: {
       return{
-          ...state,
-          tokenRequest: true,
+        ...state,
+        tokenRequest: true,
       }
     }
     case TOKEN_SUCCESS: {
       return{
-          ...state,
-          tokenRequest: false,
-          tokenSuccess: true,
-          tokenFailed: false
-      }
+        ...state,
+        tokenRequest: false,
+        tokenSuccess: true,
+        tokenFailed: false
+    }
     }
     case TOKEN_FAILED: {
-        return{
-            ...state,
-            tokenRequest: false,
-            tokenSuccess: false,
-            tokenFailed: true,
-        }
+      return{
+        ...state,
+        tokenRequest: false,
+        tokenSuccess: false,
+        tokenFailed: true,
+      }
     }
 
     case GET_USER_REQUEST: {
@@ -265,7 +302,7 @@ export const userReducer = (state = initialState, action) => {
     }
 
     default: {
-        return state;
+      return state;
     }
   }
 };

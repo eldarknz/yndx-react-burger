@@ -12,7 +12,7 @@
 }
 
 .link.isActive {
-    color: var(--color-white);
+    color: var(--link-active-color);
     cursor: default;
 }
 
@@ -26,9 +26,9 @@
 }
 
 .link:hover svg {
-    fill: var(--color-white);
+    fill: var(--link-hover-color);
 }
 
 .link.isActive svg {
-    fill: var(--color-white);
+    fill: var(--link-active-color);
 }

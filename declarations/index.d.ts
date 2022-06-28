@@ -20,65 +20,39 @@ export type TUser = {
     password?: string 
 }
 
-export interface IUserStore {
-    user: {
-        isLoggedIn: boolean;
-
-        loginRequest: boolean;
-        loginFailed: boolean;
-
-        logoutSuccess: boolean;
-        logoutRequest: boolean;
-        logoutFailed: boolean;
-
-        registerSuccess: boolean;
-        registerRequest: boolean;
-        registerFailed: boolean;
-
-        forgotPasswordSuccess: boolean;
-        forgotPasswordRequest: boolean;
-        forgotPasswordFailed: boolean;
-
-        resetPasswordSuccess: boolean;
-        resetPasswordRequest: boolean;
-        resetPasswordFailed: boolean;
-
-        tokenRequest: boolean;
-        tokenSuccess: boolean;
-        tokenFailed: boolean;
-
-        getUserRequest: boolean;
-        getUserSuccess: boolean;
-        getUserFailed: boolean;
-
-        updateUserRequest: boolean;
-        updateUserSuccess: boolean;
-        updateUserFailed: boolean;
-    }
-};
-
-export interface IIngredientsStore {
-    app: {
-        ingredients: TIngredient[];
-        ingredientsRequest: boolean;
-        ingredientsFailed: boolean;
-    
-        burgerIngredients: TIngredient[];
-        burgerBun: TIngredient;
-    
-        viewedIngredient: TIngredient | null;
-    
-        currentTab: string;
-    }
+export type TOrder = {
+    ingredients: Array<string>,
+    name: string,
+    _id: string,
+    status: 'done' | 'pending' | 'created';
+    number: number,
+    createdAt: string,
+    updatedAt: string
 }
 
-export interface IOrderStore {
-    order: {
-        orderNumber: string;
-        orderNumberRequest: boolean;
-        orderNumberFailed: boolean;
-    }
-};
+export type TOrderList = {
+    orders: Array<TOrder>,
+    total: number,
+    totalToday: number
+}
+
+export type TOrderBoard = {
+    done: Array<number>;
+    pending: Array<number>;
+}
+
+export type TBurgerCompositionIngredient = {
+    count: number,
+    ingredient: TIngredient | null
+}
+
+export type TBurgerComposition = {
+    bun: TIngredient | null
+    ingredients: {
+        [T: string]: TBurgerCompositionIngredient
+    },
+    totalValue: number
+}
 
 export interface ILocation {
     hash: string;
@@ -86,4 +60,20 @@ export interface ILocation {
     pathname: string;
     search: string;
     state: undefined;
+}
+
+export type TFeed = {
+    orders: ReadonlyArray<IFeedItem>,
+    total: number,
+    totalToday: number   
+}
+
+export type TFeedItem = {
+    ingredients: ReadonlyArray<string>;
+    _id: string;
+    status: string;
+    number: number;
+    createdAt: string;
+    updatedAt: string;
+    name: string;
 }

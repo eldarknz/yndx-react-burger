@@ -1,7 +1,7 @@
 import cn from "classnames";
 
 import { useState, useRef, SyntheticEvent, ChangeEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hooks";
 import { Redirect, useLocation } from "react-router-dom";
 import { register } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";
@@ -11,7 +11,7 @@ import { Container } from "../../components/ui/Grid/Grid";
 import FancyLink from "../../components/ui/Link/Link";
 import ActionMessage from "../../components/ActionMessage/ActionMessage";
 
-import { IUserStore, ILocation, TUser } from "../../../declarations";
+import { ILocation } from "../../../declarations";
 
 import styles from "./styles.module.css";
 
@@ -28,7 +28,7 @@ interface IFormParams {
 export const RegistrationPage = () => {
   const dispatch = useDispatch();
 
-  const { isLoggedIn, registerSuccess, registerRequest, registerFailed } = useSelector((store: IUserStore) => store.user);
+  const { isLoggedIn, registerSuccess, registerRequest, registerFailed } = useSelector(store => store.user);
 
   const location = useLocation<ILocationStateFrom>();
 

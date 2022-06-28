@@ -31,6 +31,10 @@ a:active {
     margin-right: auto;
 }
 
+.displayFlex {
+    display: flex;
+}
+
 .alignItemsCenter {
     align-items: center;
 }
@@ -41,6 +45,10 @@ a:active {
 
 .justifyContentEnd {
     justify-content: flex-end;
+}
+
+.textAlignLeft {
+    text-align: left;
 }
 
 .textAlignCenter {

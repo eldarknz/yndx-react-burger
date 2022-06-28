@@ -1,12 +1,10 @@
 import { FC } from 'react';
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/types/hooks';
 import { Route, Redirect, useLocation } from 'react-router-dom';
 
 import { ROUTES } from "../../utils/constants";
 
 import { checkAccessToken } from "../../utils/utils";
-
-import { IUserStore } from "../../../declarations";
 
 interface IProtectedRouteProps {
   path: string;
@@ -21,7 +19,7 @@ const ProtectedRoute: FC<IProtectedRouteProps> = ({
 
   const location = useLocation();
 
-  const { isLoggedIn } = useSelector((store: IUserStore) => store.user);
+  const { isLoggedIn } = useSelector(store => store.user);
 
   if (!checkAccessToken()) {
     return (

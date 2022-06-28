@@ -1,7 +1,7 @@
 import cn from "classnames";
 
 import { useState, useRef, ChangeEvent, SyntheticEvent } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "../../services/types/hooks";
 import { Redirect, useLocation } from "react-router-dom";
 import { resetPassword } from "../../services/actions/user";
 import { ROUTES } from "../../utils/constants";
@@ -11,7 +11,7 @@ import { Container } from "../../components/ui/Grid/Grid";
 import FancyLink from "../../components/ui/Link/Link";
 import ActionMessage from "components/ActionMessage/ActionMessage";
 
-import { IUserStore, ILocation } from "../../../declarations";
+import { ILocation } from "../../../declarations";
 
 import styles from "./styles.module.css";
 
@@ -33,7 +33,7 @@ export const ResetPasswordPage = () => {
     resetPasswordRequest,
     resetPasswordFailed,
     forgotPasswordSuccess
-  } = useSelector((store: IUserStore) => store.user);
+  } = useSelector(store => store.user);
 
   const location = useLocation<ILocationStateFrom>();
 

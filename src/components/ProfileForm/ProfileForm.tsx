@@ -1,14 +1,14 @@
 import cn from "classnames";
 
 import { FC, useState, useRef, useEffect, ChangeEvent, SyntheticEvent } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { getUser, updateUser } from "../../services/actions/user";
+import { useDispatch, useSelector } from '../../services/types/hooks';
 
-import { UPDATE_USER_CLEAR } from "../../services/actions/user";
+import { getUser, updateUser } from "../../services/actions/user";
+import { updateUserClear } from "../../services/actions/user";
 
 import { Input, Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-import { IUserStore, TUser } from "../../../declarations";
+import { TUser } from "../../../declarations";
 
 import styles from './ProfileForm.module.css';
 
@@ -23,7 +23,7 @@ const ProfileFormMessage = ({ text }: IProfileFormMessageProps) => {
   useEffect(() => {
     const timer = setTimeout(() => {
       setShow(false);
-      dispatch({ type: UPDATE_USER_CLEAR });
+      dispatch(updateUserClear());
     }, 3000);
 
     return () => {
@@ -43,7 +43,7 @@ const ProfileForm: FC = () => {
 
   const dispatch = useDispatch();
 
-  const { updateUserRequest, updateUserFailed, updateUserSuccess } = useSelector((store: IUserStore) => store.user);
+  const { updateUserRequest, updateUserFailed, updateUserSuccess } = useSelector(store => store.user);
 
   const [formData, setFormData] = useState<TUser>({ name: "", email: "", password: "" });
 

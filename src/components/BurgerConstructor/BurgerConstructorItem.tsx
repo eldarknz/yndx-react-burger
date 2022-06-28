@@ -1,12 +1,12 @@
 import { useRef } from 'react';
 import { useDrag, useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/types/hooks';
 
 import { Row } from "../ui/Grid/Grid";
 import { ConstructorElement } from "@ya.praktikum/react-developer-burger-ui-components";
 import { DragIcon } from "@ya.praktikum/react-developer-burger-ui-components";
 
-import { deleteIngredient, swapIngredients } from 'services/actions';
+import { removeIngredient, swapIngredients } from '../../services/actions/burger';
 
 import { TIngredient } from '../../../declarations';
 
@@ -79,7 +79,7 @@ const BurgerConstructorItem = (props: IBurgerConstructorItemProps) => {
                                 text={name}
                                 price={price}
                                 thumbnail={image}
-                                handleClose={() => dispatch(deleteIngredient(props.ingredient))}
+                                handleClose={() => dispatch(removeIngredient(props.ingredient))}
                             />
                         </div>
                     </div>

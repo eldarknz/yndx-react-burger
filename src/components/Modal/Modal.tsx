@@ -47,9 +47,11 @@ const Modal: FC<IModalProps> = ({
             <div
                 className={styles.container}
             >
-            <div className={cn(styles.title)}>
-                <h1 className="text text_type_main-large">{header}</h1>
-            </div>
+            {header && (
+                <div className={cn(styles.title)}>
+                    <h1 className="text text_type_main-large">{header}</h1>
+                </div> 
+            )}
             <div className={styles.closeButton} onClick={onClose}>
                 <CloseIcon type="primary" />
             </div>

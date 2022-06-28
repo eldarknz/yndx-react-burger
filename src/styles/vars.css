@@ -7,6 +7,7 @@
 
     --link-primary-color: #8585AD;
     --link-secondary-color: #4C4CFF;
+    --link-active-color: var(--body-color);
     --link-hover-color: var(--color-white);
     --link-decoraion: none;
 

@@ -3,40 +3,56 @@
  */
 //import { bun, ingredients } from '../initialIngredients';
 
+import { TBurgerActions } from '../actions/burger';
+import { TIngredient } from '../../../declarations';
+
 import {
     GET_INGREDIENTS_REQUEST,
     GET_INGREDIENTS_SUCCESS,
     GET_INGREDIENTS_FAILED,
     ADD_INGREDIENT,
-    DELETE_INGREDIENT,
+    REMOVE_INGREDIENT,
     ADD_BUN,
     SWAP_INGREDIENTS,
     TAB_SWITCH,
     GET_INGREDIENT_DETAILS,
-    DELETE_INGREDIENT_DETAILS,
-    CLEAR_CONSTRUCTOR
-} from '../actions/index';
+    REMOVE_INGREDIENT_DETAILS,
+    REMOVE_SELECTED_INGREDIENTS
+} from '../constants/burger';
 
-const initialState = {
+export type TBurgerState = {
+    ingredients: TIngredient[],
+    ingredientsRequest: boolean,
+    ingredientsFailed: boolean,
 
+    burgerIngredients: TIngredient[],
+    burgerBun: TIngredient | null,
+
+    viewedIngredient: TIngredient | null,
+
+    currentTab: string
+}
+
+const initialState: TBurgerState = {
     ingredients: [],
     ingredientsRequest: false,
     ingredientsFailed: false,
 
     burgerIngredients: [],
-    burgerBun: {},
+    burgerBun: null,
 
     viewedIngredient: null,
 
     currentTab: 'bun'
 };
 
-export const appReducer = (state = initialState, action) => {
+export const appReducer = (state = initialState, action: TBurgerActions): TBurgerState => {
     switch (action.type) {
         case TAB_SWITCH: {
             return {
                 ...state,
-                currentTab: state.currentTab !== action.selectedtTab ? action.selectedtTab : state.currentTab
+                currentTab: action.selectedTab
+                //currentTab: state.currentTab !== action.selectedTab ? action.selectedTab : state.currentTab
             };
         }
         case GET_INGREDIENTS_REQUEST: {
@@ -48,7 +64,10 @@ export const appReducer = (state = initialState, action) => {
         case GET_INGREDIENTS_SUCCESS: {
             return {
                 ...state,
-                ingredients: action.ingredients,
+
+                ingredients: action.ingredients.map((item: TIngredient) => {
+                    return { ...item }
+                }),
                 ingredientsRequest: false,
                 ingredientsFailed: false,
             };
@@ -67,7 +86,7 @@ export const appReducer = (state = initialState, action) => {
                 burgerIngredients: [...state.burgerIngredients, {...ingredient, uuid:uuid}]
             };
         }
-        case DELETE_INGREDIENT: {
+        case REMOVE_INGREDIENT: {
             return {
                 ...state,
                 burgerIngredients: [...state.burgerIngredients].filter(ingredient => ingredient.uuid !== action.ingredient.uuid)
@@ -95,17 +114,17 @@ export const appReducer = (state = initialState, action) => {
                 viewedIngredient: action.ingredient
             };
         }
-        case DELETE_INGREDIENT_DETAILS: {
+        case REMOVE_INGREDIENT_DETAILS: {
             return {
                 ...state,
                 viewedIngredient: null
             };
         }
-        case CLEAR_CONSTRUCTOR: {
+        case REMOVE_SELECTED_INGREDIENTS: {
             return {
                 ...state,
                 burgerIngredients: [],
-                burgerBun: {},
+                burgerBun: null,
             }
         }
         default: {

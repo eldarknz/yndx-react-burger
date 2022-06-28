@@ -26,7 +26,7 @@ const AppHeader = () => {
                                 </FancyLink>
                             </NavItem>
                             <NavItem>
-                                <FancyLink href={'/orders'} isExact={true}>
+                                <FancyLink href={'/feed'} isExact={true}>
                                     <div className={styles.icon}>
                                         <ListIcon type="primary" />
                                     </div>

@@ -1,11 +1,11 @@
 import cn from "classnames";
 
-import { useSelector } from 'react-redux';
+import { useSelector } from '../../services/types/hooks';
 import { useParams } from 'react-router-dom';
 
 import { Row, Col } from "../../components/ui/Grid/Grid";
 
-import { IIngredientsStore, TIngredient } from "../../../declarations";
+import { TIngredient } from "../../../declarations";
 
 import styles from "./IngredientDetails.module.css";
 
@@ -13,7 +13,7 @@ const IngredientDetails = () => {
 
     const { id } = useParams<{ id: string }>();
 
-    const { ingredients } = useSelector((store: IIngredientsStore) => store.app);
+    const { ingredients } = useSelector(store => store.burger);
 
     const viewedIngredient = ingredients.find((ingredient: TIngredient) => ingredient._id === id);
 

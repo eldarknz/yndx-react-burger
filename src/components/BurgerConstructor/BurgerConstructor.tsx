@@ -1,7 +1,7 @@
 import cn from "classnames";
 
 import { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from '../../services/types/hooks';
 import { useDrop } from 'react-dnd';
 import { useHistory, useLocation } from 'react-router-dom';
 import { ROUTES } from "../../utils/constants";
@@ -14,12 +14,12 @@ import Modal from "../Modal/Modal";
 import OrderDetails from "../OrderDetails/OrderDetails";
 import BurgerConstructorItem from "./BurgerConstructorItem";
 
-import { checkAccessToken, isEmpty } from "../../utils/utils";
+import { checkAccessToken } from "../../utils/utils";
 
 import { getOrderNumber } from "../../services/actions/order";
-import { addIngredient, addBun } from "../../services/actions";
+import { addIngredient, addBun } from '../../services/actions/burger';
 
-import { IUserStore, IIngredientsStore, TIngredient } from "../../../declarations";
+import { TIngredient } from "../../../declarations";
 
 import styles from "./BurgerConstructor.module.css";
 
@@ -48,15 +48,16 @@ const BurgerConstructor = () => {
 
     const dispatch = useDispatch();
 
-    const { isLoggedIn } = useSelector((store: IUserStore) => store.user);
-    const { burgerIngredients, burgerBun } = useSelector((store: IIngredientsStore) => store.app);
+    const { isLoggedIn } = useSelector(store => store.user);
+    console.log("ИСПРАВИТЬ !!!!! ===> ", isLoggedIn);
+    const { burgerIngredients, burgerBun } = useSelector(store => store.burger);
 
     const history = useHistory();
     const location = useLocation();
 
     const [modalVisible, setModalVisible] = useState(false);
 
-    const totalPrice = burgerIngredients.reduce((acc, item) => acc + item.price, 0) + (!isEmpty(burgerBun) ? burgerBun.price * 2 : 0);
+    const totalPrice = burgerIngredients.reduce((acc, item) => acc + item.price, 0) + (burgerBun ? burgerBun.price * 2 : 0);
 
     const handleOpenModal = () => setModalVisible(true);
     
@@ -64,7 +65,7 @@ const BurgerConstructor = () => {
 
     const handleOrderSubmit = () => {
         if (isLoggedIn && checkAccessToken()) {
-            if (!isEmpty(burgerBun) && burgerIngredients.length > 0) {
+            if (burgerBun && burgerIngredients.length > 0) {
                 const order = burgerIngredients.concat([burgerBun]).map(ingredient => ingredient._id);
                 dispatch(getOrderNumber(order));
                 handleOpenModal();
@@ -80,11 +81,7 @@ const BurgerConstructor = () => {
     const [, dropTarget] = useDrop({
         accept: 'ingredient',
         drop(item: TIngredient) {
-            if (item.type === 'bun') {
-                if (item._id !== burgerBun._id) dispatch(addBun(item));
-            } else {
-                dispatch(addIngredient(item));
-            }
+            dispatch(item.type === 'bun' ? addBun(item) : addIngredient(item));
         },
     });
 
@@ -108,14 +105,14 @@ const BurgerConstructor = () => {
                             )}
                             ref={dropTarget}
                         >
-                            {isEmpty(burgerBun) && burgerIngredients.length === 0 && (
+                            {!burgerBun && burgerIngredients.length === 0 && (
                                 <p className="text text_type_main-default pt-4 pr-10 pb-4 pl-10">Добавьте ингредиенты</p>
                             )}
-                            { !isEmpty(burgerBun) && <Bun type={'top'} ingredient={burgerBun} /> }
+                            {burgerBun && <Bun type={'top'} ingredient={burgerBun} /> }
                             <div className={styles.blockList}>
                                 {content()}
                             </div>
-                            { !isEmpty(burgerBun) && <Bun type={'bottom'} ingredient={burgerBun} />}
+                            {burgerBun && <Bun type={'bottom'} ingredient={burgerBun} />}
                         </div>
                     }
                     <Row alignItems="center" justifyContent="flex-end" className={cn(styles.priceBlock, "pt-10")}>

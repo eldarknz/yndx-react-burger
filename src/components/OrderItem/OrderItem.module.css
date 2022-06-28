@@ -1,0 +1,55 @@
+.card {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    border-radius: 40px;
+    background-color: #1C1C21;
+    gap: 24px;
+}
+
+.imageList {
+    position: relative;
+    display: flex;
+}
+
+.imageBlock {
+    height: 64px;
+    width: 64px;
+    border-radius: 50%;
+    background-image: linear-gradient(to right, #801AB2, #4C4CFF);
+    position: relative;
+}
+
+.imageBackground {
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    background-image: linear-gradient(black, black);
+    object-fit: cover;
+}
+
+.imageList .imageBlock:first-child {
+    margin-left: 0;
+}
+
+.imageList .imageBlock {
+    margin-left: -10px;
+}
+
+.imageOpacity img {
+    opacity: 0.6;
+}
+  
+.restItems {
+    position: absolute;
+    height: 64px;
+    width: 64px;
+    right: 0;
+    z-index: 10;
+    text-align: center;
+    line-height: 64px;
+    color: #F2F2F3;
+}

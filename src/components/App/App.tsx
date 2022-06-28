@@ -1,26 +1,29 @@
 import { useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../services/types/hooks';
 import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
-import { ROUTES } from 'utils/constants';
+import { ROUTES } from '../../utils/constants';
 
-import { getIngredients } from '../../services/actions';
+import { getIngredients } from '../../services/actions/burger';
 
 import ProtectedRoute from '../ProtectedRoute/ProtectedRoute';
 import AppHeader from '../AppHeader/AppHeader';
 import Modal from '../../components/Modal/Modal';
 import IngredientDetails from '../../components/IngredientDetails/IngredientDetails';
+import FeedOrder from '../../components/FeedOrder/FeedOrder';
 
 import { ILocation } from '../../../declarations';
 
 import {
   HomePage,
-  OrdersPage,
+  FeedPage,
+  FeedOrderPage,
   IngredientPage,
   RegistrationPage,
   LoginPage,
   ForgotPasswordPage,
   ResetPasswordPage,
   ProfilePage,
+  ProfileOrderPage,
   PageNotFoundPage
 } from '../../pages';
 
@@ -36,15 +39,18 @@ const App = () => {
 
   const location = useLocation<ILocationBackground>();
   const history = useHistory();
-
   const background = location.state && location.state.background;
 
   useEffect(() => {
     dispatch(getIngredients());
   }, [dispatch]);
 
-  const handleCloseModal = useCallback(() => {
+  const handleCloseModalIngredient = useCallback(() => {
     history.push('/');
+  }, [history]);
+
+  const handleCloseModalFeedOrder = useCallback(() => {
+    history.push('/feed');
   }, [history]);
 
   return (
@@ -67,12 +73,18 @@ const App = () => {
           <Route path={ROUTES.reset_password.path} exact={true}>
             <ResetPasswordPage />
           </Route>
+          <ProtectedRoute path={ROUTES.profile_order.path} exact={true}>
+            <ProfileOrderPage />
+          </ProtectedRoute>
           <ProtectedRoute path={ROUTES.profile.path}>
             <ProfilePage />
           </ProtectedRoute>
-          <ProtectedRoute path={ROUTES.orders.path} exact={true}>
-            <OrdersPage />
-          </ProtectedRoute>
+          <Route path={ROUTES.feed.path} exact={true}>
+            <FeedPage />
+          </Route>
+          <Route path={ROUTES.feed_order.path} exact={true}>
+            <FeedOrderPage />
+          </Route>
           <Route path={ROUTES.ingredient.path} exact={true}>
             <IngredientPage />
           </Route>
@@ -82,14 +94,23 @@ const App = () => {
         </Switch>
 
         {background && (
-          <Route path={ROUTES.ingredient.path}>
-            <Modal
-              header="Детали ингредиента"
-              onClose={handleCloseModal}
-            >
-              <IngredientDetails />
-            </Modal>
-          </Route>
+          <Switch>
+            <Route path={ROUTES.ingredient.path}>
+              <Modal
+                header="Детали ингредиента"
+                onClose={handleCloseModalIngredient}
+              >
+                <IngredientDetails />
+              </Modal>
+            </Route>
+            <Route path={ROUTES.feed_order.path}>
+              <Modal
+                onClose={handleCloseModalFeedOrder}
+              >
+                <FeedOrder isModal={true}/>
+              </Modal>
+            </Route>
+          </Switch>
         )}
 
       </main>
