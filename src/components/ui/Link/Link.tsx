@@ -23,10 +23,10 @@ const FancyLink: FC<IFancyLinkProps> = ({
     isExact = false
 }) => {
 
-    const match = useRouteMatch({
+    /*const match = useRouteMatch({
         path: href,
         exact: isExact
-    });
+    });*/
 
     const linkClassName = cn(styles.link,
         className
@@ -52,7 +52,7 @@ const FancyLink: FC<IFancyLinkProps> = ({
             to={href}
             className={cn(linkClassName,
                 {
-                    [styles.isActive]: match
+                    [styles.isActive]: useRouteMatch({ path: href, exact: isExact })
                 },
             )}
         >

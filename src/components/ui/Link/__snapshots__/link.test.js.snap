@@ -1,0 +1,9 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`The link is rendering without errors 1`] = `
+<div
+  className="link"
+>
+  Ссылка
+</div>
+`;
