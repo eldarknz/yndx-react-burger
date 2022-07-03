@@ -128,122 +128,156 @@ describe('Profile orders reducer', () => {
     })
   })
 
-    it('should handle LOGIN_FAILED', () => {
-      expect(userReducer(initialState, {
-        type: LOGIN_FAILED
-      })).toEqual({
-        ...initialState,
-        loginRequest: false,
-        loginFailed: true
-      })
+  it('should handle LOGIN_FAILED', () => {
+    expect(userReducer(initialState, {
+      type: LOGIN_FAILED
+    })).toEqual({
+      ...initialState,
+      loginRequest: false,
+      loginFailed: true
     })
+  })
 
-    it('should handle LOGOUT_REQUEST', () => {
-      expect(userReducer(initialState, {
-        type: LOGOUT_REQUEST
-      })).toEqual({
-        ...initialState,
-        logoutRequest: true
-      })
+  it('should handle LOGOUT_REQUEST', () => {
+    expect(userReducer(initialState, {
+      type: LOGOUT_REQUEST
+    })).toEqual({
+      ...initialState,
+      logoutRequest: true
     })
+  })
 
-    it('should handle LOGOUT_SUCCESS', () => {
-      expect(userReducer({
-          ...initialState,
-          isLoggedIn: true,
-        },
-        {
-          type: LOGOUT_SUCCESS,
-          isLoggedIn: false
-        }
-      )).toEqual({
+  it('should handle LOGOUT_SUCCESS', () => {
+    expect(userReducer({
         ...initialState,
-        isLoggedIn: false,
-        logoutRequest: false,
-        logoutSuccess: true, 
-        logoutFailed: false,
-      })
+        isLoggedIn: true,
+      },
+      {
+        type: LOGOUT_SUCCESS,
+        isLoggedIn: false
+      }
+    )).toEqual({
+      ...initialState,
+      isLoggedIn: false,
+      logoutRequest: false,
+      logoutSuccess: true, 
+      logoutFailed: false,
     })
+  })
     
-    it('should handle LOGOUT_FAILED', () => {
-      expect(userReducer(initialState, {
-        type: LOGOUT_FAILED
-      })).toEqual({
-        ...initialState,
-        logoutRequest: false,
-        logoutSuccess: false,
-        logoutFailed: true,
-      })
+  it('should handle LOGOUT_FAILED', () => {
+    expect(userReducer(initialState, {
+      type: LOGOUT_FAILED
+    })).toEqual({
+      ...initialState,
+      logoutRequest: false,
+      logoutSuccess: false,
+      logoutFailed: true,
     })
+  })
+
+  it('should handle REGISTER_REQUEST', () => {
+    expect(userReducer(initialState, {
+      type: REGISTER_REQUEST
+    })).toEqual({
+      ...initialState,
+      registerRequest: true,
+    })
+  })
+
+  it('should handle REGISTER_REQUEST', () => {
+    expect(userReducer(initialState, {
+      type: REGISTER_REQUEST
+    })).toEqual({
+      ...initialState,
+      registerRequest: true
+    })
+  })
+
+  it('should handle REGISTER_SUCCESS', () => {
+    expect(userReducer(initialState, {
+      type: REGISTER_SUCCESS
+    })).toEqual({
+      ...initialState,
+      registerSuccess: true,
+      registerRequest: false,
+      registerFailed: false
+    })
+  })
+
+  it('should handle REGISTER_FAILED', () => {
+    expect(userReducer(initialState, {
+      type: REGISTER_FAILED
+    })).toEqual({
+      ...initialState,
+      registerSuccess: false,
+      registerRequest: false,
+      registerFailed: true,
+    })
+  })
+
+  it('should handle FORGOT_PASSWORD_REQUEST', () => {
+    expect(userReducer(initialState, {
+      type: FORGOT_PASSWORD_REQUEST
+    })).toEqual({
+      ...initialState,
+      forgotPasswordRequest: true
+    })
+  })
+
+  it('should handle FORGOT_PASSWORD_SUCCESS', () => {
+    expect(userReducer(initialState, {
+      type: FORGOT_PASSWORD_SUCCESS
+    })).toEqual({
+      ...initialState,
+      forgotPasswordSuccess: true,
+      forgotPasswordRequest: false,
+      forgotPasswordFailed: false
+    })
+  })
+
+  it('should handle FORGOT_PASSWORD_FAILED', () => {
+    expect(userReducer(initialState, {
+      type: FORGOT_PASSWORD_FAILED
+    })).toEqual({
+      ...initialState,
+      forgotPasswordSuccess: false,
+      forgotPasswordRequest: false,
+      forgotPasswordFailed: true
+    })
+  })
+
+  it('should handle RESET_PASSWORD_REQUEST', () => {
+    expect(userReducer(initialState, {
+      type: RESET_PASSWORD_REQUEST
+    })).toEqual({
+      ...initialState,
+      resetPasswordRequest: true
+    })
+  })
+
+  it('should handle RESET_PASSWORD_SUCCESS', () => {
+    expect(userReducer(initialState, {
+      type: RESET_PASSWORD_SUCCESS
+    })).toEqual({
+      ...initialState,
+      resetPasswordSuccess: true,
+      resetPasswordRequest: false,
+      resetPasswordFailed: false,
+    })
+  })
+
+  it('should handle RESET_PASSWORD_FAILED', () => {
+    expect(userReducer(initialState, {
+      type: RESET_PASSWORD_FAILED
+    })).toEqual({
+      ...initialState,
+      resetPasswordSuccess: false,
+      resetPasswordRequest: false,
+      resetPasswordFailed: true,
+    })
+  })
     /*
-    it('should handle REGISTER_REQUEST', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    registerRequest: true,
-  }
-}
-    it('should handle REGISTER_SUCCESS', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    registerSuccess: true,
-    registerRequest: false,
-    registerFailed: false
-  }
-}
-    it('should handle REGISTER_FAILED', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    registerSuccess: false,
-    registerRequest: false,
-    registerFailed: true,
-  }
-}
-
-    it('should handle FORGOT_PASSWORD_REQUEST', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    forgotPasswordRequest: true,
-  }
-}
-    it('should handle FORGOT_PASSWORD_SUCCESS', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    forgotPasswordSuccess: true,
-    forgotPasswordRequest: false,
-    forgotPasswordFailed: false
-  }
-}
-    it('should handle FORGOT_PASSWORD_FAILED', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    forgotPasswordSuccess: false,
-    forgotPasswordRequest: false,
-    forgotPasswordFailed: true
-  }
-}
-
-    it('should handle RESET_PASSWORD_REQUEST', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    resetPasswordRequest: true,
-  }
-}
-    it('should handle RESET_PASSWORD_SUCCESS', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    resetPasswordSuccess: true,
-    resetPasswordRequest: false,
-    resetPasswordFailed: false,
-  }
-}
-    it('should handle RESET_PASSWORD_FAILED', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    resetPasswordSuccess: false,
-    resetPasswordRequest: false,
-    resetPasswordFailed: true,
-  }
-}
 
     it('should handle TOKEN_REQUEST', () => {
   return{
