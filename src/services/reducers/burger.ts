@@ -46,7 +46,7 @@ const initialState: TBurgerState = {
     currentTab: 'bun'
 };
 
-export const appReducer = (state = initialState, action: TBurgerActions): TBurgerState => {
+export const burgerReducer = (state = initialState, action: TBurgerActions): TBurgerState => {
     switch (action.type) {
         case TAB_SWITCH: {
             return {
