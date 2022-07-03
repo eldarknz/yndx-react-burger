@@ -1,8 +1,3 @@
-/**
- * Для теста
- */
-//import { getItemsRequest } from "../initialIngredients";
-
 import { v4 as uuidv4 } from 'uuid';
 
 import { AppDispatch, AppThunk } from '../types';
@@ -23,29 +18,6 @@ import {
   TAB_SWITCH
 } from "../constants/burger"
 import { TIngredient } from "../../../declarations";
-
-/**
- * Для теста
- */
-/*export const getIngredients = () => {
-    return (dispatch) => {
-      dispatch({
-        type: GET_INGREDIENTS_REQUEST
-      });
-      getItemsRequest().then(res => {
-        if (res && res.success) {
-          dispatch({
-            type: GET_INGREDIENTS_SUCCESS,
-            ingredients: res.data
-          });
-        } else {
-          dispatch({
-            type: GET_INGREDIENTS_FAILED
-          });
-        }
-      });
-    };
-}*/
 
 /**
  * Action typing
@@ -94,7 +66,7 @@ export interface IRemoveSelectedIngredientsAction {
 }
 export interface ITabSwitchAction {
   readonly type: typeof TAB_SWITCH;
-  readonly selectedTab: string;
+  readonly currentTab: string;
 }
 
 /**
@@ -128,7 +100,7 @@ export const swapIngredients = (dragIndex: Readonly<number>, hoverIndex: Readonl
     hoverIndex: hoverIndex
   }
 });
-export const tabSwitch = (selectedTab: Readonly<string>): ITabSwitchAction => ({ type: TAB_SWITCH, selectedTab });
+export const tabSwitch = (currentTab: Readonly<string>): ITabSwitchAction => ({ type: TAB_SWITCH, currentTab });
 
 /**
  * Thunk

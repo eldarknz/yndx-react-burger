@@ -1,4 +1,48 @@
-export const bun = {
+import { TIngredient, TOrder } from "../../declarations";
+
+export const orders: ReadonlyArray<TOrder> = [
+    {
+        name: "Space флюоресцентный бургер",
+        _id: "6224ccfc25b9a4001b6e2f5e",
+        number: 10000,
+        status: "done",
+        createdAt: "2022-06-23T20:46:10.047Z",
+        updatedAt: "2022-06-23T20:46:10.236Z",
+        ingredients: [
+            "60d3b41abdacab0026a733c7",
+            "60d3b41abdacab0026a733cd"
+        ]
+    },
+    {
+        name: "Фалленианский антарианский краторный бургер",
+        _id: "62c1ff6a42d34a001c2741a6",
+        number: 10001,
+        status: "done",
+        createdAt: "2022-06-23T20:43:22.132Z",
+        updatedAt: "2022-06-23T20:43:22.334Z",
+        ingredients: [
+            "60d3b41abdacab0026a733c6",
+            "60d3b41abdacab0026a733c6",
+            "60d3b41abdacab0026a733cf",
+            "60d3b41abdacab0026a733d1"
+        ]
+    },
+    {
+        name: "Space флюоресцентный бургер",
+        _id: "62c1f15d42d34a001c27414c",
+        number: 10002,
+        status: "done",
+        createdAt: "2022-06-23T19:43:25.920Z",
+        updatedAt: "2022-06-23T19:43:26.130Z",
+        ingredients: [
+            "60d3b41abdacab0026a733c7",
+            "60d3b41abdacab0026a733cd",
+            "60d3b41abdacab0026a733c7"
+        ]
+    },
+];
+
+export const bun: TIngredient = {
     "_id":"60d3b41abdacab0026a733c6",
     "name":"Краторная булка N-200i",
     "type":"bun",
@@ -13,7 +57,7 @@ export const bun = {
     "__v":0
 };
 
-export const ingredients = [
+export const ingredients: ReadonlyArray<TIngredient> = [
     {
         "_id":"60d3b41abdacab0026a733c8",
         "name":"Филе Люминесцентного тетраодонтимформа",

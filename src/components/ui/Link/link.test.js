@@ -4,12 +4,12 @@ import { shallow } from 'enzyme';
 
 import FancyLink from "./Link";
 
-it("The link is rendering without errors", () => {
+/*it("The link is rendering without errors", () => {
     const component = renderer.create(<FancyLink>Ссылка</FancyLink>).toJSON();
     expect(component).toMatchSnapshot();
-});
+});*/
 
-it('Нажатие на кнопку вызывает корректный alert', () => {
+/*it('Нажатие на кнопку вызывает корректный alert', () => {
     window.alert = jest.fn();
 
         // Рендерим ссылку в переменную
@@ -21,4 +21,4 @@ it('Нажатие на кнопку вызывает корректный alert
         
         // Проверяем, что alert сработал с правильным текстом предупреждения
     expect(window.alert).toHaveBeenCalledWith('Ссылка');
-});
+});*/

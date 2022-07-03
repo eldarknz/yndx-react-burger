@@ -1,3 +1,5 @@
+import { TIngredientCategory } from "../../declarations";
+
 export const API_URL = "https://norma.nomoreparties.space/api";
 export const WS_FEED_URL = 'wss://norma.nomoreparties.space/orders/all';
 export const WS_PROFILE_ORDERS_URL = 'wss://norma.nomoreparties.space/orders';
@@ -19,7 +21,7 @@ export const ROUTES = {
     profile_order: { title: "", path: "/profile/orders/:id"}
 }
 
-export const INGREDIENT_CATEGORIES = [
+export const INGREDIENT_CATEGORIES: ReadonlyArray<TIngredientCategory> = [
     { _id: 0, type: "bun", title: "Булки" },
     { _id: 1, type: "sauce", title: "Соусы" },
     { _id: 2, type: "main", title: "Начинки" }
