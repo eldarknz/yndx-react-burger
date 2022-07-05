@@ -277,82 +277,150 @@ describe('Profile orders reducer', () => {
       resetPasswordFailed: true,
     })
   })
-    /*
 
-    it('should handle TOKEN_REQUEST', () => {
-  return{
-    ...initialState,
-    tokenRequest: true,
-  }
-}
-    it('should handle TOKEN_SUCCESS', () => {
-  return{
-    ...initialState,
-    tokenRequest: false,
-    tokenSuccess: true,
-    tokenFailed: false
-}
-}
-    it('should handle TOKEN_FAILED', () => {
-  return{
-    ...initialState,
-    tokenRequest: false,
-    tokenSuccess: false,
-    tokenFailed: true,
-  }
-}
+  it('should handle TOKEN_REQUEST', () => {
+    expect(userReducer(initialState, {
+      type: TOKEN_REQUEST
+    })).toEqual({
+      ...initialState,
+      tokenRequest: true
+    })
+  })
 
-    it('should handle GET_USER_REQUEST', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    getUserRequest: true,
-  }
-}
-    it('should handle GET_USER_SUCCESS', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    getUserRequest: false,
-    getUserSuccess: true,
-    getUserFailed: false,
-  }
-}
-    it('should handle GET_USER_FAILED', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    getUserRequest: false,
-    getUserSuccess: false,
-    getUserFailed: true
-  }
-}
+  it('should handle TOKEN_SUCCESS', () => {
+    expect(userReducer(
+      { 
+        ...initialState,
+        tokenRequest: true
+      },
+      {
+        type: TOKEN_SUCCESS
+      }
+    )).toEqual({
+      ...initialState,
+      tokenRequest: false,
+      tokenSuccess: true,
+      tokenFailed: false
+    })
+  })
 
-    it('should handle UPDATE_USER_REQUEST', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    updateUserRequest: true,
-  }
-}
-    it('should handle UPDATE_USER_SUCCESS', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    updateUserRequest: false,
-    updateUserSuccess: true,
-    updateUserFailed: false,
-  }
-}
-    it('should handle UPDATE_USER_FAILED', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    updateUserRequest: false,
-    updateUserSuccess: false,
-    updateUserFailed: true
-  }
-}
-    it('should handle UPDATE_USER_CLEAR', () => {
-        expect(userReducer(initialState, {
-    ...initialState,
-    updateUserRequest: false,
-    updateUserSuccess: false,
-    updateUserFailed: false
-  }
-}*/
+  it('should handle TOKEN_FAILED', () => {
+    expect(userReducer(
+      { 
+        ...initialState,
+        tokenRequest: true
+      },
+      {
+        type: TOKEN_FAILED
+      }
+    )).toEqual({
+      ...initialState,
+      tokenRequest: false,
+      tokenSuccess: false,
+      tokenFailed: true
+    })
+  })
+
+  it('should handle GET_USER_REQUEST', () => {
+    expect(userReducer(initialState, {
+        type: GET_USER_REQUEST
+    })).toEqual({
+      ...initialState,
+      getUserRequest: false
+    })
+  })
+
+  it('should handle GET_USER_SUCCESS', () => {
+    expect(userReducer(
+      { 
+        ...initialState,
+        getUserRequest: true
+      },
+      {
+        type: GET_USER_SUCCESS
+      }
+    )).toEqual({
+      ...initialState,
+      getUserRequest: false,
+      getUserSuccess: true,
+      getUserFailed: false,
+    })
+  })
+
+  it('should handle GET_USER_FAILED', () => {
+    expect(userReducer(
+      { 
+        ...initialState,
+        getUserRequest: true
+      },
+      {
+        type: GET_USER_FAILED
+      }
+    )).toEqual({
+      ...initialState,
+      getUserRequest: false,
+      getUserSuccess: false,
+      getUserFailed: true,
+    })
+  })
+
+  it('should handle UPDATE_USER_REQUEST', () => {
+    expect(userReducer(initialState, {
+        type: UPDATE_USER_REQUEST
+    })).toEqual({
+      ...initialState,
+      updateUserRequest: false
+    })
+  })
+
+  it('should handle UPDATE_USER_SUCCESS', () => {
+    expect(userReducer(
+      { 
+        ...initialState,
+        updateUserRequest: true
+      },
+      {
+        type: UPDATE_USER_SUCCESS
+      }
+    )).toEqual({
+      ...initialState,
+      updateUserRequest: false,
+      updateUserSuccess: true,
+      updateUserFailed: false,
+    })
+  })
+
+  it('should handle UPDATE_USER_FAILED', () => {
+    expect(userReducer(
+      { 
+        ...initialState,
+        updateUserRequest: true
+      },
+      {
+        type: UPDATE_USER_FAILED
+      }
+    )).toEqual({
+      ...initialState,
+      updateUserRequest: false,
+      updateUserSuccess: false,
+      updateUserFailed: true
+    })
+  })
+
+  it('should handle UPDATE_USER_CLEAR', () => {
+    expect(userReducer(
+      { 
+        ...initialState,
+        updateUserSuccess: true
+      },
+      {
+        type: UPDATE_USER_CLEAR
+      }
+    )).toEqual({
+      ...initialState,
+      updateUserRequest: false,
+      updateUserSuccess: false,
+      updateUserFailed: false
+    })
+  })
 })

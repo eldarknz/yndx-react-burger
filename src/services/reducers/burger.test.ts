@@ -4,7 +4,7 @@ import { INGREDIENT_CATEGORIES } from '../../utils/constants';
 import { TIngredient } from '../../../declarations';
 import { bun, ingredients } from '../../utils/testData';
 
-import { burgerReducer } from './burger';
+import { burgerReducer } from "./burger"
 
 import {
     GET_INGREDIENTS_REQUEST,

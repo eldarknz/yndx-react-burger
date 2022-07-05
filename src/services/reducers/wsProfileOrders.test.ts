@@ -1,5 +1,4 @@
 import { TOrder } from "../../../declarations";
-import { TWSProfileOrdersActions } from "../../services/actions/wsProfileOrders";
 import { profileOrdersReducer } from "./wsProfileOrders";
 
 import { orders } from "../../utils/testData";

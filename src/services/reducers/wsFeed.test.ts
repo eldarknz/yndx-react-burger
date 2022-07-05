@@ -1,4 +1,3 @@
-import { ORDER_STATUS } from "utils/constants";
 import { TOrderBoard, TOrder } from "../../../declarations";
 import { orders } from "../../utils/testData";
 
