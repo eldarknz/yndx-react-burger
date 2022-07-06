@@ -4,7 +4,7 @@ describe('Burger Constructor usability and functionality test', function() {
         Cypress.Cookies.debug(true);
         cy.visit('http://localhost:3000/login');
         cy.get('input').first().type('eldarknz@gmail.com');
-        cy.get('input').last().type('123456');
+        cy.get('input').last().type('123456789');
         cy.get('button').click();
     })
 
