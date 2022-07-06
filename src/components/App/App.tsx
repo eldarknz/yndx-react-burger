@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch } from '../../services/types/hooks';
-import { Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { ROUTES } from '../../utils/constants';
 
 import { getIngredients } from '../../services/actions/burger';
