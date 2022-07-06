@@ -1,6 +1,6 @@
 import { useEffect, useCallback } from 'react';
 import { useDispatch } from '../../services/types/hooks';
-import { Route, Switch, useHistory, useLocation } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory, useLocation } from 'react-router-dom';
 import { ROUTES } from '../../utils/constants';
 
 import { getIngredients } from '../../services/actions/burger';
@@ -46,11 +46,11 @@ const App = () => {
   }, [dispatch]);
 
   const handleCloseModalIngredient = useCallback(() => {
-    history.push('/');
+    history.push(ROUTES.home.path);
   }, [history]);
 
   const handleCloseModalFeedOrder = useCallback(() => {
-    history.push('/feed');
+    history.push(ROUTES.feed.path);
   }, [history]);
 
   return (

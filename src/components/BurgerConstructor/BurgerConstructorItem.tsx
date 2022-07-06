@@ -25,7 +25,7 @@ const BurgerConstructorItem = (props: IBurgerConstructorItemProps) => {
 
     const dispatch = useDispatch();
 
-    const { price, image, name } = props.ingredient;
+    const { price, image, name, type } = props.ingredient;
 
     const ref = useRef<HTMLDivElement>(null);
 
@@ -65,7 +65,7 @@ const BurgerConstructorItem = (props: IBurgerConstructorItemProps) => {
     dragRef(dropRef(ref))
 
     return (
-        <div ref={ref} style={{ opacity }}>
+        <div ref={ref} style={{ opacity }} data-constructor-type={type} >
             <Row alignItems="center">
                 {
                     <div 

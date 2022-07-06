@@ -19,8 +19,8 @@ interface IBurgerIngredientsItemProps {
 const BurgerIngredientsItem = (props: IBurgerIngredientsItemProps) => {
     const location = useLocation();
 
-    const { _id, price, image, name } = props.ingredient;
-
+    const { _id, price, image, name, type } = props.ingredient;
+    
     const { burgerIngredients, burgerBun } = useSelector(store => store.burger);
 
     const ingredientOccurrences = burgerIngredients.concat(burgerBun ? [burgerBun] : []).reduce((sum, ingredient) => {
@@ -42,6 +42,7 @@ const BurgerIngredientsItem = (props: IBurgerIngredientsItemProps) => {
     return (
         <div
             className={cn(styles.card, "ml-4 mr-1 mb-8")}
+            data-type={type}
             ref={dragRef}
             style={{ opacity }}
         >

@@ -125,11 +125,11 @@ export const LoginPage = () => {
         { loginFailed && <ActionMessage text="Произошла ошибка, попробуйте еще раз." />}
         <div className={cn(styles.text, "mt-10 mb-4")}>
           <span className="text text_type_main-default text_color_inactive">Вы — новый пользователь?</span>
-          <FancyLink href="/register" className={cn(styles.link, "text_type_main-default ml-2")}>Зарегистироваться</FancyLink>
+          <FancyLink href={ROUTES.register.path} className={cn(styles.link, "text_type_main-default ml-2")}>Зарегистироваться</FancyLink>
         </div>
         <div className={styles.text}>
           <span className="text text_type_main-default text_color_inactive">Забыли пароль?</span>
-          <FancyLink href="/forgot-password" className={cn(styles.link, "text_type_main-default ml-2")}>Восстановить пароль</FancyLink>
+          <FancyLink href={ROUTES.forgot_password.path} className={cn(styles.link, "text_type_main-default ml-2")}>Восстановить пароль</FancyLink>
         </div>
       </div>
     </Container>

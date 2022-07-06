@@ -116,7 +116,7 @@ const BurgerConstructor = () => {
                         </div>
                     }
                     <Row alignItems="center" justifyContent="flex-end" className={cn(styles.priceBlock, "pt-10")}>
-                        <div className={"text text_type_digits-medium mr-2"}>
+                        <div className={"totalPrice text text_type_digits-medium mr-2"}>
                             {totalPrice}
                         </div>
                         <div className={cn(styles.iconLarge, "pr-10")}>
