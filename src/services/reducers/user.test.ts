@@ -106,7 +106,7 @@ const initialState: TUserState = {
   updateUserFailed: false,
 };
 
-describe('Profile orders reducer', () => {
+describe('User reducer', () => {
   it('should handle LOGIN_REQUEST', () => {
     expect(userReducer(initialState, {
       type: LOGIN_REQUEST
@@ -326,7 +326,7 @@ describe('Profile orders reducer', () => {
         type: GET_USER_REQUEST
     })).toEqual({
       ...initialState,
-      getUserRequest: false
+      getUserRequest: true
     })
   })
 
@@ -369,7 +369,7 @@ describe('Profile orders reducer', () => {
         type: UPDATE_USER_REQUEST
     })).toEqual({
       ...initialState,
-      updateUserRequest: false
+      updateUserRequest: true
     })
   })
 

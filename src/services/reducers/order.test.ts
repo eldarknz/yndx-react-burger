@@ -20,7 +20,7 @@ const initialState: TOrderState = {
 
 const orderNumber = '123456';
 
-describe('Burger reducer', () => {
+describe('Order reducer', () => {
     it('should handle GET_ORDER_NUMBER_REQUEST', () => {
         expect(orderReducer(initialState, {
             type: GET_ORDER_NUMBER_REQUEST,
