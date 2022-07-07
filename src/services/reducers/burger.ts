@@ -1,10 +1,7 @@
-/**
- * Для теста
- */
-//import { bun, ingredients } from '../initialIngredients';
-
 import { TBurgerActions } from '../actions/burger';
 import { TIngredient } from '../../../declarations';
+
+import { INGREDIENT_CATEGORIES } from '../../utils/constants';
 
 import {
     GET_INGREDIENTS_REQUEST,
@@ -43,16 +40,15 @@ const initialState: TBurgerState = {
 
     viewedIngredient: null,
 
-    currentTab: 'bun'
+    currentTab: INGREDIENT_CATEGORIES[0].type
 };
 
-export const appReducer = (state = initialState, action: TBurgerActions): TBurgerState => {
+export const burgerReducer = (state = initialState, action: TBurgerActions): TBurgerState => {
     switch (action.type) {
         case TAB_SWITCH: {
             return {
                 ...state,
-                currentTab: action.selectedTab
-                //currentTab: state.currentTab !== action.selectedTab ? action.selectedTab : state.currentTab
+                currentTab: action.currentTab
             };
         }
         case GET_INGREDIENTS_REQUEST: {

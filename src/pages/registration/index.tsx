@@ -123,7 +123,7 @@ export const RegistrationPage = () => {
         { registerFailed && <ActionMessage text="Произошла ошибка, попробуйте еще раз." />}
         <div className={cn(styles.text, "mt-10")}>
           <span className="text text_type_main-default text_color_inactive">Уже зарегистированы?</span>
-          <FancyLink href="/login" className={cn(styles.link, "text_type_main-default ml-2")}>Войти</FancyLink>
+          <FancyLink href={ROUTES.login.path} className={cn(styles.link, "text_type_main-default ml-2")}>Войти</FancyLink>
         </div>
       </div>
     </Container>

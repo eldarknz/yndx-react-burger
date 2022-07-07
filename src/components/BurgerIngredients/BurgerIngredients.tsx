@@ -27,8 +27,8 @@ const BurgerIngredients = () => {
     const sauceRef = useRef<HTMLHeadingElement>(null);
     const mainRef = useRef<HTMLHeadingElement>(null);
 
-    const handleSwitchTab = (selectedTab: string) => {
-        dispatch(tabSwitch(selectedTab));
+    const handleSwitchTab = (currentTab: string) => {
+        dispatch(tabSwitch(currentTab));
     };
 
     const handleScroll = () => {

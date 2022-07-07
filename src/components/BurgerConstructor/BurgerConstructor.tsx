@@ -49,7 +49,6 @@ const BurgerConstructor = () => {
     const dispatch = useDispatch();
 
     const { isLoggedIn } = useSelector(store => store.user);
-    console.log("ИСПРАВИТЬ !!!!! ===> ", isLoggedIn);
     const { burgerIngredients, burgerBun } = useSelector(store => store.burger);
 
     const history = useHistory();
@@ -116,7 +115,7 @@ const BurgerConstructor = () => {
                         </div>
                     }
                     <Row alignItems="center" justifyContent="flex-end" className={cn(styles.priceBlock, "pt-10")}>
-                        <div className={"text text_type_digits-medium mr-2"}>
+                        <div className={"totalPrice text text_type_digits-medium mr-2"}>
                             {totalPrice}
                         </div>
                         <div className={cn(styles.iconLarge, "pr-10")}>

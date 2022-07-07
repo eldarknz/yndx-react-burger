@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
-import { appReducer } from './burger';
+import { burgerReducer } from './burger';
 import { orderReducer } from './order';
 import { userReducer } from './user';
 import { feedReducer } from './wsFeed';
 import { profileOrdersReducer } from './wsProfileOrders';
 
 export const rootReducer = combineReducers({
-  burger: appReducer,
+  burger: burgerReducer,
   order: orderReducer,
   user: userReducer,
   feed: feedReducer,

@@ -1,3 +1,5 @@
+export type TIngredientType = 'bun' | 'sauce' | 'main';
+
 export type TIngredient = {
     readonly __v: number;
     readonly _id: string;
@@ -12,6 +14,12 @@ export type TIngredient = {
     readonly proteins: number;
     readonly type: string;
     uuid?: string;
+}
+
+export type TIngredientCategory = {
+    _id: number
+    type: TIngredientType;
+    title: string;
 }
 
 export type TUser = {

@@ -9,6 +9,7 @@ import { BurgerIcon, ListIcon, ProfileIcon } from "@ya.praktikum/react-developer
 import FancyLink from "../ui/Link/Link";
 
 import styles from "./AppHeader.module.css";
+import { ROUTES } from "utils/constants";
 
 const AppHeader = () => {
     return (
@@ -18,7 +19,7 @@ const AppHeader = () => {
                     <Col col="4">
                         <Nav>
                             <NavItem>
-                                <FancyLink href={'/'} isExact={true}>
+                                <FancyLink href={ROUTES.home.path} isExact={true}>
                                     <div className={styles.icon}>
                                         <BurgerIcon type="primary" />
                                     </div>
@@ -26,7 +27,7 @@ const AppHeader = () => {
                                 </FancyLink>
                             </NavItem>
                             <NavItem>
-                                <FancyLink href={'/feed'} isExact={true}>
+                                <FancyLink href={ROUTES.feed.path} isExact={true}>
                                     <div className={styles.icon}>
                                         <ListIcon type="primary" />
                                     </div>
@@ -37,7 +38,7 @@ const AppHeader = () => {
                     </Col>
                     <Col col="4">
                         <div className={cn(styles.logo, "justifyContentCenter")}>
-                            <Link to={'/'}>
+                            <Link to={ROUTES.home.path}>
                                 <Logo />
                             </Link>
                         </div>
@@ -45,7 +46,7 @@ const AppHeader = () => {
                     <Col col="4">
                         <Nav className="justifyContentEnd">
                             <NavItem>
-                                <FancyLink href={'/profile'}>
+                                <FancyLink href={ROUTES.profile.path}>
                                 <div className={styles.icon}>
                                         <ProfileIcon type="primary" />
                                     </div>

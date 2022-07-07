@@ -225,13 +225,13 @@ export const userReducer = (state = initialState, action: TUserActions): TUserSt
     }
 
     case TOKEN_REQUEST: {
-      return{
+      return {
         ...state,
         tokenRequest: true,
       }
     }
     case TOKEN_SUCCESS: {
-      return{
+      return {
         ...state,
         tokenRequest: false,
         tokenSuccess: true,
@@ -239,7 +239,7 @@ export const userReducer = (state = initialState, action: TUserActions): TUserSt
     }
     }
     case TOKEN_FAILED: {
-      return{
+      return {
         ...state,
         tokenRequest: false,
         tokenSuccess: false,

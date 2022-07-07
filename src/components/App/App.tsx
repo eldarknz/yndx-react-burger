@@ -46,11 +46,11 @@ const App = () => {
   }, [dispatch]);
 
   const handleCloseModalIngredient = useCallback(() => {
-    history.push('/');
+    history.push(ROUTES.home.path);
   }, [history]);
 
   const handleCloseModalFeedOrder = useCallback(() => {
-    history.push('/feed');
+    history.push(ROUTES.feed.path);
   }, [history]);
 
   return (
